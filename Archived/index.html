@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kick NoPixel Directory</title>
+    <style src="index.css">
+        /* Dark theme matching Kick/Hasroot */
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #53fc18; /* Kick Green */
+        }
+
+        /* Responsive Grid System */
+        #stream-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Stream Card Styling */
+        .stream-card {
+            background-color: #1a1f29;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .stream-card:hover {
+            transform: scale(1.02);
+            border: 1px solid #53fc18;
+        }
+
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-info {
+            padding: 12px;
+        }
+
+        .stream-title {
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 8px;
+        }
+
+        .stream-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #a0a5b5;
+        }
+
+        .viewers {
+            color: #ff4a4a; /* Red viewer count */
+            font-weight: bold;
+        }
+        /* Search Bar Styling */
+        .search-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #search-bar {
+            width: 90%;
+            max-width: 600px;
+            padding: 14px 24px;
+            border-radius: 30px;
+            border: 2px solid #2d3546;
+            background-color: #1a1f29;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        #search-bar:focus {
+            border-color: #53fc18; /* Kick Green */
+            box-shadow: 0 0 10px rgba(83, 252, 24, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🟢 Live NoPixel Streams (<span id="total-count">0</span>)</h1>
+    <div class="search-container">
+        <input type="text" id="search-bar" placeholder="🔍 Search for a streamer or title...">
+    </div>
+    <div id="stream-grid">
+        </div>
+
+    <script>
+        const API_URL = "http://localhost:8000/api/streams";
+        const grid = document.getElementById('stream-grid');
+        const countDisplay = document.getElementById('total-count');
+        const searchBar = document.getElementById('search-bar');
+        
+        // This will hold our master list of streams
+        let allStreams = [];
+
+        // Function to draw the cards to the screen
+        function renderStreams(streamsToRender) {
+            grid.innerHTML = ''; // Clear the current grid
+            
+            streamsToRender.forEach(stream => {
+                const card = document.createElement('div');
+                card.className = 'stream-card';
+                card.onclick = () => window.open(`https://kick.com/${stream.channel}`, '_blank');
+
+                card.innerHTML = `
+                    <img class="thumbnail" src="${stream.thumbnail}" alt="${stream.channel} thumbnail">
+                    <div class="card-info">
+                        <div class="stream-title">${stream.title}</div>
+                        <div class="stream-meta">
+                            <span>👤 ${stream.channel}</span>
+                            <span class="viewers">🔴 ${stream.viewers.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Fetch data from your Python backend
+        async function fetchStreams() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("API not ready");
+                
+                const data = await response.json();
+                
+                // Update the master list and the total count
+                allStreams = data.streams;
+                countDisplay.textContent = data.count;
+                
+                // Trigger the search logic to re-render the grid
+                // (This ensures if a user is currently searching, a background refresh doesn't break their search)
+                applySearch();
+
+            } catch (error) {
+                console.error("Error fetching streams:", error);
+            }
+        }
+
+        // Filter the streams based on the search bar input
+        function applySearch() {
+            const searchTerm = searchBar.value.toLowerCase();
+            
+            const filteredStreams = allStreams.filter(stream => {
+                // Check if the search term is in the channel name OR the title
+                const inChannel = stream.channel.toLowerCase().includes(searchTerm);
+                const inTitle = stream.title.toLowerCase().includes(searchTerm);
+                return inChannel || inTitle;
+            });
+
+            // Draw the filtered list
+            renderStreams(filteredStreams);
+        }
+
+        // Listen for typing in the search bar and filter instantly
+        searchBar.addEventListener('input', applySearch);
+
+        // Fetch immediately on load, then every 30 seconds
+        fetchStreams();
+        setInterval(fetchStreams, 30000);
+    </script>
+
+</body>
+</html>

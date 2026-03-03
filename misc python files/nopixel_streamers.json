@@ -1,0 +1,5107 @@
+{
+    "Hydra": [
+        {
+            "platform": "twitch",
+            "channel": "silent",
+            "url": "https://twitch.tv/silent"
+        },
+        {
+            "platform": "kick",
+            "channel": "silent",
+            "url": "https://kick.com/silent"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kioshima_ff",
+            "url": "https://twitch.tv/kioshima_ff"
+        },
+        {
+            "platform": "kick",
+            "channel": "kioshima",
+            "url": "https://kick.com/kioshima"
+        },
+        {
+            "platform": "twitch",
+            "channel": "moboking",
+            "url": "https://twitch.tv/moboking"
+        },
+        {
+            "platform": "kick",
+            "channel": "moboking",
+            "url": "https://kick.com/moboking"
+        },
+        {
+            "platform": "twitch",
+            "channel": "docwizard",
+            "url": "https://twitch.tv/docwizard"
+        },
+        {
+            "platform": "kick",
+            "channel": "docwizard",
+            "url": "https://kick.com/docwizard"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jjfried",
+            "url": "https://twitch.tv/jjfried"
+        },
+        {
+            "platform": "kick",
+            "channel": "jjfried",
+            "url": "https://kick.com/jjfried"
+        },
+        {
+            "platform": "twitch",
+            "channel": "either",
+            "url": "https://twitch.tv/either"
+        },
+        {
+            "platform": "kick",
+            "channel": "either",
+            "url": "https://kick.com/either"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rexs",
+            "url": "https://twitch.tv/rexs"
+        },
+        {
+            "platform": "kick",
+            "channel": "rexs",
+            "url": "https://kick.com/rexs"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lauti",
+            "url": "https://twitch.tv/lauti"
+        },
+        {
+            "platform": "kick",
+            "channel": "lauti",
+            "url": "https://kick.com/lauti"
+        },
+        {
+            "platform": "twitch",
+            "channel": "basedlore",
+            "url": "https://twitch.tv/basedlore"
+        },
+        {
+            "platform": "kick",
+            "channel": "basedlore",
+            "url": "https://kick.com/basedlore"
+        },
+        {
+            "platform": "twitch",
+            "channel": "arnie",
+            "url": "https://twitch.tv/arnie"
+        },
+        {
+            "platform": "kick",
+            "channel": "arniev",
+            "url": "https://kick.com/arniev"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ash",
+            "url": "https://twitch.tv/ash"
+        },
+        {
+            "platform": "kick",
+            "channel": "ash",
+            "url": "https://kick.com/ash"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vgsbrendan",
+            "url": "https://twitch.tv/vgsbrendan"
+        },
+        {
+            "platform": "kick",
+            "channel": "vgsbrendan",
+            "url": "https://kick.com/vgsbrendan"
+        },
+        {
+            "platform": "twitch",
+            "channel": "chasrp",
+            "url": "https://twitch.tv/chasrp"
+        },
+        {
+            "platform": "kick",
+            "channel": "chasrp",
+            "url": "https://kick.com/chasrp"
+        },
+        {
+            "platform": "twitch",
+            "channel": "tylertr",
+            "url": "https://twitch.tv/tylertr"
+        },
+        {
+            "platform": "kick",
+            "channel": "tylertr",
+            "url": "https://kick.com/tylertr"
+        },
+        {
+            "platform": "twitch",
+            "channel": "edenitoo",
+            "url": "https://twitch.tv/edenitoo"
+        },
+        {
+            "platform": "kick",
+            "channel": "edenitoo",
+            "url": "https://kick.com/edenitoo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "stank",
+            "url": "https://twitch.tv/stank"
+        },
+        {
+            "platform": "kick",
+            "channel": "StankXO",
+            "url": "https://kick.com/StankXO"
+        },
+        {
+            "platform": "twitch",
+            "channel": "qmariox",
+            "url": "https://twitch.tv/qmariox"
+        },
+        {
+            "platform": "kick",
+            "channel": "qMARIOx",
+            "url": "https://kick.com/qMARIOx"
+        },
+        {
+            "platform": "twitch",
+            "channel": "crazyheartsz",
+            "url": "https://twitch.tv/crazyheartsz"
+        },
+        {
+            "platform": "kick",
+            "channel": "CrazyHeartsz",
+            "url": "https://kick.com/CrazyHeartsz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "KiloAU",
+            "url": "https://twitch.tv/KiloAU"
+        },
+        {
+            "platform": "kick",
+            "channel": "KiloAU",
+            "url": "https://kick.com/KiloAU"
+        },
+        {
+            "platform": "twitch",
+            "channel": "scratchrp",
+            "url": "https://twitch.tv/scratchrp"
+        },
+        {
+            "platform": "kick",
+            "channel": "scratchrp",
+            "url": "https://kick.com/scratchrp"
+        },
+        {
+            "platform": "twitch",
+            "channel": "aus24",
+            "url": "https://twitch.tv/aus24"
+        },
+        {
+            "platform": "kick",
+            "channel": "Aus24",
+            "url": "https://kick.com/Aus24"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nathankb_",
+            "url": "https://twitch.tv/nathankb_"
+        },
+        {
+            "platform": "kick",
+            "channel": "nathankb",
+            "url": "https://kick.com/nathankb"
+        },
+        {
+            "platform": "twitch",
+            "channel": "B_Hoopla",
+            "url": "https://twitch.tv/B_Hoopla"
+        },
+        {
+            "platform": "kick",
+            "channel": "B_Hoopla",
+            "url": "https://kick.com/B_Hoopla"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jeimiru",
+            "url": "https://twitch.tv/jeimiru"
+        },
+        {
+            "platform": "kick",
+            "channel": "jeimiru",
+            "url": "https://kick.com/jeimiru"
+        },
+        {
+            "platform": "twitch",
+            "channel": "chillypanda",
+            "url": "https://twitch.tv/chillypanda"
+        },
+        {
+            "platform": "kick",
+            "channel": "chillypanda",
+            "url": "https://kick.com/chillypanda"
+        },
+        {
+            "platform": "twitch",
+            "channel": "xiceman",
+            "url": "https://twitch.tv/xiceman"
+        },
+        {
+            "platform": "kick",
+            "channel": "xiceman",
+            "url": "https://kick.com/xiceman"
+        },
+        {
+            "platform": "twitch",
+            "channel": "slyyrak",
+            "url": "https://twitch.tv/slyyrak"
+        },
+        {
+            "platform": "twitch",
+            "channel": "yuukidav",
+            "url": "https://twitch.tv/yuukidav"
+        },
+        {
+            "platform": "kick",
+            "channel": "yuukidav",
+            "url": "https://kick.com/yuukidav"
+        },
+        {
+            "platform": "twitch",
+            "channel": "reedy",
+            "url": "https://twitch.tv/reedy"
+        },
+        {
+            "platform": "kick",
+            "channel": "reedy",
+            "url": "https://kick.com/reedy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Crowhex",
+            "url": "https://twitch.tv/Crowhex"
+        },
+        {
+            "platform": "twitch",
+            "channel": "umad",
+            "url": "https://twitch.tv/umad"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kemony",
+            "url": "https://twitch.tv/kemony"
+        },
+        {
+            "platform": "kick",
+            "channel": "kemony",
+            "url": "https://kick.com/kemony"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Acie",
+            "url": "https://twitch.tv/Acie"
+        },
+        {
+            "platform": "kick",
+            "channel": "Acie",
+            "url": "https://kick.com/Acie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kate",
+            "url": "https://twitch.tv/kate"
+        },
+        {
+            "platform": "kick",
+            "channel": "kate",
+            "url": "https://kick.com/kate"
+        },
+        {
+            "platform": "twitch",
+            "channel": "boogie",
+            "url": "https://twitch.tv/boogie"
+        },
+        {
+            "platform": "kick",
+            "channel": "Boogie",
+            "url": "https://kick.com/Boogie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "curvyelephant",
+            "url": "https://twitch.tv/curvyelephant"
+        },
+        {
+            "platform": "kick",
+            "channel": "curvyelephant",
+            "url": "https://kick.com/curvyelephant"
+        },
+        {
+            "platform": "twitch",
+            "channel": "DTalmer",
+            "url": "https://twitch.tv/DTalmer"
+        },
+        {
+            "platform": "twitch",
+            "channel": "stewvrt",
+            "url": "https://twitch.tv/stewvrt"
+        }
+    ],
+    "Besties": [
+        {
+            "platform": "twitch",
+            "channel": "4head",
+            "url": "https://twitch.tv/4head"
+        },
+        {
+            "platform": "kick",
+            "channel": "4head",
+            "url": "https://kick.com/4head"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sukhi_1",
+            "url": "https://twitch.tv/sukhi_1"
+        },
+        {
+            "platform": "kick",
+            "channel": "sukhi_1",
+            "url": "https://kick.com/sukhi_1"
+        },
+        {
+            "platform": "twitch",
+            "channel": "daisyks",
+            "url": "https://twitch.tv/daisyks"
+        },
+        {
+            "platform": "kick",
+            "channel": "daisyks",
+            "url": "https://kick.com/daisyks"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ajumpin",
+            "url": "https://twitch.tv/ajumpin"
+        },
+        {
+            "platform": "kick",
+            "channel": "sanesfx",
+            "url": "https://kick.com/sanesfx"
+        },
+        {
+            "platform": "twitch",
+            "channel": "chelb",
+            "url": "https://twitch.tv/chelb"
+        },
+        {
+            "platform": "kick",
+            "channel": "chelb",
+            "url": "https://kick.com/chelb"
+        },
+        {
+            "platform": "twitch",
+            "channel": "simplessr6",
+            "url": "https://twitch.tv/simplessr6"
+        },
+        {
+            "platform": "kick",
+            "channel": "simpless",
+            "url": "https://kick.com/simpless"
+        },
+        {
+            "platform": "twitch",
+            "channel": "mrchopo_",
+            "url": "https://twitch.tv/mrchopo_"
+        },
+        {
+            "platform": "kick",
+            "channel": "mrchopo",
+            "url": "https://kick.com/mrchopo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "travpiper",
+            "url": "https://twitch.tv/travpiper"
+        },
+        {
+            "platform": "kick",
+            "channel": "travpiper",
+            "url": "https://kick.com/travpiper"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kyrienolife",
+            "url": "https://twitch.tv/kyrienolife"
+        },
+        {
+            "platform": "kick",
+            "channel": "kyrienolife",
+            "url": "https://kick.com/kyrienolife"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ghotties",
+            "url": "https://twitch.tv/ghotties"
+        },
+        {
+            "platform": "kick",
+            "channel": "ghotties",
+            "url": "https://kick.com/ghotties"
+        },
+        {
+            "platform": "twitch",
+            "channel": "mdrakoo",
+            "url": "https://twitch.tv/mdrakoo"
+        },
+        {
+            "platform": "kick",
+            "channel": "mdrakoo",
+            "url": "https://kick.com/mdrakoo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dripp",
+            "url": "https://twitch.tv/dripp"
+        },
+        {
+            "platform": "kick",
+            "channel": "dripp",
+            "url": "https://kick.com/dripp"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jack",
+            "url": "https://twitch.tv/jack"
+        },
+        {
+            "platform": "kick",
+            "channel": "jack",
+            "url": "https://kick.com/jack"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thatguygp",
+            "url": "https://twitch.tv/thatguygp"
+        },
+        {
+            "platform": "kick",
+            "channel": "thatguygp",
+            "url": "https://kick.com/thatguygp"
+        },
+        {
+            "platform": "twitch",
+            "channel": "a2guapo",
+            "url": "https://twitch.tv/a2guapo"
+        },
+        {
+            "platform": "kick",
+            "channel": "a2guapo",
+            "url": "https://kick.com/a2guapo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kelley_",
+            "url": "https://twitch.tv/kelley_"
+        },
+        {
+            "platform": "kick",
+            "channel": "mkelley",
+            "url": "https://kick.com/mkelley"
+        },
+        {
+            "platform": "kick",
+            "channel": "kermshiesty",
+            "url": "https://kick.com/kermshiesty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sanityybro",
+            "url": "https://twitch.tv/sanityybro"
+        },
+        {
+            "platform": "kick",
+            "channel": "sanityybro",
+            "url": "https://kick.com/sanityybro"
+        },
+        {
+            "platform": "twitch",
+            "channel": "caramel",
+            "url": "https://twitch.tv/caramel"
+        },
+        {
+            "platform": "kick",
+            "channel": "caramel",
+            "url": "https://kick.com/caramel"
+        },
+        {
+            "platform": "twitch",
+            "channel": "harmless",
+            "url": "https://twitch.tv/harmless"
+        },
+        {
+            "platform": "kick",
+            "channel": "harmless",
+            "url": "https://kick.com/harmless"
+        },
+        {
+            "platform": "twitch",
+            "channel": "manax",
+            "url": "https://twitch.tv/manax"
+        },
+        {
+            "platform": "kick",
+            "channel": "manax",
+            "url": "https://kick.com/manax"
+        },
+        {
+            "platform": "twitch",
+            "channel": "swizzmb",
+            "url": "https://twitch.tv/swizzmb"
+        },
+        {
+            "platform": "kick",
+            "channel": "swizz",
+            "url": "https://kick.com/swizz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ming",
+            "url": "https://twitch.tv/ming"
+        },
+        {
+            "platform": "kick",
+            "channel": "ming",
+            "url": "https://kick.com/ming"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rissabear",
+            "url": "https://twitch.tv/rissabear"
+        },
+        {
+            "platform": "kick",
+            "channel": "rissabear",
+            "url": "https://kick.com/rissabear"
+        },
+        {
+            "platform": "twitch",
+            "channel": "goufbam",
+            "url": "https://twitch.tv/goufbam"
+        },
+        {
+            "platform": "kick",
+            "channel": "goufbam",
+            "url": "https://kick.com/goufbam"
+        },
+        {
+            "platform": "twitch",
+            "channel": "zuck",
+            "url": "https://twitch.tv/zuck"
+        },
+        {
+            "platform": "kick",
+            "channel": "zuck",
+            "url": "https://kick.com/zuck"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nidas",
+            "url": "https://twitch.tv/nidas"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Julian",
+            "url": "https://twitch.tv/Julian"
+        },
+        {
+            "platform": "kick",
+            "channel": "Julian",
+            "url": "https://kick.com/Julian"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ipink_",
+            "url": "https://twitch.tv/ipink_"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thedoubles",
+            "url": "https://twitch.tv/thedoubles"
+        },
+        {
+            "platform": "kick",
+            "channel": "thedoubles",
+            "url": "https://kick.com/thedoubles"
+        },
+        {
+            "platform": "twitch",
+            "channel": "slightlypoetic",
+            "url": "https://twitch.tv/slightlypoetic"
+        },
+        {
+            "platform": "kick",
+            "channel": "poetic",
+            "url": "https://kick.com/poetic"
+        },
+        {
+            "platform": "twitch",
+            "channel": "razzy",
+            "url": "https://twitch.tv/razzy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "enduringanguish",
+            "url": "https://twitch.tv/enduringanguish"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vigors",
+            "url": "https://twitch.tv/vigors"
+        },
+        {
+            "platform": "twitch",
+            "channel": "stuply",
+            "url": "https://twitch.tv/stuply"
+        }
+    ],
+    "Manor": [
+        {
+            "platform": "twitch",
+            "channel": "Jakson",
+            "url": "https://twitch.tv/Jakson"
+        },
+        {
+            "platform": "kick",
+            "channel": "Jakson",
+            "url": "https://kick.com/Jakson"
+        },
+        {
+            "platform": "twitch",
+            "channel": "txylorzz",
+            "url": "https://twitch.tv/txylorzz"
+        },
+        {
+            "platform": "kick",
+            "channel": "txylorz",
+            "url": "https://kick.com/txylorz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "finlay",
+            "url": "https://twitch.tv/finlay"
+        },
+        {
+            "platform": "kick",
+            "channel": "finlayy",
+            "url": "https://kick.com/finlayy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "machofc",
+            "url": "https://twitch.tv/machofc"
+        },
+        {
+            "platform": "kick",
+            "channel": "MachoSL",
+            "url": "https://kick.com/MachoSL"
+        },
+        {
+            "platform": "kick",
+            "channel": "0axe",
+            "url": "https://kick.com/0axe"
+        },
+        {
+            "platform": "twitch",
+            "channel": "klutch",
+            "url": "https://twitch.tv/klutch"
+        },
+        {
+            "platform": "kick",
+            "channel": "Klutch",
+            "url": "https://kick.com/Klutch"
+        },
+        {
+            "platform": "twitch",
+            "channel": "peachylivv",
+            "url": "https://twitch.tv/peachylivv"
+        },
+        {
+            "platform": "kick",
+            "channel": "liiv",
+            "url": "https://kick.com/liiv"
+        },
+        {
+            "platform": "twitch",
+            "channel": "prof_frosty",
+            "url": "https://twitch.tv/prof_frosty"
+        },
+        {
+            "platform": "kick",
+            "channel": "PFrosty",
+            "url": "https://kick.com/PFrosty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "frank_ladd",
+            "url": "https://twitch.tv/frank_ladd"
+        },
+        {
+            "platform": "kick",
+            "channel": "frank_ladd",
+            "url": "https://kick.com/frank_ladd"
+        },
+        {
+            "platform": "twitch",
+            "channel": "angelknivez",
+            "url": "https://twitch.tv/angelknivez"
+        },
+        {
+            "platform": "kick",
+            "channel": "angelknivez",
+            "url": "https://kick.com/angelknivez"
+        },
+        {
+            "platform": "twitch",
+            "channel": "cashxzy",
+            "url": "https://twitch.tv/cashxzy"
+        },
+        {
+            "platform": "kick",
+            "channel": "cashxzy",
+            "url": "https://kick.com/cashxzy"
+        },
+        {
+            "platform": "kick",
+            "channel": "Iateabattery",
+            "url": "https://kick.com/Iateabattery"
+        },
+        {
+            "platform": "kick",
+            "channel": "charrEurope",
+            "url": "https://kick.com/charrEurope"
+        },
+        {
+            "platform": "twitch",
+            "channel": "JayPlays",
+            "url": "https://twitch.tv/JayPlays"
+        },
+        {
+            "platform": "kick",
+            "channel": "JayPlays",
+            "url": "https://kick.com/JayPlays"
+        },
+        {
+            "platform": "twitch",
+            "channel": "JonLaw_",
+            "url": "https://twitch.tv/JonLaw_"
+        },
+        {
+            "platform": "kick",
+            "channel": "JonLaw",
+            "url": "https://kick.com/JonLaw"
+        },
+        {
+            "platform": "twitch",
+            "channel": "paperstackerj",
+            "url": "https://twitch.tv/paperstackerj"
+        },
+        {
+            "platform": "kick",
+            "channel": "paperstackerj",
+            "url": "https://kick.com/paperstackerj"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ifluffedup",
+            "url": "https://twitch.tv/ifluffedup"
+        },
+        {
+            "platform": "kick",
+            "channel": "FluffyC",
+            "url": "https://kick.com/FluffyC"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hollymaemc",
+            "url": "https://twitch.tv/hollymaemc"
+        },
+        {
+            "platform": "kick",
+            "channel": "hollymaemc",
+            "url": "https://kick.com/hollymaemc"
+        },
+        {
+            "platform": "twitch",
+            "channel": "matteu",
+            "url": "https://twitch.tv/matteu"
+        },
+        {
+            "platform": "kick",
+            "channel": "matteu",
+            "url": "https://kick.com/matteu"
+        },
+        {
+            "platform": "kick",
+            "channel": "AJBLAD",
+            "url": "https://kick.com/AJBLAD"
+        },
+        {
+            "platform": "twitch",
+            "channel": "satchelrp",
+            "url": "https://twitch.tv/satchelrp"
+        },
+        {
+            "platform": "kick",
+            "channel": "satchelrp",
+            "url": "https://kick.com/satchelrp"
+        },
+        {
+            "platform": "kick",
+            "channel": "samih",
+            "url": "https://kick.com/samih"
+        },
+        {
+            "platform": "twitch",
+            "channel": "gigiactually",
+            "url": "https://twitch.tv/gigiactually"
+        },
+        {
+            "platform": "kick",
+            "channel": "gigiactually",
+            "url": "https://kick.com/gigiactually"
+        },
+        {
+            "platform": "twitch",
+            "channel": "xholty",
+            "url": "https://twitch.tv/xholty"
+        },
+        {
+            "platform": "kick",
+            "channel": "xholty",
+            "url": "https://kick.com/xholty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itzsiiee",
+            "url": "https://twitch.tv/itzsiiee"
+        },
+        {
+            "platform": "kick",
+            "channel": "siiee92",
+            "url": "https://kick.com/siiee92"
+        },
+        {
+            "platform": "twitch",
+            "channel": "shlomi",
+            "url": "https://twitch.tv/shlomi"
+        },
+        {
+            "platform": "kick",
+            "channel": "shlomi",
+            "url": "https://kick.com/shlomi"
+        }
+    ],
+    "New Babylon": [
+        {
+            "platform": "twitch",
+            "channel": "mfwarlock",
+            "url": "https://twitch.tv/mfwarlock"
+        },
+        {
+            "platform": "kick",
+            "channel": "mfwarlock",
+            "url": "https://kick.com/mfwarlock"
+        },
+        {
+            "platform": "twitch",
+            "channel": "biotox",
+            "url": "https://twitch.tv/biotox"
+        },
+        {
+            "platform": "kick",
+            "channel": "biotox",
+            "url": "https://kick.com/biotox"
+        },
+        {
+            "platform": "twitch",
+            "channel": "novazfov",
+            "url": "https://twitch.tv/novazfov"
+        },
+        {
+            "platform": "kick",
+            "channel": "novazfov",
+            "url": "https://kick.com/novazfov"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Kastiann",
+            "url": "https://twitch.tv/Kastiann"
+        },
+        {
+            "platform": "kick",
+            "channel": "Kastiann",
+            "url": "https://kick.com/Kastiann"
+        },
+        {
+            "platform": "twitch",
+            "channel": "the_truth_jgw",
+            "url": "https://twitch.tv/the_truth_jgw"
+        },
+        {
+            "platform": "kick",
+            "channel": "the-truth-jgw",
+            "url": "https://kick.com/the-truth-jgw"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ssaab",
+            "url": "https://twitch.tv/ssaab"
+        },
+        {
+            "platform": "kick",
+            "channel": "saab",
+            "url": "https://kick.com/saab"
+        },
+        {
+            "platform": "twitch",
+            "channel": "icky619",
+            "url": "https://twitch.tv/icky619"
+        },
+        {
+            "platform": "kick",
+            "channel": "icky619",
+            "url": "https://kick.com/icky619"
+        },
+        {
+            "platform": "kick",
+            "channel": "Nitemare-Boba",
+            "url": "https://kick.com/Nitemare-Boba"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sayeed",
+            "url": "https://twitch.tv/sayeed"
+        },
+        {
+            "platform": "kick",
+            "channel": "Sayeed",
+            "url": "https://kick.com/Sayeed"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dumpykdog",
+            "url": "https://twitch.tv/dumpykdog"
+        },
+        {
+            "platform": "kick",
+            "channel": "Dumpykdog",
+            "url": "https://kick.com/Dumpykdog"
+        },
+        {
+            "platform": "twitch",
+            "channel": "tjnv",
+            "url": "https://twitch.tv/tjnv"
+        },
+        {
+            "platform": "kick",
+            "channel": "tjnv",
+            "url": "https://kick.com/tjnv"
+        },
+        {
+            "platform": "twitch",
+            "channel": "masonshortland",
+            "url": "https://twitch.tv/masonshortland"
+        },
+        {
+            "platform": "kick",
+            "channel": "masonshortland",
+            "url": "https://kick.com/masonshortland"
+        },
+        {
+            "platform": "twitch",
+            "channel": "alyssajeanaf",
+            "url": "https://twitch.tv/alyssajeanaf"
+        },
+        {
+            "platform": "kick",
+            "channel": "alyssajean",
+            "url": "https://kick.com/alyssajean"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kritacul",
+            "url": "https://twitch.tv/kritacul"
+        },
+        {
+            "platform": "kick",
+            "channel": "kritacul",
+            "url": "https://kick.com/kritacul"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kaelea",
+            "url": "https://twitch.tv/kaelea"
+        },
+        {
+            "platform": "kick",
+            "channel": "kaelea",
+            "url": "https://kick.com/kaelea"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itsellecee",
+            "url": "https://twitch.tv/itsellecee"
+        },
+        {
+            "platform": "kick",
+            "channel": "itsellecee",
+            "url": "https://kick.com/itsellecee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "pavfaz",
+            "url": "https://twitch.tv/pavfaz"
+        },
+        {
+            "platform": "kick",
+            "channel": "pavfaz",
+            "url": "https://kick.com/pavfaz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ashi",
+            "url": "https://twitch.tv/ashi"
+        },
+        {
+            "platform": "kick",
+            "channel": "ashi",
+            "url": "https://kick.com/ashi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "notgeega",
+            "url": "https://twitch.tv/notgeega"
+        },
+        {
+            "platform": "twitch",
+            "channel": "harry",
+            "url": "https://twitch.tv/harry"
+        },
+        {
+            "platform": "kick",
+            "channel": "harry",
+            "url": "https://kick.com/harry"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jack",
+            "url": "https://twitch.tv/jack"
+        },
+        {
+            "platform": "kick",
+            "channel": "jack",
+            "url": "https://kick.com/jack"
+        },
+        {
+            "platform": "twitch",
+            "channel": "fahrenheit",
+            "url": "https://twitch.tv/fahrenheit"
+        },
+        {
+            "platform": "kick",
+            "channel": "fahrenheit",
+            "url": "https://kick.com/fahrenheit"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vawwn",
+            "url": "https://twitch.tv/vawwn"
+        },
+        {
+            "platform": "kick",
+            "channel": "Vawwn",
+            "url": "https://kick.com/Vawwn"
+        },
+        {
+            "platform": "twitch",
+            "channel": "revive",
+            "url": "https://twitch.tv/revive"
+        },
+        {
+            "platform": "kick",
+            "channel": "ReviveRP",
+            "url": "https://kick.com/ReviveRP"
+        },
+        {
+            "platform": "twitch",
+            "channel": "buddha",
+            "url": "https://twitch.tv/buddha"
+        },
+        {
+            "platform": "kick",
+            "channel": "buddha",
+            "url": "https://kick.com/buddha"
+        },
+        {
+            "platform": "twitch",
+            "channel": "edwardvanmanz",
+            "url": "https://twitch.tv/edwardvanmanz"
+        },
+        {
+            "platform": "kick",
+            "channel": "EdwardVanmanz",
+            "url": "https://kick.com/EdwardVanmanz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "zetark",
+            "url": "https://twitch.tv/zetark"
+        },
+        {
+            "platform": "kick",
+            "channel": "zetark",
+            "url": "https://kick.com/zetark"
+        },
+        {
+            "platform": "twitch",
+            "channel": "catherinereel",
+            "url": "https://twitch.tv/catherinereel"
+        },
+        {
+            "platform": "kick",
+            "channel": "catherinereel",
+            "url": "https://kick.com/catherinereel"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bigbeautifuljay",
+            "url": "https://twitch.tv/bigbeautifuljay"
+        },
+        {
+            "platform": "kick",
+            "channel": "bigbeautifuljay",
+            "url": "https://kick.com/bigbeautifuljay"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ryankingsounds",
+            "url": "https://twitch.tv/ryankingsounds"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sanauchiha",
+            "url": "https://twitch.tv/sanauchiha"
+        },
+        {
+            "platform": "kick",
+            "channel": "sanauchiha",
+            "url": "https://kick.com/sanauchiha"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ziggy",
+            "url": "https://twitch.tv/ziggy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "simplynumi",
+            "url": "https://twitch.tv/simplynumi"
+        },
+        {
+            "platform": "kick",
+            "channel": "simplynumi",
+            "url": "https://kick.com/simplynumi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "peachtreemcgee",
+            "url": "https://twitch.tv/peachtreemcgee"
+        },
+        {
+            "platform": "kick",
+            "channel": "PeachTreeMcGee",
+            "url": "https://kick.com/PeachTreeMcGee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "synced3d",
+            "url": "https://twitch.tv/synced3d"
+        },
+        {
+            "platform": "kick",
+            "channel": "synced3d",
+            "url": "https://kick.com/synced3d"
+        }
+    ],
+    "Ex Manor": [
+        {
+            "platform": "twitch",
+            "channel": "STE_Eire",
+            "url": "https://twitch.tv/STE_Eire"
+        },
+        {
+            "platform": "kick",
+            "channel": "STE_Eire",
+            "url": "https://kick.com/STE_Eire"
+        },
+        {
+            "platform": "twitch",
+            "channel": "zixtah",
+            "url": "https://twitch.tv/zixtah"
+        },
+        {
+            "platform": "kick",
+            "channel": "zixtah",
+            "url": "https://kick.com/zixtah"
+        },
+        {
+            "platform": "twitch",
+            "channel": "defac3d",
+            "url": "https://twitch.tv/defac3d"
+        },
+        {
+            "platform": "kick",
+            "channel": "DEFAC3D",
+            "url": "https://kick.com/DEFAC3D"
+        },
+        {
+            "platform": "twitch",
+            "channel": "justkiku",
+            "url": "https://twitch.tv/justkiku"
+        },
+        {
+            "platform": "kick",
+            "channel": "justkiku",
+            "url": "https://kick.com/justkiku"
+        },
+        {
+            "platform": "twitch",
+            "channel": "liamdpt",
+            "url": "https://twitch.tv/liamdpt"
+        },
+        {
+            "platform": "twitch",
+            "channel": "luhrsix",
+            "url": "https://twitch.tv/luhrsix"
+        },
+        {
+            "platform": "kick",
+            "channel": "kieron",
+            "url": "https://kick.com/kieron"
+        },
+        {
+            "platform": "twitch",
+            "channel": "louuis",
+            "url": "https://twitch.tv/louuis"
+        },
+        {
+            "platform": "kick",
+            "channel": "louuis",
+            "url": "https://kick.com/louuis"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sokka_x",
+            "url": "https://twitch.tv/sokka_x"
+        }
+    ],
+    "Lost MC: Diamond Chapter": [
+        {
+            "platform": "twitch",
+            "channel": "cheever7",
+            "url": "https://twitch.tv/cheever7"
+        },
+        {
+            "platform": "kick",
+            "channel": "cheever7",
+            "url": "https://kick.com/cheever7"
+        },
+        {
+            "platform": "twitch",
+            "channel": "0reed",
+            "url": "https://twitch.tv/0reed"
+        },
+        {
+            "platform": "kick",
+            "channel": "0reed",
+            "url": "https://kick.com/0reed"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kongfue",
+            "url": "https://twitch.tv/kongfue"
+        },
+        {
+            "platform": "kick",
+            "channel": "kongfue",
+            "url": "https://kick.com/kongfue"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ItsNowas",
+            "url": "https://twitch.tv/ItsNowas"
+        },
+        {
+            "platform": "kick",
+            "channel": "Nowas",
+            "url": "https://kick.com/Nowas"
+        },
+        {
+            "platform": "kick",
+            "channel": "senorq",
+            "url": "https://kick.com/senorq"
+        },
+        {
+            "platform": "twitch",
+            "channel": "neverossa",
+            "url": "https://twitch.tv/neverossa"
+        },
+        {
+            "platform": "kick",
+            "channel": "neverossa",
+            "url": "https://kick.com/neverossa"
+        },
+        {
+            "platform": "twitch",
+            "channel": "skiliyo",
+            "url": "https://twitch.tv/skiliyo"
+        },
+        {
+            "platform": "kick",
+            "channel": "skiliyo",
+            "url": "https://kick.com/skiliyo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Jonthebroski",
+            "url": "https://twitch.tv/Jonthebroski"
+        },
+        {
+            "platform": "kick",
+            "channel": "Jonthebroski",
+            "url": "https://kick.com/Jonthebroski"
+        },
+        {
+            "platform": "twitch",
+            "channel": "luka_aus",
+            "url": "https://twitch.tv/luka_aus"
+        },
+        {
+            "platform": "kick",
+            "channel": "luka_aus",
+            "url": "https://kick.com/luka_aus"
+        },
+        {
+            "platform": "twitch",
+            "channel": "AnimatedJF",
+            "url": "https://twitch.tv/AnimatedJF"
+        },
+        {
+            "platform": "kick",
+            "channel": "mokiin",
+            "url": "https://kick.com/mokiin"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lt_raven",
+            "url": "https://twitch.tv/lt_raven"
+        },
+        {
+            "platform": "kick",
+            "channel": "lt-raven",
+            "url": "https://kick.com/lt-raven"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ntviiper",
+            "url": "https://twitch.tv/ntviiper"
+        },
+        {
+            "platform": "twitch",
+            "channel": "luckymisfit",
+            "url": "https://twitch.tv/luckymisfit"
+        },
+        {
+            "platform": "kick",
+            "channel": "luckymisfit",
+            "url": "https://kick.com/luckymisfit"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thebigmeech",
+            "url": "https://twitch.tv/thebigmeech"
+        },
+        {
+            "platform": "kick",
+            "channel": "puddledux",
+            "url": "https://kick.com/puddledux"
+        },
+        {
+            "platform": "twitch",
+            "channel": "plashir",
+            "url": "https://twitch.tv/plashir"
+        },
+        {
+            "platform": "kick",
+            "channel": "plashir",
+            "url": "https://kick.com/plashir"
+        },
+        {
+            "platform": "twitch",
+            "channel": "fungletoe",
+            "url": "https://twitch.tv/fungletoe"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Phantomzz",
+            "url": "https://twitch.tv/Phantomzz"
+        },
+        {
+            "platform": "kick",
+            "channel": "Phantomzz",
+            "url": "https://kick.com/Phantomzz"
+        }
+    ],
+    "Cuban Federales": [
+        {
+            "platform": "twitch",
+            "channel": "hogshund",
+            "url": "https://twitch.tv/hogshund"
+        },
+        {
+            "platform": "kick",
+            "channel": "hogshund",
+            "url": "https://kick.com/hogshund"
+        },
+        {
+            "platform": "twitch",
+            "channel": "traycee",
+            "url": "https://twitch.tv/traycee"
+        },
+        {
+            "platform": "kick",
+            "channel": "traycee",
+            "url": "https://kick.com/traycee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bananalover115",
+            "url": "https://twitch.tv/bananalover115"
+        },
+        {
+            "platform": "twitch",
+            "channel": "justteetaa",
+            "url": "https://twitch.tv/justteetaa"
+        },
+        {
+            "platform": "kick",
+            "channel": "justteetaa",
+            "url": "https://kick.com/justteetaa"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ittsZACH",
+            "url": "https://twitch.tv/ittsZACH"
+        },
+        {
+            "platform": "twitch",
+            "channel": "neverossa",
+            "url": "https://twitch.tv/neverossa"
+        },
+        {
+            "platform": "kick",
+            "channel": "neverossa",
+            "url": "https://kick.com/neverossa"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ninjajessica",
+            "url": "https://twitch.tv/ninjajessica"
+        },
+        {
+            "platform": "kick",
+            "channel": "theninjajessica",
+            "url": "https://kick.com/theninjajessica"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kittyalyy",
+            "url": "https://twitch.tv/kittyalyy"
+        },
+        {
+            "platform": "kick",
+            "channel": "AliCat",
+            "url": "https://kick.com/AliCat"
+        },
+        {
+            "platform": "twitch",
+            "channel": "fyzicul",
+            "url": "https://twitch.tv/fyzicul"
+        },
+        {
+            "platform": "kick",
+            "channel": "fyzicul",
+            "url": "https://kick.com/fyzicul"
+        },
+        {
+            "platform": "twitch",
+            "channel": "imbladee_",
+            "url": "https://twitch.tv/imbladee_"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dariqueen",
+            "url": "https://twitch.tv/dariqueen"
+        },
+        {
+            "platform": "kick",
+            "channel": "dariqueen",
+            "url": "https://kick.com/dariqueen"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thebigmeech",
+            "url": "https://twitch.tv/thebigmeech"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Zeadie_",
+            "url": "https://twitch.tv/Zeadie_"
+        },
+        {
+            "platform": "kick",
+            "channel": "Zeadie",
+            "url": "https://kick.com/Zeadie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nikkisariot",
+            "url": "https://twitch.tv/nikkisariot"
+        },
+        {
+            "platform": "kick",
+            "channel": "nikkiriot",
+            "url": "https://kick.com/nikkiriot"
+        },
+        {
+            "platform": "twitch",
+            "channel": "royalcreates",
+            "url": "https://twitch.tv/royalcreates"
+        },
+        {
+            "platform": "twitch",
+            "channel": "arsisplays",
+            "url": "https://twitch.tv/arsisplays"
+        }
+    ],
+    "The Crackheads": [
+        {
+            "platform": "twitch",
+            "channel": "katecirrus",
+            "url": "https://twitch.tv/katecirrus"
+        },
+        {
+            "platform": "kick",
+            "channel": "katecirrus",
+            "url": "https://kick.com/katecirrus"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bledorable",
+            "url": "https://twitch.tv/bledorable"
+        },
+        {
+            "platform": "twitch",
+            "channel": "schwoegl",
+            "url": "https://twitch.tv/schwoegl"
+        },
+        {
+            "platform": "twitch",
+            "channel": "yoryke",
+            "url": "https://twitch.tv/yoryke"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kostigan44",
+            "url": "https://twitch.tv/kostigan44"
+        },
+        {
+            "platform": "twitch",
+            "channel": "potatojesuss",
+            "url": "https://twitch.tv/potatojesuss"
+        },
+        {
+            "platform": "twitch",
+            "channel": "margothesnail",
+            "url": "https://twitch.tv/margothesnail"
+        },
+        {
+            "platform": "kick",
+            "channel": "margothesnail",
+            "url": "https://kick.com/margothesnail"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bondii",
+            "url": "https://twitch.tv/bondii"
+        },
+        {
+            "platform": "twitch",
+            "channel": "blaisenit",
+            "url": "https://twitch.tv/blaisenit"
+        },
+        {
+            "platform": "twitch",
+            "channel": "spekel",
+            "url": "https://twitch.tv/spekel"
+        },
+        {
+            "platform": "twitch",
+            "channel": "baldlionnn",
+            "url": "https://twitch.tv/baldlionnn"
+        },
+        {
+            "platform": "twitch",
+            "channel": "goufbam",
+            "url": "https://twitch.tv/goufbam"
+        },
+        {
+            "platform": "kick",
+            "channel": "goufbam",
+            "url": "https://kick.com/goufbam"
+        }
+    ],
+    "The Faceless": [
+        {
+            "platform": "twitch",
+            "channel": "silent",
+            "url": "https://twitch.tv/silent"
+        },
+        {
+            "platform": "kick",
+            "channel": "silent",
+            "url": "https://kick.com/silent"
+        },
+        {
+            "platform": "twitch",
+            "channel": "STE_Eire",
+            "url": "https://twitch.tv/STE_Eire"
+        },
+        {
+            "platform": "kick",
+            "channel": "STE_Eire",
+            "url": "https://kick.com/STE_Eire"
+        },
+        {
+            "platform": "twitch",
+            "channel": "acezproduction",
+            "url": "https://twitch.tv/acezproduction"
+        },
+        {
+            "platform": "kick",
+            "channel": "AcezProduction",
+            "url": "https://kick.com/AcezProduction"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itshholmes",
+            "url": "https://twitch.tv/itshholmes"
+        },
+        {
+            "platform": "kick",
+            "channel": "itsHolmes",
+            "url": "https://kick.com/itsHolmes"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Lysium",
+            "url": "https://twitch.tv/Lysium"
+        },
+        {
+            "platform": "kick",
+            "channel": "lysium",
+            "url": "https://kick.com/lysium"
+        },
+        {
+            "platform": "twitch",
+            "channel": "theeazylife",
+            "url": "https://twitch.tv/theeazylife"
+        },
+        {
+            "platform": "kick",
+            "channel": "theeazylife",
+            "url": "https://kick.com/theeazylife"
+        },
+        {
+            "platform": "twitch",
+            "channel": "artbybaha",
+            "url": "https://twitch.tv/artbybaha"
+        },
+        {
+            "platform": "kick",
+            "channel": "artbybaha",
+            "url": "https://kick.com/artbybaha"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ohhhmanitsdan",
+            "url": "https://twitch.tv/ohhhmanitsdan"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Jonthebroski",
+            "url": "https://twitch.tv/Jonthebroski"
+        },
+        {
+            "platform": "kick",
+            "channel": "Jonthebroski",
+            "url": "https://kick.com/Jonthebroski"
+        },
+        {
+            "platform": "twitch",
+            "channel": "heyimzed",
+            "url": "https://twitch.tv/heyimzed"
+        },
+        {
+            "platform": "kick",
+            "channel": "heyimzed",
+            "url": "https://kick.com/heyimzed"
+        },
+        {
+            "platform": "twitch",
+            "channel": "4hbunger",
+            "url": "https://twitch.tv/4hbunger"
+        },
+        {
+            "platform": "kick",
+            "channel": "4hBunger",
+            "url": "https://kick.com/4hBunger"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hotted89",
+            "url": "https://twitch.tv/hotted89"
+        },
+        {
+            "platform": "kick",
+            "channel": "hotted89",
+            "url": "https://kick.com/hotted89"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Baffty",
+            "url": "https://twitch.tv/Baffty"
+        },
+        {
+            "platform": "kick",
+            "channel": "bafffty",
+            "url": "https://kick.com/bafffty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "druzikk",
+            "url": "https://twitch.tv/druzikk"
+        },
+        {
+            "platform": "twitch",
+            "channel": "natekarama",
+            "url": "https://twitch.tv/natekarama"
+        },
+        {
+            "platform": "kick",
+            "channel": "NateKarama",
+            "url": "https://kick.com/NateKarama"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ray__c",
+            "url": "https://twitch.tv/ray__c"
+        },
+        {
+            "platform": "kick",
+            "channel": "RayC",
+            "url": "https://kick.com/RayC"
+        },
+        {
+            "platform": "twitch",
+            "channel": "irish_gt",
+            "url": "https://twitch.tv/irish_gt"
+        },
+        {
+            "platform": "kick",
+            "channel": "IrishGT",
+            "url": "https://kick.com/IrishGT"
+        },
+        {
+            "platform": "twitch",
+            "channel": "BaRKy",
+            "url": "https://twitch.tv/BaRKy"
+        },
+        {
+            "platform": "kick",
+            "channel": "Barky",
+            "url": "https://kick.com/Barky"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vertex84",
+            "url": "https://twitch.tv/vertex84"
+        },
+        {
+            "platform": "kick",
+            "channel": "vertex84",
+            "url": "https://kick.com/vertex84"
+        },
+        {
+            "platform": "twitch",
+            "channel": "louuis",
+            "url": "https://twitch.tv/louuis"
+        },
+        {
+            "platform": "kick",
+            "channel": "louuis",
+            "url": "https://kick.com/louuis"
+        },
+        {
+            "platform": "twitch",
+            "channel": "capped",
+            "url": "https://twitch.tv/capped"
+        },
+        {
+            "platform": "kick",
+            "channel": "capped",
+            "url": "https://kick.com/capped"
+        },
+        {
+            "platform": "twitch",
+            "channel": "beard",
+            "url": "https://twitch.tv/beard"
+        },
+        {
+            "platform": "kick",
+            "channel": "notbeard",
+            "url": "https://kick.com/notbeard"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lycanstory",
+            "url": "https://twitch.tv/lycanstory"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dasmehdi",
+            "url": "https://twitch.tv/dasmehdi"
+        },
+        {
+            "platform": "kick",
+            "channel": "dasmehdi",
+            "url": "https://kick.com/dasmehdi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "mackaelroni",
+            "url": "https://twitch.tv/mackaelroni"
+        }
+    ],
+    "The Merchants": [
+        {
+            "platform": "twitch",
+            "channel": "katecirrus",
+            "url": "https://twitch.tv/katecirrus"
+        },
+        {
+            "platform": "kick",
+            "channel": "katecirrus",
+            "url": "https://kick.com/katecirrus"
+        },
+        {
+            "platform": "twitch",
+            "channel": "yodarrell",
+            "url": "https://twitch.tv/yodarrell"
+        },
+        {
+            "platform": "kick",
+            "channel": "yodarrell",
+            "url": "https://kick.com/yodarrell"
+        },
+        {
+            "platform": "kick",
+            "channel": "m-atte",
+            "url": "https://kick.com/m-atte"
+        },
+        {
+            "platform": "twitch",
+            "channel": "goodkarmz",
+            "url": "https://twitch.tv/goodkarmz"
+        },
+        {
+            "platform": "kick",
+            "channel": "goodkarmz",
+            "url": "https://kick.com/goodkarmz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "margothesnail",
+            "url": "https://twitch.tv/margothesnail"
+        },
+        {
+            "platform": "kick",
+            "channel": "margothesnail",
+            "url": "https://kick.com/margothesnail"
+        },
+        {
+            "platform": "kick",
+            "channel": "delulul",
+            "url": "https://kick.com/delulul"
+        },
+        {
+            "platform": "kick",
+            "channel": "bduncan90",
+            "url": "https://kick.com/bduncan90"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lemon77",
+            "url": "https://twitch.tv/lemon77"
+        },
+        {
+            "platform": "kick",
+            "channel": "lemon77",
+            "url": "https://kick.com/lemon77"
+        },
+        {
+            "platform": "twitch",
+            "channel": "niki_iremia",
+            "url": "https://twitch.tv/niki_iremia"
+        },
+        {
+            "platform": "twitch",
+            "channel": "njf_02 ",
+            "url": "https://twitch.tv/njf_02 "
+        },
+        {
+            "platform": "twitch",
+            "channel": "baldlionnn",
+            "url": "https://twitch.tv/baldlionnn"
+        }
+    ],
+    "3PAS": [
+        {
+            "platform": "twitch",
+            "channel": "grammthegibbon",
+            "url": "https://twitch.tv/grammthegibbon"
+        },
+        {
+            "platform": "kick",
+            "channel": "grammthegibbon",
+            "url": "https://kick.com/grammthegibbon"
+        },
+        {
+            "platform": "twitch",
+            "channel": "givemeuhminute",
+            "url": "https://twitch.tv/givemeuhminute"
+        },
+        {
+            "platform": "kick",
+            "channel": "givemeuhminute",
+            "url": "https://kick.com/givemeuhminute"
+        },
+        {
+            "platform": "twitch",
+            "channel": "peppo",
+            "url": "https://twitch.tv/peppo"
+        },
+        {
+            "platform": "kick",
+            "channel": "peppo",
+            "url": "https://kick.com/peppo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "varaktv",
+            "url": "https://twitch.tv/varaktv"
+        },
+        {
+            "platform": "kick",
+            "channel": "varak",
+            "url": "https://kick.com/varak"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Baffty",
+            "url": "https://twitch.tv/Baffty"
+        },
+        {
+            "platform": "kick",
+            "channel": "bafffty",
+            "url": "https://kick.com/bafffty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "imnotkosher",
+            "url": "https://twitch.tv/imnotkosher"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sadvonna",
+            "url": "https://twitch.tv/sadvonna"
+        },
+        {
+            "platform": "twitch",
+            "channel": "tommybaham",
+            "url": "https://twitch.tv/tommybaham"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Dankdd",
+            "url": "https://twitch.tv/Dankdd"
+        },
+        {
+            "platform": "kick",
+            "channel": "dankdd",
+            "url": "https://kick.com/dankdd"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Jacksonsfaded",
+            "url": "https://twitch.tv/Jacksonsfaded"
+        },
+        {
+            "platform": "kick",
+            "channel": "jacksonsfaded",
+            "url": "https://kick.com/jacksonsfaded"
+        }
+    ],
+    "Besties Associates": [
+        {
+            "platform": "twitch",
+            "channel": "Leonarwho",
+            "url": "https://twitch.tv/Leonarwho"
+        },
+        {
+            "platform": "kick",
+            "channel": "leonarwho",
+            "url": "https://kick.com/leonarwho"
+        },
+        {
+            "platform": "twitch",
+            "channel": "only_an_enigma",
+            "url": "https://twitch.tv/only_an_enigma"
+        },
+        {
+            "platform": "kick",
+            "channel": "only-an-enigma",
+            "url": "https://kick.com/only-an-enigma"
+        },
+        {
+            "platform": "twitch",
+            "channel": "spekcypher",
+            "url": "https://twitch.tv/spekcypher"
+        },
+        {
+            "platform": "kick",
+            "channel": "spekcypher",
+            "url": "https://kick.com/spekcypher"
+        },
+        {
+            "platform": "kick",
+            "channel": "sstarfields",
+            "url": "https://kick.com/sstarfields"
+        },
+        {
+            "platform": "kick",
+            "channel": "fazecamel",
+            "url": "https://kick.com/fazecamel"
+        },
+        {
+            "platform": "twitch",
+            "channel": "stormskii",
+            "url": "https://twitch.tv/stormskii"
+        },
+        {
+            "platform": "kick",
+            "channel": "stormskii",
+            "url": "https://kick.com/stormskii"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kurupt",
+            "url": "https://twitch.tv/kurupt"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ambush",
+            "url": "https://twitch.tv/ambush"
+        },
+        {
+            "platform": "kick",
+            "channel": "ambush",
+            "url": "https://kick.com/ambush"
+        }
+    ],
+    "Clowncil": [
+        {
+            "platform": "twitch",
+            "channel": "hogshund",
+            "url": "https://twitch.tv/hogshund"
+        },
+        {
+            "platform": "kick",
+            "channel": "hogshund",
+            "url": "https://kick.com/hogshund"
+        },
+        {
+            "platform": "twitch",
+            "channel": "justteetaa",
+            "url": "https://twitch.tv/justteetaa"
+        },
+        {
+            "platform": "kick",
+            "channel": "justteetaa",
+            "url": "https://kick.com/justteetaa"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bozo",
+            "url": "https://twitch.tv/bozo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "totallynotbelltower",
+            "url": "https://twitch.tv/totallynotbelltower"
+        },
+        {
+            "platform": "twitch",
+            "channel": "chatterbox",
+            "url": "https://twitch.tv/chatterbox"
+        },
+        {
+            "platform": "kick",
+            "channel": "chatterbox",
+            "url": "https://kick.com/chatterbox"
+        },
+        {
+            "platform": "twitch",
+            "channel": "mikfoolery",
+            "url": "https://twitch.tv/mikfoolery"
+        },
+        {
+            "platform": "twitch",
+            "channel": "twinkles",
+            "url": "https://twitch.tv/twinkles"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bigbam",
+            "url": "https://twitch.tv/bigbam"
+        },
+        {
+            "platform": "twitch",
+            "channel": "charli",
+            "url": "https://twitch.tv/charli"
+        },
+        {
+            "platform": "twitch",
+            "channel": "revroach",
+            "url": "https://twitch.tv/revroach"
+        },
+        {
+            "platform": "twitch",
+            "channel": "youney",
+            "url": "https://twitch.tv/youney"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rueben",
+            "url": "https://twitch.tv/rueben"
+        },
+        {
+            "platform": "twitch",
+            "channel": "carbie",
+            "url": "https://twitch.tv/carbie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thio",
+            "url": "https://twitch.tv/thio"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kittenqg",
+            "url": "https://twitch.tv/kittenqg"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bodoc_",
+            "url": "https://twitch.tv/bodoc_"
+        },
+        {
+            "platform": "twitch",
+            "channel": "zaxx386",
+            "url": "https://twitch.tv/zaxx386"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ItsKGU",
+            "url": "https://twitch.tv/ItsKGU"
+        },
+        {
+            "platform": "kick",
+            "channel": "ItsKGU",
+            "url": "https://kick.com/ItsKGU"
+        },
+        {
+            "platform": "twitch",
+            "channel": "wavetf",
+            "url": "https://twitch.tv/wavetf"
+        },
+        {
+            "platform": "kick",
+            "channel": "wavetf2",
+            "url": "https://kick.com/wavetf2"
+        },
+        {
+            "platform": "twitch",
+            "channel": "natekarama",
+            "url": "https://twitch.tv/natekarama"
+        },
+        {
+            "platform": "kick",
+            "channel": "NateKarama",
+            "url": "https://kick.com/NateKarama"
+        },
+        {
+            "platform": "twitch",
+            "channel": "wetbow",
+            "url": "https://twitch.tv/wetbow"
+        },
+        {
+            "platform": "twitch",
+            "channel": "firecrackthat",
+            "url": "https://twitch.tv/firecrackthat"
+        },
+        {
+            "platform": "kick",
+            "channel": "firecrackthat",
+            "url": "https://kick.com/firecrackthat"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nakkida",
+            "url": "https://twitch.tv/nakkida"
+        },
+        {
+            "platform": "twitch",
+            "channel": "noctileo",
+            "url": "https://twitch.tv/noctileo"
+        },
+        {
+            "platform": "kick",
+            "channel": "noctileo",
+            "url": "https://kick.com/noctileo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "royalcreates",
+            "url": "https://twitch.tv/royalcreates"
+        },
+        {
+            "platform": "twitch",
+            "channel": "geekymeepy",
+            "url": "https://twitch.tv/geekymeepy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "valkyrae",
+            "url": "https://twitch.tv/valkyrae"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kappatalmoose",
+            "url": "https://twitch.tv/kappatalmoose"
+        },
+        {
+            "platform": "twitch",
+            "channel": "walnutcast",
+            "url": "https://twitch.tv/walnutcast"
+        }
+    ],
+    "GSF": [
+        {
+            "platform": "twitch",
+            "channel": "liftedgn",
+            "url": "https://twitch.tv/liftedgn"
+        },
+        {
+            "platform": "kick",
+            "channel": "liftedgn",
+            "url": "https://kick.com/liftedgn"
+        },
+        {
+            "platform": "twitch",
+            "channel": "c0smiik",
+            "url": "https://twitch.tv/c0smiik"
+        },
+        {
+            "platform": "kick",
+            "channel": "Cosmik",
+            "url": "https://kick.com/Cosmik"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ayekayy47_",
+            "url": "https://twitch.tv/ayekayy47_"
+        },
+        {
+            "platform": "kick",
+            "channel": "ayekayy47",
+            "url": "https://kick.com/ayekayy47"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sinllipsis",
+            "url": "https://twitch.tv/sinllipsis"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jdot",
+            "url": "https://twitch.tv/jdot"
+        },
+        {
+            "platform": "twitch",
+            "channel": "LordNetloc",
+            "url": "https://twitch.tv/LordNetloc"
+        },
+        {
+            "platform": "kick",
+            "channel": "lordnetloc",
+            "url": "https://kick.com/lordnetloc"
+        },
+        {
+            "platform": "twitch",
+            "channel": "aweathervane",
+            "url": "https://twitch.tv/aweathervane"
+        },
+        {
+            "platform": "twitch",
+            "channel": "DeputyDangerDan",
+            "url": "https://twitch.tv/DeputyDangerDan"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hollowp0int",
+            "url": "https://twitch.tv/hollowp0int"
+        },
+        {
+            "platform": "twitch",
+            "channel": "decetheus",
+            "url": "https://twitch.tv/decetheus"
+        },
+        {
+            "platform": "kick",
+            "channel": "Decetheus",
+            "url": "https://kick.com/Decetheus"
+        },
+        {
+            "platform": "twitch",
+            "channel": "afro",
+            "url": "https://twitch.tv/afro"
+        },
+        {
+            "platform": "kick",
+            "channel": "afro",
+            "url": "https://kick.com/afro"
+        },
+        {
+            "platform": "twitch",
+            "channel": "melodymaeee",
+            "url": "https://twitch.tv/melodymaeee"
+        },
+        {
+            "platform": "kick",
+            "channel": "melodymaeee",
+            "url": "https://kick.com/melodymaeee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "e2lite",
+            "url": "https://twitch.tv/e2lite"
+        },
+        {
+            "platform": "twitch",
+            "channel": "scythex",
+            "url": "https://twitch.tv/scythex"
+        },
+        {
+            "platform": "kick",
+            "channel": "scythex",
+            "url": "https://kick.com/scythex"
+        },
+        {
+            "platform": "twitch",
+            "channel": "llikthead",
+            "url": "https://twitch.tv/llikthead"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sydzzzzzz",
+            "url": "https://twitch.tv/sydzzzzzz"
+        },
+        {
+            "platform": "kick",
+            "channel": "sydzzzzzz",
+            "url": "https://kick.com/sydzzzzzz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "RobertG0123",
+            "url": "https://twitch.tv/RobertG0123"
+        },
+        {
+            "platform": "kick",
+            "channel": "RobertG0123",
+            "url": "https://kick.com/RobertG0123"
+        },
+        {
+            "platform": "twitch",
+            "channel": "AyoTory",
+            "url": "https://twitch.tv/AyoTory"
+        },
+        {
+            "platform": "twitch",
+            "channel": "queenquelle",
+            "url": "https://twitch.tv/queenquelle"
+        },
+        {
+            "platform": "twitch",
+            "channel": "NicoleZeroSeven",
+            "url": "https://twitch.tv/NicoleZeroSeven"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nerdypatty",
+            "url": "https://twitch.tv/nerdypatty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "flomcnasty_tv",
+            "url": "https://twitch.tv/flomcnasty_tv"
+        },
+        {
+            "platform": "twitch",
+            "channel": "blown",
+            "url": "https://twitch.tv/blown"
+        },
+        {
+            "platform": "twitch",
+            "channel": "theeazylife",
+            "url": "https://twitch.tv/theeazylife"
+        },
+        {
+            "platform": "kick",
+            "channel": "theeazylife",
+            "url": "https://kick.com/theeazylife"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bigsinka",
+            "url": "https://twitch.tv/bigsinka"
+        },
+        {
+            "platform": "kick",
+            "channel": "bigsinka",
+            "url": "https://kick.com/bigsinka"
+        }
+    ],
+    "Hounds MC": [
+        {
+            "platform": "twitch",
+            "channel": "zixtah",
+            "url": "https://twitch.tv/zixtah"
+        },
+        {
+            "platform": "kick",
+            "channel": "zixtah",
+            "url": "https://kick.com/zixtah"
+        },
+        {
+            "platform": "twitch",
+            "channel": "alex_3mm",
+            "url": "https://twitch.tv/alex_3mm"
+        },
+        {
+            "platform": "kick",
+            "channel": "Alex3MM",
+            "url": "https://kick.com/Alex3MM"
+        },
+        {
+            "platform": "twitch",
+            "channel": "arttigg",
+            "url": "https://twitch.tv/arttigg"
+        },
+        {
+            "platform": "kick",
+            "channel": "artTigg",
+            "url": "https://kick.com/artTigg"
+        },
+        {
+            "platform": "twitch",
+            "channel": "christombstone",
+            "url": "https://twitch.tv/christombstone"
+        },
+        {
+            "platform": "kick",
+            "channel": "ChrisTombstone",
+            "url": "https://kick.com/ChrisTombstone"
+        },
+        {
+            "platform": "twitch",
+            "channel": "occamssabre",
+            "url": "https://twitch.tv/occamssabre"
+        },
+        {
+            "platform": "kick",
+            "channel": "occamssabre",
+            "url": "https://kick.com/occamssabre"
+        },
+        {
+            "platform": "twitch",
+            "channel": "protay",
+            "url": "https://twitch.tv/protay"
+        },
+        {
+            "platform": "kick",
+            "channel": "protay",
+            "url": "https://kick.com/protay"
+        },
+        {
+            "platform": "twitch",
+            "channel": "belowthewaves",
+            "url": "https://twitch.tv/belowthewaves"
+        },
+        {
+            "platform": "kick",
+            "channel": "belowthewaves",
+            "url": "https://kick.com/belowthewaves"
+        },
+        {
+            "platform": "twitch",
+            "channel": "madgiiee",
+            "url": "https://twitch.tv/madgiiee"
+        },
+        {
+            "platform": "kick",
+            "channel": "Madgiiee",
+            "url": "https://kick.com/Madgiiee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "PaulthePunk",
+            "url": "https://twitch.tv/PaulthePunk"
+        },
+        {
+            "platform": "kick",
+            "channel": "PaulThePunk",
+            "url": "https://kick.com/PaulThePunk"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sareff",
+            "url": "https://twitch.tv/sareff"
+        },
+        {
+            "platform": "kick",
+            "channel": "SareffRP",
+            "url": "https://kick.com/SareffRP"
+        },
+        {
+            "platform": "twitch",
+            "channel": "shugrvt",
+            "url": "https://twitch.tv/shugrvt"
+        },
+        {
+            "platform": "kick",
+            "channel": "ShugrVT",
+            "url": "https://kick.com/ShugrVT"
+        },
+        {
+            "platform": "twitch",
+            "channel": "irish_gt",
+            "url": "https://twitch.tv/irish_gt"
+        },
+        {
+            "platform": "kick",
+            "channel": "IrishGT",
+            "url": "https://kick.com/IrishGT"
+        },
+        {
+            "platform": "twitch",
+            "channel": "skimaskdaniel",
+            "url": "https://twitch.tv/skimaskdaniel"
+        },
+        {
+            "platform": "kick",
+            "channel": "skimaskdaniel",
+            "url": "https://kick.com/skimaskdaniel"
+        },
+        {
+            "platform": "twitch",
+            "channel": "gingersnap___",
+            "url": "https://twitch.tv/gingersnap___"
+        },
+        {
+            "platform": "kick",
+            "channel": "itsginger",
+            "url": "https://kick.com/itsginger"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nikkisariot",
+            "url": "https://twitch.tv/nikkisariot"
+        },
+        {
+            "platform": "kick",
+            "channel": "nikkiriot",
+            "url": "https://kick.com/nikkiriot"
+        }
+    ],
+    "Kaneshiro": [
+        {
+            "platform": "twitch",
+            "channel": "faithfultv",
+            "url": "https://twitch.tv/faithfultv"
+        },
+        {
+            "platform": "kick",
+            "channel": "Faiithful",
+            "url": "https://kick.com/Faiithful"
+        },
+        {
+            "platform": "twitch",
+            "channel": "shadiko",
+            "url": "https://twitch.tv/shadiko"
+        },
+        {
+            "platform": "kick",
+            "channel": "shadiko",
+            "url": "https://kick.com/shadiko"
+        },
+        {
+            "platform": "twitch",
+            "channel": "shadowshidden_",
+            "url": "https://twitch.tv/shadowshidden_"
+        },
+        {
+            "platform": "kick",
+            "channel": "shadowshidden",
+            "url": "https://kick.com/shadowshidden"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sorasons",
+            "url": "https://twitch.tv/sorasons"
+        },
+        {
+            "platform": "kick",
+            "channel": "Sorasons",
+            "url": "https://kick.com/Sorasons"
+        },
+        {
+            "platform": "twitch",
+            "channel": "amusing_sloth",
+            "url": "https://twitch.tv/amusing_sloth"
+        },
+        {
+            "platform": "kick",
+            "channel": "AmusingSloth",
+            "url": "https://kick.com/AmusingSloth"
+        },
+        {
+            "platform": "twitch",
+            "channel": "raye",
+            "url": "https://twitch.tv/raye"
+        },
+        {
+            "platform": "kick",
+            "channel": "raye",
+            "url": "https://kick.com/raye"
+        },
+        {
+            "platform": "twitch",
+            "channel": "chidori_senpai",
+            "url": "https://twitch.tv/chidori_senpai"
+        },
+        {
+            "platform": "kick",
+            "channel": "chidori-senpai",
+            "url": "https://kick.com/chidori-senpai"
+        },
+        {
+            "platform": "twitch",
+            "channel": "riptide248",
+            "url": "https://twitch.tv/riptide248"
+        },
+        {
+            "platform": "kick",
+            "channel": "riptide248",
+            "url": "https://kick.com/riptide248"
+        },
+        {
+            "platform": "twitch",
+            "channel": "urbanaasimar",
+            "url": "https://twitch.tv/urbanaasimar"
+        },
+        {
+            "platform": "kick",
+            "channel": "urbanaasimar",
+            "url": "https://kick.com/urbanaasimar"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dommi101",
+            "url": "https://twitch.tv/dommi101"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vanillayoshee",
+            "url": "https://twitch.tv/vanillayoshee"
+        },
+        {
+            "platform": "kick",
+            "channel": "vanillayoshee",
+            "url": "https://kick.com/vanillayoshee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "tengreg",
+            "url": "https://twitch.tv/tengreg"
+        },
+        {
+            "platform": "kick",
+            "channel": "tengreg",
+            "url": "https://kick.com/tengreg"
+        },
+        {
+            "platform": "twitch",
+            "channel": "cathie",
+            "url": "https://twitch.tv/cathie"
+        },
+        {
+            "platform": "kick",
+            "channel": "cathie",
+            "url": "https://kick.com/cathie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "aidennortha",
+            "url": "https://twitch.tv/aidennortha"
+        },
+        {
+            "platform": "kick",
+            "channel": "aidennortha",
+            "url": "https://kick.com/aidennortha"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hotted89",
+            "url": "https://twitch.tv/hotted89"
+        },
+        {
+            "platform": "kick",
+            "channel": "hotted89",
+            "url": "https://kick.com/hotted89"
+        },
+        {
+            "platform": "twitch",
+            "channel": "comrademolly",
+            "url": "https://twitch.tv/comrademolly"
+        },
+        {
+            "platform": "kick",
+            "channel": "comrademolly",
+            "url": "https://kick.com/comrademolly"
+        },
+        {
+            "platform": "twitch",
+            "channel": "tinyspark",
+            "url": "https://twitch.tv/tinyspark"
+        },
+        {
+            "platform": "kick",
+            "channel": "Tinyspark",
+            "url": "https://kick.com/Tinyspark"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itselnari",
+            "url": "https://twitch.tv/itselnari"
+        },
+        {
+            "platform": "kick",
+            "channel": "itselnari",
+            "url": "https://kick.com/itselnari"
+        },
+        {
+            "platform": "kick",
+            "channel": "upgrati",
+            "url": "https://kick.com/upgrati"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vee_v",
+            "url": "https://twitch.tv/vee_v"
+        },
+        {
+            "platform": "kick",
+            "channel": "Vee-v",
+            "url": "https://kick.com/Vee-v"
+        },
+        {
+            "platform": "twitch",
+            "channel": "im_baguette_",
+            "url": "https://twitch.tv/im_baguette_"
+        },
+        {
+            "platform": "kick",
+            "channel": "im-baguette",
+            "url": "https://kick.com/im-baguette"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kyliebitkin",
+            "url": "https://twitch.tv/kyliebitkin"
+        },
+        {
+            "platform": "kick",
+            "channel": "kyliebitkin",
+            "url": "https://kick.com/kyliebitkin"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lunaoni",
+            "url": "https://twitch.tv/lunaoni"
+        },
+        {
+            "platform": "kick",
+            "channel": "lunaoni",
+            "url": "https://kick.com/lunaoni"
+        },
+        {
+            "platform": "twitch",
+            "channel": "zaquelle",
+            "url": "https://twitch.tv/zaquelle"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vindichee",
+            "url": "https://twitch.tv/vindichee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sophiescwave608",
+            "url": "https://twitch.tv/sophiescwave608"
+        },
+        {
+            "platform": "kick",
+            "channel": "mistyblueskies",
+            "url": "https://kick.com/mistyblueskies"
+        },
+        {
+            "platform": "twitch",
+            "channel": "roxmiral",
+            "url": "https://twitch.tv/roxmiral"
+        },
+        {
+            "platform": "kick",
+            "channel": "roxmiral",
+            "url": "https://kick.com/roxmiral"
+        },
+        {
+            "platform": "twitch",
+            "channel": "snowe",
+            "url": "https://twitch.tv/snowe"
+        },
+        {
+            "platform": "kick",
+            "channel": "snowe",
+            "url": "https://kick.com/snowe"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Cipher2k",
+            "url": "https://twitch.tv/Cipher2k"
+        },
+        {
+            "platform": "twitch",
+            "channel": "katalistic",
+            "url": "https://twitch.tv/katalistic"
+        },
+        {
+            "platform": "kick",
+            "channel": "katalistic",
+            "url": "https://kick.com/katalistic"
+        },
+        {
+            "platform": "twitch",
+            "channel": "largesalt",
+            "url": "https://twitch.tv/largesalt"
+        },
+        {
+            "platform": "twitch",
+            "channel": "fryinrice",
+            "url": "https://twitch.tv/fryinrice"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lunaomi",
+            "url": "https://twitch.tv/lunaomi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Corvollo",
+            "url": "https://twitch.tv/Corvollo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Xerthevia",
+            "url": "https://twitch.tv/Xerthevia"
+        },
+        {
+            "platform": "twitch",
+            "channel": "muzzyn97",
+            "url": "https://twitch.tv/muzzyn97"
+        },
+        {
+            "platform": "twitch",
+            "channel": "twotwotwain",
+            "url": "https://twitch.tv/twotwotwain"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sareff",
+            "url": "https://twitch.tv/sareff"
+        },
+        {
+            "platform": "kick",
+            "channel": "SareffRP",
+            "url": "https://kick.com/SareffRP"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thepitfallover",
+            "url": "https://twitch.tv/thepitfallover"
+        },
+        {
+            "platform": "twitch",
+            "channel": "just_another_bean",
+            "url": "https://twitch.tv/just_another_bean"
+        },
+        {
+            "platform": "twitch",
+            "channel": "laserwolf",
+            "url": "https://twitch.tv/laserwolf"
+        }
+    ],
+    "Ravens MC": [
+        {
+            "platform": "twitch",
+            "channel": "artofcod",
+            "url": "https://twitch.tv/artofcod"
+        },
+        {
+            "platform": "twitch",
+            "channel": "azreal311",
+            "url": "https://twitch.tv/azreal311"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bondjens",
+            "url": "https://twitch.tv/bondjens"
+        },
+        {
+            "platform": "kick",
+            "channel": "bondjens",
+            "url": "https://kick.com/bondjens"
+        },
+        {
+            "platform": "twitch",
+            "channel": "wattzisnova",
+            "url": "https://twitch.tv/wattzisnova"
+        },
+        {
+            "platform": "twitch",
+            "channel": "carolineswitched",
+            "url": "https://twitch.tv/carolineswitched"
+        },
+        {
+            "platform": "kick",
+            "channel": "carolineswitched",
+            "url": "https://kick.com/carolineswitched"
+        },
+        {
+            "platform": "twitch",
+            "channel": "KatAudeo",
+            "url": "https://twitch.tv/KatAudeo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rake",
+            "url": "https://twitch.tv/rake"
+        },
+        {
+            "platform": "kick",
+            "channel": "Rake",
+            "url": "https://kick.com/Rake"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sarkwentv",
+            "url": "https://twitch.tv/sarkwentv"
+        },
+        {
+            "platform": "kick",
+            "channel": "sarkwentv",
+            "url": "https://kick.com/sarkwentv"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dar_",
+            "url": "https://twitch.tv/dar_"
+        },
+        {
+            "platform": "twitch",
+            "channel": "banditogatito",
+            "url": "https://twitch.tv/banditogatito"
+        },
+        {
+            "platform": "twitch",
+            "channel": "arttigg",
+            "url": "https://twitch.tv/arttigg"
+        },
+        {
+            "platform": "kick",
+            "channel": "artTigg",
+            "url": "https://kick.com/artTigg"
+        },
+        {
+            "platform": "twitch",
+            "channel": "the_smol_kiwi",
+            "url": "https://twitch.tv/the_smol_kiwi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "iiconstance",
+            "url": "https://twitch.tv/iiconstance"
+        },
+        {
+            "platform": "kick",
+            "channel": "iiconstance",
+            "url": "https://kick.com/iiconstance"
+        },
+        {
+            "platform": "twitch",
+            "channel": "druzikk",
+            "url": "https://twitch.tv/druzikk"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hootie1985",
+            "url": "https://twitch.tv/hootie1985"
+        },
+        {
+            "platform": "twitch",
+            "channel": "cephalonwolffe",
+            "url": "https://twitch.tv/cephalonwolffe"
+        },
+        {
+            "platform": "twitch",
+            "channel": "adamsmiley96",
+            "url": "https://twitch.tv/adamsmiley96"
+        },
+        {
+            "platform": "twitch",
+            "channel": "artemisw0lf",
+            "url": "https://twitch.tv/artemisw0lf"
+        },
+        {
+            "platform": "kick",
+            "channel": "artemisw0lf",
+            "url": "https://kick.com/artemisw0lf"
+        },
+        {
+            "platform": "twitch",
+            "channel": "elzethel",
+            "url": "https://twitch.tv/elzethel"
+        },
+        {
+            "platform": "twitch",
+            "channel": "starship_squirrel",
+            "url": "https://twitch.tv/starship_squirrel"
+        },
+        {
+            "platform": "twitch",
+            "channel": "gibbs_gg",
+            "url": "https://twitch.tv/gibbs_gg"
+        }
+    ],
+    "ADMC": [
+        {
+            "platform": "twitch",
+            "channel": "kiva",
+            "url": "https://twitch.tv/kiva"
+        },
+        {
+            "platform": "kick",
+            "channel": "kiva",
+            "url": "https://kick.com/kiva"
+        },
+        {
+            "platform": "twitch",
+            "channel": "moesabai",
+            "url": "https://twitch.tv/moesabai"
+        },
+        {
+            "platform": "kick",
+            "channel": "moesabai",
+            "url": "https://kick.com/moesabai"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bazza",
+            "url": "https://twitch.tv/bazza"
+        },
+        {
+            "platform": "twitch",
+            "channel": "boosted",
+            "url": "https://twitch.tv/boosted"
+        },
+        {
+            "platform": "kick",
+            "channel": "boostedwastaken",
+            "url": "https://kick.com/boostedwastaken"
+        },
+        {
+            "platform": "twitch",
+            "channel": "tempestwastaken0",
+            "url": "https://twitch.tv/tempestwastaken0"
+        },
+        {
+            "platform": "kick",
+            "channel": "tempestwastaken",
+            "url": "https://kick.com/tempestwastaken"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ms_star",
+            "url": "https://twitch.tv/ms_star"
+        },
+        {
+            "platform": "kick",
+            "channel": "ms_star",
+            "url": "https://kick.com/ms_star"
+        },
+        {
+            "platform": "twitch",
+            "channel": "heyimzed",
+            "url": "https://twitch.tv/heyimzed"
+        },
+        {
+            "platform": "kick",
+            "channel": "heyimzed",
+            "url": "https://kick.com/heyimzed"
+        },
+        {
+            "platform": "twitch",
+            "channel": "justchelsay",
+            "url": "https://twitch.tv/justchelsay"
+        },
+        {
+            "platform": "kick",
+            "channel": "Chelsay",
+            "url": "https://kick.com/Chelsay"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sannmann_",
+            "url": "https://twitch.tv/sannmann_"
+        },
+        {
+            "platform": "kick",
+            "channel": "sannmann",
+            "url": "https://kick.com/sannmann"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ashi",
+            "url": "https://twitch.tv/ashi"
+        },
+        {
+            "platform": "kick",
+            "channel": "ashi",
+            "url": "https://kick.com/ashi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Zeadie_",
+            "url": "https://twitch.tv/Zeadie_"
+        },
+        {
+            "platform": "kick",
+            "channel": "Zeadie",
+            "url": "https://kick.com/Zeadie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "DawnnnVT",
+            "url": "https://twitch.tv/DawnnnVT"
+        },
+        {
+            "platform": "kick",
+            "channel": "dawnnnvt",
+            "url": "https://kick.com/dawnnnvt"
+        },
+        {
+            "platform": "twitch",
+            "channel": "twistedy1",
+            "url": "https://twitch.tv/twistedy1"
+        },
+        {
+            "platform": "kick",
+            "channel": "twistedy1",
+            "url": "https://kick.com/twistedy1"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bananahead_og",
+            "url": "https://twitch.tv/bananahead_og"
+        },
+        {
+            "platform": "kick",
+            "channel": "bananahead",
+            "url": "https://kick.com/bananahead"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nikez",
+            "url": "https://twitch.tv/nikez"
+        },
+        {
+            "platform": "kick",
+            "channel": "nikez",
+            "url": "https://kick.com/nikez"
+        },
+        {
+            "platform": "twitch",
+            "channel": "novaaberries",
+            "url": "https://twitch.tv/novaaberries"
+        },
+        {
+            "platform": "twitch",
+            "channel": "BaRKy",
+            "url": "https://twitch.tv/BaRKy"
+        },
+        {
+            "platform": "kick",
+            "channel": "Barky",
+            "url": "https://kick.com/Barky"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bezjian",
+            "url": "https://twitch.tv/bezjian"
+        },
+        {
+            "platform": "twitch",
+            "channel": "townie",
+            "url": "https://twitch.tv/townie"
+        },
+        {
+            "platform": "kick",
+            "channel": "townie",
+            "url": "https://kick.com/townie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vogiir",
+            "url": "https://twitch.tv/vogiir"
+        },
+        {
+            "platform": "kick",
+            "channel": "Vogiir",
+            "url": "https://kick.com/Vogiir"
+        },
+        {
+            "platform": "twitch",
+            "channel": "docwizard",
+            "url": "https://twitch.tv/docwizard"
+        },
+        {
+            "platform": "kick",
+            "channel": "docwizard",
+            "url": "https://kick.com/docwizard"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lt_custard",
+            "url": "https://twitch.tv/lt_custard"
+        },
+        {
+            "platform": "kick",
+            "channel": "lt_custard",
+            "url": "https://kick.com/lt_custard"
+        },
+        {
+            "platform": "twitch",
+            "channel": "stevetheemo",
+            "url": "https://twitch.tv/stevetheemo"
+        },
+        {
+            "platform": "kick",
+            "channel": "stevetheemo",
+            "url": "https://kick.com/stevetheemo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "viberlisk",
+            "url": "https://twitch.tv/viberlisk"
+        },
+        {
+            "platform": "kick",
+            "channel": "viberlisk",
+            "url": "https://kick.com/viberlisk"
+        },
+        {
+            "platform": "twitch",
+            "channel": "qrowy",
+            "url": "https://twitch.tv/qrowy"
+        },
+        {
+            "platform": "kick",
+            "channel": "qrowy",
+            "url": "https://kick.com/qrowy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "somisao",
+            "url": "https://twitch.tv/somisao"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jayaitch",
+            "url": "https://twitch.tv/jayaitch"
+        },
+        {
+            "platform": "kick",
+            "channel": "jayaitch",
+            "url": "https://kick.com/jayaitch"
+        },
+        {
+            "platform": "twitch",
+            "channel": "goodnightjackalope",
+            "url": "https://twitch.tv/goodnightjackalope"
+        },
+        {
+            "platform": "kick",
+            "channel": "goodnightjackalope",
+            "url": "https://kick.com/goodnightjackalope"
+        },
+        {
+            "platform": "twitch",
+            "channel": "pan_derp",
+            "url": "https://twitch.tv/pan_derp"
+        },
+        {
+            "platform": "kick",
+            "channel": "panderp",
+            "url": "https://kick.com/panderp"
+        }
+    ],
+    "Chaos Crew": [
+        {
+            "platform": "twitch",
+            "channel": "beanskitty",
+            "url": "https://twitch.tv/beanskitty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "mikethebard",
+            "url": "https://twitch.tv/mikethebard"
+        },
+        {
+            "platform": "twitch",
+            "channel": "alyoren",
+            "url": "https://twitch.tv/alyoren"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bodoc_",
+            "url": "https://twitch.tv/bodoc_"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Explodicy",
+            "url": "https://twitch.tv/Explodicy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "gutturalsteve",
+            "url": "https://twitch.tv/gutturalsteve"
+        }
+    ],
+    "Cypress": [
+        {
+            "platform": "twitch",
+            "channel": "ItsNiall",
+            "url": "https://twitch.tv/ItsNiall"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lolnathaniel",
+            "url": "https://twitch.tv/lolnathaniel"
+        },
+        {
+            "platform": "kick",
+            "channel": "ghostnathaniel",
+            "url": "https://kick.com/ghostnathaniel"
+        },
+        {
+            "platform": "kick",
+            "channel": "Mithering",
+            "url": "https://kick.com/Mithering"
+        },
+        {
+            "platform": "twitch",
+            "channel": "drwz",
+            "url": "https://twitch.tv/drwz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Edonxd",
+            "url": "https://twitch.tv/Edonxd"
+        },
+        {
+            "platform": "twitch",
+            "channel": "spettx",
+            "url": "https://twitch.tv/spettx"
+        },
+        {
+            "platform": "kick",
+            "channel": "SpettWTH",
+            "url": "https://kick.com/SpettWTH"
+        },
+        {
+            "platform": "twitch",
+            "channel": "edwardvanmanz",
+            "url": "https://twitch.tv/edwardvanmanz"
+        },
+        {
+            "platform": "kick",
+            "channel": "EdwardVanmanz",
+            "url": "https://kick.com/EdwardVanmanz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lainexvx",
+            "url": "https://twitch.tv/lainexvx"
+        },
+        {
+            "platform": "kick",
+            "channel": "laineee",
+            "url": "https://kick.com/laineee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "xnvthan",
+            "url": "https://twitch.tv/xnvthan"
+        },
+        {
+            "platform": "kick",
+            "channel": "xnvthan",
+            "url": "https://kick.com/xnvthan"
+        },
+        {
+            "platform": "kick",
+            "channel": "notclxn",
+            "url": "https://kick.com/notclxn"
+        },
+        {
+            "platform": "twitch",
+            "channel": "travx___",
+            "url": "https://twitch.tv/travx___"
+        },
+        {
+            "platform": "kick",
+            "channel": "travvxx",
+            "url": "https://kick.com/travvxx"
+        },
+        {
+            "platform": "twitch",
+            "channel": "unabeard",
+            "url": "https://twitch.tv/unabeard"
+        },
+        {
+            "platform": "kick",
+            "channel": "Unabeard",
+            "url": "https://kick.com/Unabeard"
+        }
+    ],
+    "Davis Cartel": [
+        {
+            "platform": "twitch",
+            "channel": "doomdays",
+            "url": "https://twitch.tv/doomdays"
+        },
+        {
+            "platform": "kick",
+            "channel": "doomdaysz",
+            "url": "https://kick.com/doomdaysz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rambo_fletch",
+            "url": "https://twitch.tv/rambo_fletch"
+        },
+        {
+            "platform": "kick",
+            "channel": "rambofletch",
+            "url": "https://kick.com/rambofletch"
+        },
+        {
+            "platform": "kick",
+            "channel": "fibez",
+            "url": "https://kick.com/fibez"
+        },
+        {
+            "platform": "kick",
+            "channel": "jacknifevp",
+            "url": "https://kick.com/jacknifevp"
+        }
+    ],
+    "East Side Vagos": [
+        {
+            "platform": "twitch",
+            "channel": "horusmaximus",
+            "url": "https://twitch.tv/horusmaximus"
+        },
+        {
+            "platform": "kick",
+            "channel": "horusmaximus",
+            "url": "https://kick.com/horusmaximus"
+        },
+        {
+            "platform": "kick",
+            "channel": "Aduumm",
+            "url": "https://kick.com/Aduumm"
+        },
+        {
+            "platform": "kick",
+            "channel": "viiela",
+            "url": "https://kick.com/viiela"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Aymenhd",
+            "url": "https://twitch.tv/Aymenhd"
+        },
+        {
+            "platform": "kick",
+            "channel": "AymenHD",
+            "url": "https://kick.com/AymenHD"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ogastrx",
+            "url": "https://twitch.tv/ogastrx"
+        },
+        {
+            "platform": "kick",
+            "channel": "ogastrx",
+            "url": "https://kick.com/ogastrx"
+        },
+        {
+            "platform": "twitch",
+            "channel": "reklez",
+            "url": "https://twitch.tv/reklez"
+        },
+        {
+            "platform": "kick",
+            "channel": "reklez",
+            "url": "https://kick.com/reklez"
+        },
+        {
+            "platform": "twitch",
+            "channel": "yunoquest",
+            "url": "https://twitch.tv/yunoquest"
+        },
+        {
+            "platform": "twitch",
+            "channel": "4nn3ed",
+            "url": "https://twitch.tv/4nn3ed"
+        },
+        {
+            "platform": "kick",
+            "channel": "itss-Anne",
+            "url": "https://kick.com/itss-Anne"
+        },
+        {
+            "platform": "twitch",
+            "channel": "MrCruxi",
+            "url": "https://twitch.tv/MrCruxi"
+        },
+        {
+            "platform": "kick",
+            "channel": "MrCruxi",
+            "url": "https://kick.com/MrCruxi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "zeraahz",
+            "url": "https://twitch.tv/zeraahz"
+        },
+        {
+            "platform": "kick",
+            "channel": "zeraahz",
+            "url": "https://kick.com/zeraahz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thenathanx_",
+            "url": "https://twitch.tv/thenathanx_"
+        },
+        {
+            "platform": "kick",
+            "channel": "thenathanx",
+            "url": "https://kick.com/thenathanx"
+        },
+        {
+            "platform": "twitch",
+            "channel": "iamShiiNeR",
+            "url": "https://twitch.tv/iamShiiNeR"
+        },
+        {
+            "platform": "kick",
+            "channel": "shiiner",
+            "url": "https://kick.com/shiiner"
+        },
+        {
+            "platform": "twitch",
+            "channel": "cosmic_chimp",
+            "url": "https://twitch.tv/cosmic_chimp"
+        },
+        {
+            "platform": "kick",
+            "channel": "cosmic-chimp",
+            "url": "https://kick.com/cosmic-chimp"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jaritoh",
+            "url": "https://twitch.tv/jaritoh"
+        },
+        {
+            "platform": "kick",
+            "channel": "Jaritoh",
+            "url": "https://kick.com/Jaritoh"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Nazzzy_x",
+            "url": "https://twitch.tv/Nazzzy_x"
+        },
+        {
+            "platform": "kick",
+            "channel": "Nazzy-x",
+            "url": "https://kick.com/Nazzy-x"
+        },
+        {
+            "platform": "twitch",
+            "channel": "defnotelvis",
+            "url": "https://twitch.tv/defnotelvis"
+        },
+        {
+            "platform": "kick",
+            "channel": "defnotelvis",
+            "url": "https://kick.com/defnotelvis"
+        },
+        {
+            "platform": "twitch",
+            "channel": "neutralwitchglenda",
+            "url": "https://twitch.tv/neutralwitchglenda"
+        },
+        {
+            "platform": "twitch",
+            "channel": "raulucky7",
+            "url": "https://twitch.tv/raulucky7"
+        },
+        {
+            "platform": "kick",
+            "channel": "raulucky7",
+            "url": "https://kick.com/raulucky7"
+        },
+        {
+            "platform": "twitch",
+            "channel": "tqcoman",
+            "url": "https://twitch.tv/tqcoman"
+        },
+        {
+            "platform": "kick",
+            "channel": "tqcoman",
+            "url": "https://kick.com/tqcoman"
+        },
+        {
+            "platform": "twitch",
+            "channel": "gr8pe_tv",
+            "url": "https://twitch.tv/gr8pe_tv"
+        },
+        {
+            "platform": "kick",
+            "channel": "gr8pe_tv",
+            "url": "https://kick.com/gr8pe_tv"
+        }
+    ],
+    "HOA": [
+        {
+            "platform": "twitch",
+            "channel": "chalupa_pants",
+            "url": "https://twitch.tv/chalupa_pants"
+        },
+        {
+            "platform": "twitch",
+            "channel": "asteroba",
+            "url": "https://twitch.tv/asteroba"
+        },
+        {
+            "platform": "kick",
+            "channel": "asteroba",
+            "url": "https://kick.com/asteroba"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ntviiper",
+            "url": "https://twitch.tv/ntviiper"
+        },
+        {
+            "platform": "twitch",
+            "channel": "spiderpigethan",
+            "url": "https://twitch.tv/spiderpigethan"
+        },
+        {
+            "platform": "kick",
+            "channel": "spiderpigethan",
+            "url": "https://kick.com/spiderpigethan"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hidaruma",
+            "url": "https://twitch.tv/hidaruma"
+        },
+        {
+            "platform": "twitch",
+            "channel": "d4n1elle",
+            "url": "https://twitch.tv/d4n1elle"
+        },
+        {
+            "platform": "twitch",
+            "channel": "CrimsonSwordsman",
+            "url": "https://twitch.tv/CrimsonSwordsman"
+        },
+        {
+            "platform": "twitch",
+            "channel": "beetle",
+            "url": "https://twitch.tv/beetle"
+        },
+        {
+            "platform": "kick",
+            "channel": "beetle",
+            "url": "https://kick.com/beetle"
+        },
+        {
+            "platform": "twitch",
+            "channel": "peekay___",
+            "url": "https://twitch.tv/peekay___"
+        },
+        {
+            "platform": "twitch",
+            "channel": "pengwin",
+            "url": "https://twitch.tv/pengwin"
+        },
+        {
+            "platform": "kick",
+            "channel": "pengwin",
+            "url": "https://kick.com/pengwin"
+        },
+        {
+            "platform": "twitch",
+            "channel": "goose_thegreat",
+            "url": "https://twitch.tv/goose_thegreat"
+        },
+        {
+            "platform": "twitch",
+            "channel": "plashir",
+            "url": "https://twitch.tv/plashir"
+        },
+        {
+            "platform": "kick",
+            "channel": "plashir",
+            "url": "https://kick.com/plashir"
+        }
+    ],
+    "Habibis": [
+        {
+            "platform": "twitch",
+            "channel": "acezproduction",
+            "url": "https://twitch.tv/acezproduction"
+        },
+        {
+            "platform": "kick",
+            "channel": "AcezProduction",
+            "url": "https://kick.com/AcezProduction"
+        },
+        {
+            "platform": "twitch",
+            "channel": "justkiku",
+            "url": "https://twitch.tv/justkiku"
+        },
+        {
+            "platform": "kick",
+            "channel": "justkiku",
+            "url": "https://kick.com/justkiku"
+        },
+        {
+            "platform": "twitch",
+            "channel": "breakyx",
+            "url": "https://twitch.tv/breakyx"
+        },
+        {
+            "platform": "kick",
+            "channel": "Breaky",
+            "url": "https://kick.com/Breaky"
+        },
+        {
+            "platform": "twitch",
+            "channel": "casualbaesu",
+            "url": "https://twitch.tv/casualbaesu"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Brandallita",
+            "url": "https://twitch.tv/Brandallita"
+        },
+        {
+            "platform": "kick",
+            "channel": "Brandallita",
+            "url": "https://kick.com/Brandallita"
+        },
+        {
+            "platform": "twitch",
+            "channel": "barnszzz",
+            "url": "https://twitch.tv/barnszzz"
+        },
+        {
+            "platform": "kick",
+            "channel": "BarnsZ",
+            "url": "https://kick.com/BarnsZ"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kirst345",
+            "url": "https://twitch.tv/kirst345"
+        },
+        {
+            "platform": "kick",
+            "channel": "kirst345",
+            "url": "https://kick.com/kirst345"
+        },
+        {
+            "platform": "twitch",
+            "channel": "catsrage",
+            "url": "https://twitch.tv/catsrage"
+        },
+        {
+            "platform": "kick",
+            "channel": "catssrage",
+            "url": "https://kick.com/catssrage"
+        },
+        {
+            "platform": "twitch",
+            "channel": "akartt",
+            "url": "https://twitch.tv/akartt"
+        },
+        {
+            "platform": "kick",
+            "channel": "akartt",
+            "url": "https://kick.com/akartt"
+        },
+        {
+            "platform": "twitch",
+            "channel": "maybefaraday",
+            "url": "https://twitch.tv/maybefaraday"
+        },
+        {
+            "platform": "kick",
+            "channel": "maybefaraday",
+            "url": "https://kick.com/maybefaraday"
+        },
+        {
+            "platform": "twitch",
+            "channel": "theobrosia",
+            "url": "https://twitch.tv/theobrosia"
+        },
+        {
+            "platform": "kick",
+            "channel": "Theobrosia",
+            "url": "https://kick.com/Theobrosia"
+        },
+        {
+            "platform": "twitch",
+            "channel": "laurinrae",
+            "url": "https://twitch.tv/laurinrae"
+        },
+        {
+            "platform": "twitch",
+            "channel": "explicitx_",
+            "url": "https://twitch.tv/explicitx_"
+        },
+        {
+            "platform": "twitch",
+            "channel": "jaakuvt",
+            "url": "https://twitch.tv/jaakuvt"
+        },
+        {
+            "platform": "kick",
+            "channel": "jaaku",
+            "url": "https://kick.com/jaaku"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lancerofficial",
+            "url": "https://twitch.tv/lancerofficial"
+        },
+        {
+            "platform": "kick",
+            "channel": "lancer",
+            "url": "https://kick.com/lancer"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vonderweisz",
+            "url": "https://twitch.tv/vonderweisz"
+        },
+        {
+            "platform": "kick",
+            "channel": "vonderweisz",
+            "url": "https://kick.com/vonderweisz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "3piccsauce",
+            "url": "https://twitch.tv/3piccsauce"
+        },
+        {
+            "platform": "kick",
+            "channel": "3piccsauce",
+            "url": "https://kick.com/3piccsauce"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Lucky_RP",
+            "url": "https://twitch.tv/Lucky_RP"
+        },
+        {
+            "platform": "kick",
+            "channel": "LuckyRP",
+            "url": "https://kick.com/LuckyRP"
+        },
+        {
+            "platform": "twitch",
+            "channel": "luhrsix",
+            "url": "https://twitch.tv/luhrsix"
+        },
+        {
+            "platform": "kick",
+            "channel": "kieron",
+            "url": "https://kick.com/kieron"
+        },
+        {
+            "platform": "twitch",
+            "channel": "t2kn8",
+            "url": "https://twitch.tv/t2kn8"
+        },
+        {
+            "platform": "kick",
+            "channel": "t2kn8",
+            "url": "https://kick.com/t2kn8"
+        },
+        {
+            "platform": "kick",
+            "channel": "imunchy",
+            "url": "https://kick.com/imunchy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "GeminiPKC",
+            "url": "https://twitch.tv/GeminiPKC"
+        },
+        {
+            "platform": "twitch",
+            "channel": "blur_o7",
+            "url": "https://twitch.tv/blur_o7"
+        },
+        {
+            "platform": "kick",
+            "channel": "blur_o7",
+            "url": "https://kick.com/blur_o7"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ray__c",
+            "url": "https://twitch.tv/ray__c"
+        },
+        {
+            "platform": "kick",
+            "channel": "RayC",
+            "url": "https://kick.com/RayC"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Jesameep",
+            "url": "https://twitch.tv/Jesameep"
+        },
+        {
+            "platform": "kick",
+            "channel": "jesameep",
+            "url": "https://kick.com/jesameep"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lStrictlyLogicl",
+            "url": "https://twitch.tv/lStrictlyLogicl"
+        },
+        {
+            "platform": "kick",
+            "channel": "strictlylogic",
+            "url": "https://kick.com/strictlylogic"
+        },
+        {
+            "platform": "twitch",
+            "channel": "StrikingContact",
+            "url": "https://twitch.tv/StrikingContact"
+        },
+        {
+            "platform": "kick",
+            "channel": "StrikingContact",
+            "url": "https://kick.com/StrikingContact"
+        },
+        {
+            "platform": "twitch",
+            "channel": "NyokoSato",
+            "url": "https://twitch.tv/NyokoSato"
+        },
+        {
+            "platform": "kick",
+            "channel": "nyokosato",
+            "url": "https://kick.com/nyokosato"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Bundie",
+            "url": "https://twitch.tv/Bundie"
+        },
+        {
+            "platform": "kick",
+            "channel": "Bundie",
+            "url": "https://kick.com/Bundie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "wraiyf",
+            "url": "https://twitch.tv/wraiyf"
+        },
+        {
+            "platform": "kick",
+            "channel": "wraiyf",
+            "url": "https://kick.com/wraiyf"
+        },
+        {
+            "platform": "twitch",
+            "channel": "WooWolfy",
+            "url": "https://twitch.tv/WooWolfy"
+        },
+        {
+            "platform": "kick",
+            "channel": "WooWolfy",
+            "url": "https://kick.com/WooWolfy"
+        }
+    ],
+    "Halo": [
+        {
+            "platform": "twitch",
+            "channel": "spicybarbie",
+            "url": "https://twitch.tv/spicybarbie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "shaiesty",
+            "url": "https://twitch.tv/shaiesty"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nxsiah",
+            "url": "https://twitch.tv/nxsiah"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dezzick12",
+            "url": "https://twitch.tv/dezzick12"
+        },
+        {
+            "platform": "twitch",
+            "channel": "imnotkosher",
+            "url": "https://twitch.tv/imnotkosher"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kristianako",
+            "url": "https://twitch.tv/kristianako"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thelanalution",
+            "url": "https://twitch.tv/thelanalution"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sadvonna",
+            "url": "https://twitch.tv/sadvonna"
+        },
+        {
+            "platform": "twitch",
+            "channel": "defnotelvis",
+            "url": "https://twitch.tv/defnotelvis"
+        },
+        {
+            "platform": "kick",
+            "channel": "defnotelvis",
+            "url": "https://kick.com/defnotelvis"
+        },
+        {
+            "platform": "twitch",
+            "channel": "teaneww",
+            "url": "https://twitch.tv/teaneww"
+        }
+    ],
+    "Iconicz": [
+        {
+            "platform": "twitch",
+            "channel": "yunoquest",
+            "url": "https://twitch.tv/yunoquest"
+        },
+        {
+            "platform": "twitch",
+            "channel": "realkza",
+            "url": "https://twitch.tv/realkza"
+        },
+        {
+            "platform": "kick",
+            "channel": "RealKZA",
+            "url": "https://kick.com/RealKZA"
+        },
+        {
+            "platform": "twitch",
+            "channel": "WavyGravi",
+            "url": "https://twitch.tv/WavyGravi"
+        },
+        {
+            "platform": "kick",
+            "channel": "WavyGravi",
+            "url": "https://kick.com/WavyGravi"
+        },
+        {
+            "platform": "twitch",
+            "channel": "SwaysWRLDD",
+            "url": "https://twitch.tv/SwaysWRLDD"
+        },
+        {
+            "platform": "kick",
+            "channel": "SwaysWRLDD",
+            "url": "https://kick.com/SwaysWRLDD"
+        }
+    ],
+    "Kilo Tray Ballas": [
+        {
+            "platform": "twitch",
+            "channel": "bilalarm",
+            "url": "https://twitch.tv/bilalarm"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itshholmes",
+            "url": "https://twitch.tv/itshholmes"
+        },
+        {
+            "platform": "kick",
+            "channel": "itsHolmes",
+            "url": "https://kick.com/itsHolmes"
+        },
+        {
+            "platform": "twitch",
+            "channel": "SmithyFPS",
+            "url": "https://twitch.tv/SmithyFPS"
+        },
+        {
+            "platform": "kick",
+            "channel": "ItsSmithyFPS",
+            "url": "https://kick.com/ItsSmithyFPS"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rhattv",
+            "url": "https://twitch.tv/rhattv"
+        },
+        {
+            "platform": "twitch",
+            "channel": "revive",
+            "url": "https://twitch.tv/revive"
+        },
+        {
+            "platform": "kick",
+            "channel": "ReviveRP",
+            "url": "https://kick.com/ReviveRP"
+        },
+        {
+            "platform": "twitch",
+            "channel": "25daves",
+            "url": "https://twitch.tv/25daves"
+        },
+        {
+            "platform": "kick",
+            "channel": "25daves",
+            "url": "https://kick.com/25daves"
+        },
+        {
+            "platform": "twitch",
+            "channel": "heliiih",
+            "url": "https://twitch.tv/heliiih"
+        },
+        {
+            "platform": "kick",
+            "channel": "HeliiiH",
+            "url": "https://kick.com/HeliiiH"
+        },
+        {
+            "platform": "twitch",
+            "channel": "aquafinaplays",
+            "url": "https://twitch.tv/aquafinaplays"
+        },
+        {
+            "platform": "kick",
+            "channel": "AquafinaPlays",
+            "url": "https://kick.com/AquafinaPlays"
+        },
+        {
+            "platform": "twitch",
+            "channel": "cleeismad",
+            "url": "https://twitch.tv/cleeismad"
+        },
+        {
+            "platform": "kick",
+            "channel": "cleerp",
+            "url": "https://kick.com/cleerp"
+        },
+        {
+            "platform": "twitch",
+            "channel": "fl00wer",
+            "url": "https://twitch.tv/fl00wer"
+        },
+        {
+            "platform": "twitch",
+            "channel": "xkibbs",
+            "url": "https://twitch.tv/xkibbs"
+        },
+        {
+            "platform": "twitch",
+            "channel": "izzidizzy",
+            "url": "https://twitch.tv/izzidizzy"
+        },
+        {
+            "platform": "kick",
+            "channel": "izzidizzy",
+            "url": "https://kick.com/izzidizzy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "firthy00",
+            "url": "https://twitch.tv/firthy00"
+        },
+        {
+            "platform": "kick",
+            "channel": "firthy00",
+            "url": "https://kick.com/firthy00"
+        },
+        {
+            "platform": "twitch",
+            "channel": "binoversion",
+            "url": "https://twitch.tv/binoversion"
+        },
+        {
+            "platform": "twitch",
+            "channel": "trinexcarries",
+            "url": "https://twitch.tv/trinexcarries"
+        },
+        {
+            "platform": "twitch",
+            "channel": "chickenkeev",
+            "url": "https://twitch.tv/chickenkeev"
+        },
+        {
+            "platform": "kick",
+            "channel": "chickenkeev",
+            "url": "https://kick.com/chickenkeev"
+        }
+    ],
+    "League of Evil": [
+        {
+            "platform": "twitch",
+            "channel": "geekymeepy",
+            "url": "https://twitch.tv/geekymeepy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "learning_pr0cess",
+            "url": "https://twitch.tv/learning_pr0cess"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hauce011",
+            "url": "https://twitch.tv/hauce011"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rustbingames",
+            "url": "https://twitch.tv/rustbingames"
+        }
+    ],
+    "Mimes": [
+        {
+            "platform": "twitch",
+            "channel": "wetbow",
+            "url": "https://twitch.tv/wetbow"
+        },
+        {
+            "platform": "twitch",
+            "channel": "afro",
+            "url": "https://twitch.tv/afro"
+        },
+        {
+            "platform": "kick",
+            "channel": "afro",
+            "url": "https://kick.com/afro"
+        },
+        {
+            "platform": "twitch",
+            "channel": "firecrackthat",
+            "url": "https://twitch.tv/firecrackthat"
+        },
+        {
+            "platform": "kick",
+            "channel": "firecrackthat",
+            "url": "https://kick.com/firecrackthat"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rustbingames",
+            "url": "https://twitch.tv/rustbingames"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bozo",
+            "url": "https://twitch.tv/bozo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rueben",
+            "url": "https://twitch.tv/rueben"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sonknuck",
+            "url": "https://twitch.tv/sonknuck"
+        },
+        {
+            "platform": "twitch",
+            "channel": "burn",
+            "url": "https://twitch.tv/burn"
+        },
+        {
+            "platform": "kick",
+            "channel": "burn",
+            "url": "https://kick.com/burn"
+        },
+        {
+            "platform": "twitch",
+            "channel": "carbie",
+            "url": "https://twitch.tv/carbie"
+        }
+    ],
+    "NoPixel Devs": [
+        {
+            "platform": "twitch",
+            "channel": "denis3d",
+            "url": "https://twitch.tv/denis3d"
+        },
+        {
+            "platform": "kick",
+            "channel": "denis3d",
+            "url": "https://kick.com/denis3d"
+        },
+        {
+            "platform": "twitch",
+            "channel": "cleardesigns",
+            "url": "https://twitch.tv/cleardesigns"
+        },
+        {
+            "platform": "twitch",
+            "channel": "elochai",
+            "url": "https://twitch.tv/elochai"
+        },
+        {
+            "platform": "kick",
+            "channel": "elochai",
+            "url": "https://kick.com/elochai"
+        },
+        {
+            "platform": "twitch",
+            "channel": "koil",
+            "url": "https://twitch.tv/koil"
+        },
+        {
+            "platform": "kick",
+            "channel": "koil",
+            "url": "https://kick.com/koil"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nikez",
+            "url": "https://twitch.tv/nikez"
+        },
+        {
+            "platform": "kick",
+            "channel": "nikez",
+            "url": "https://kick.com/nikez"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nnslul",
+            "url": "https://twitch.tv/nnslul"
+        },
+        {
+            "platform": "kick",
+            "channel": "nnsdev",
+            "url": "https://kick.com/nnsdev"
+        },
+        {
+            "platform": "twitch",
+            "channel": "synced3d",
+            "url": "https://twitch.tv/synced3d"
+        },
+        {
+            "platform": "kick",
+            "channel": "synced3d",
+            "url": "https://kick.com/synced3d"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Tobii",
+            "url": "https://twitch.tv/Tobii"
+        },
+        {
+            "platform": "kick",
+            "channel": "tobii",
+            "url": "https://kick.com/tobii"
+        }
+    ],
+    "Raiders MC": [
+        {
+            "platform": "twitch",
+            "channel": "wildflowerwonder",
+            "url": "https://twitch.tv/wildflowerwonder"
+        },
+        {
+            "platform": "kick",
+            "channel": "WildflowerWonder",
+            "url": "https://kick.com/WildflowerWonder"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itscrystaleyes",
+            "url": "https://twitch.tv/itscrystaleyes"
+        },
+        {
+            "platform": "kick",
+            "channel": "itsCrystalEyes",
+            "url": "https://kick.com/itsCrystalEyes"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dimoak",
+            "url": "https://twitch.tv/dimoak"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itsjustasummerjob",
+            "url": "https://twitch.tv/itsjustasummerjob"
+        },
+        {
+            "platform": "twitch",
+            "channel": "nareus",
+            "url": "https://twitch.tv/nareus"
+        },
+        {
+            "platform": "twitch",
+            "channel": "Bont__",
+            "url": "https://twitch.tv/Bont__"
+        },
+        {
+            "platform": "twitch",
+            "channel": "the_livingdeadgirl",
+            "url": "https://twitch.tv/the_livingdeadgirl"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thebayougamer",
+            "url": "https://twitch.tv/thebayougamer"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hiliddy",
+            "url": "https://twitch.tv/hiliddy"
+        },
+        {
+            "platform": "kick",
+            "channel": "hiliddy",
+            "url": "https://kick.com/hiliddy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "oyamec",
+            "url": "https://twitch.tv/oyamec"
+        },
+        {
+            "platform": "kick",
+            "channel": "oyamec",
+            "url": "https://kick.com/oyamec"
+        },
+        {
+            "platform": "twitch",
+            "channel": "withextrasauce",
+            "url": "https://twitch.tv/withextrasauce"
+        },
+        {
+            "platform": "twitch",
+            "channel": "lovendor",
+            "url": "https://twitch.tv/lovendor"
+        },
+        {
+            "platform": "twitch",
+            "channel": "moomoogamingtv",
+            "url": "https://twitch.tv/moomoogamingtv"
+        },
+        {
+            "platform": "kick",
+            "channel": "moomoogaming",
+            "url": "https://kick.com/moomoogaming"
+        },
+        {
+            "platform": "twitch",
+            "channel": "americansneakers",
+            "url": "https://twitch.tv/americansneakers"
+        },
+        {
+            "platform": "twitch",
+            "channel": "beard",
+            "url": "https://twitch.tv/beard"
+        },
+        {
+            "platform": "kick",
+            "channel": "notbeard",
+            "url": "https://kick.com/notbeard"
+        },
+        {
+            "platform": "twitch",
+            "channel": "barrytheeflash",
+            "url": "https://twitch.tv/barrytheeflash"
+        },
+        {
+            "platform": "twitch",
+            "channel": "shugrvt",
+            "url": "https://twitch.tv/shugrvt"
+        },
+        {
+            "platform": "kick",
+            "channel": "ShugrVT",
+            "url": "https://kick.com/ShugrVT"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kate",
+            "url": "https://twitch.tv/kate"
+        },
+        {
+            "platform": "kick",
+            "channel": "kate",
+            "url": "https://kick.com/kate"
+        }
+    ],
+    "SYN": [
+        {
+            "platform": "twitch",
+            "channel": "giseletwitchtv",
+            "url": "https://twitch.tv/giseletwitchtv"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itshazelsaurus",
+            "url": "https://twitch.tv/itshazelsaurus"
+        },
+        {
+            "platform": "twitch",
+            "channel": "space_unicorn20",
+            "url": "https://twitch.tv/space_unicorn20"
+        },
+        {
+            "platform": "twitch",
+            "channel": "larbeartv",
+            "url": "https://twitch.tv/larbeartv"
+        },
+        {
+            "platform": "twitch",
+            "channel": "crashcustoms",
+            "url": "https://twitch.tv/crashcustoms"
+        }
+    ],
+    "Sewer Rats": [
+        {
+            "platform": "twitch",
+            "channel": "stonedog146",
+            "url": "https://twitch.tv/stonedog146"
+        },
+        {
+            "platform": "twitch",
+            "channel": "rakatac",
+            "url": "https://twitch.tv/rakatac"
+        }
+    ],
+    "Skeleton Crew": [
+        {
+            "platform": "twitch",
+            "channel": "sidequestbri",
+            "url": "https://twitch.tv/sidequestbri"
+        },
+        {
+            "platform": "kick",
+            "channel": "sidequestbri",
+            "url": "https://kick.com/sidequestbri"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dumpykdog",
+            "url": "https://twitch.tv/dumpykdog"
+        },
+        {
+            "platform": "kick",
+            "channel": "Dumpykdog",
+            "url": "https://kick.com/Dumpykdog"
+        },
+        {
+            "platform": "twitch",
+            "channel": "dimplesemily",
+            "url": "https://twitch.tv/dimplesemily"
+        },
+        {
+            "platform": "kick",
+            "channel": "Dimples-Emily",
+            "url": "https://kick.com/Dimples-Emily"
+        },
+        {
+            "platform": "twitch",
+            "channel": "pavfaz",
+            "url": "https://twitch.tv/pavfaz"
+        },
+        {
+            "platform": "kick",
+            "channel": "pavfaz",
+            "url": "https://kick.com/pavfaz"
+        },
+        {
+            "platform": "twitch",
+            "channel": "ryankingsounds",
+            "url": "https://twitch.tv/ryankingsounds"
+        },
+        {
+            "platform": "twitch",
+            "channel": "sanauchiha",
+            "url": "https://twitch.tv/sanauchiha"
+        },
+        {
+            "platform": "kick",
+            "channel": "sanauchiha",
+            "url": "https://kick.com/sanauchiha"
+        },
+        {
+            "platform": "twitch",
+            "channel": "peachtreemcgee",
+            "url": "https://twitch.tv/peachtreemcgee"
+        },
+        {
+            "platform": "kick",
+            "channel": "PeachTreeMcGee",
+            "url": "https://kick.com/PeachTreeMcGee"
+        }
+    ],
+    "Smileys": [
+        {
+            "platform": "twitch",
+            "channel": "stinnekay",
+            "url": "https://twitch.tv/stinnekay"
+        },
+        {
+            "platform": "twitch",
+            "channel": "mrwest16",
+            "url": "https://twitch.tv/mrwest16"
+        },
+        {
+            "platform": "twitch",
+            "channel": "auriellis",
+            "url": "https://twitch.tv/auriellis"
+        },
+        {
+            "platform": "twitch",
+            "channel": "classicchrisgaming",
+            "url": "https://twitch.tv/classicchrisgaming"
+        }
+    ],
+    "Strayz": [
+        {
+            "platform": "twitch",
+            "channel": "xusao",
+            "url": "https://twitch.tv/xusao"
+        },
+        {
+            "platform": "kick",
+            "channel": "xusao",
+            "url": "https://kick.com/xusao"
+        },
+        {
+            "platform": "twitch",
+            "channel": "bbeambee",
+            "url": "https://twitch.tv/bbeambee"
+        },
+        {
+            "platform": "kick",
+            "channel": "bbeambee",
+            "url": "https://kick.com/bbeambee"
+        },
+        {
+            "platform": "kick",
+            "channel": "cherylojw",
+            "url": "https://kick.com/cherylojw"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hamersredd",
+            "url": "https://twitch.tv/hamersredd"
+        },
+        {
+            "platform": "kick",
+            "channel": "hammersred",
+            "url": "https://kick.com/hammersred"
+        },
+        {
+            "platform": "twitch",
+            "channel": "emoussy",
+            "url": "https://twitch.tv/emoussy"
+        },
+        {
+            "platform": "kick",
+            "channel": "moussy",
+            "url": "https://kick.com/moussy"
+        },
+        {
+            "platform": "twitch",
+            "channel": "cariwp",
+            "url": "https://twitch.tv/cariwp"
+        },
+        {
+            "platform": "kick",
+            "channel": "cariwp",
+            "url": "https://kick.com/cariwp"
+        },
+        {
+            "platform": "twitch",
+            "channel": "KielbasaOP",
+            "url": "https://twitch.tv/KielbasaOP"
+        },
+        {
+            "platform": "kick",
+            "channel": "KielbasaOP",
+            "url": "https://kick.com/KielbasaOP"
+        },
+        {
+            "platform": "twitch",
+            "channel": "biboskills",
+            "url": "https://twitch.tv/biboskills"
+        },
+        {
+            "platform": "kick",
+            "channel": "bibo",
+            "url": "https://kick.com/bibo"
+        },
+        {
+            "platform": "twitch",
+            "channel": "justbongolicious",
+            "url": "https://twitch.tv/justbongolicious"
+        },
+        {
+            "platform": "kick",
+            "channel": "justbongolicious",
+            "url": "https://kick.com/justbongolicious"
+        },
+        {
+            "platform": "kick",
+            "channel": "olivegarden",
+            "url": "https://kick.com/olivegarden"
+        },
+        {
+            "platform": "twitch",
+            "channel": "qift",
+            "url": "https://twitch.tv/qift"
+        },
+        {
+            "platform": "kick",
+            "channel": "qift",
+            "url": "https://kick.com/qift"
+        }
+    ],
+    "The Crayons": [
+        {
+            "platform": "twitch",
+            "channel": "snekysly",
+            "url": "https://twitch.tv/snekysly"
+        },
+        {
+            "platform": "twitch",
+            "channel": "catssarole",
+            "url": "https://twitch.tv/catssarole"
+        },
+        {
+            "platform": "twitch",
+            "channel": "christombstone",
+            "url": "https://twitch.tv/christombstone"
+        },
+        {
+            "platform": "kick",
+            "channel": "ChrisTombstone",
+            "url": "https://kick.com/ChrisTombstone"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kiratamora",
+            "url": "https://twitch.tv/kiratamora"
+        },
+        {
+            "platform": "twitch",
+            "channel": "crypticthecat",
+            "url": "https://twitch.tv/crypticthecat"
+        },
+        {
+            "platform": "twitch",
+            "channel": "reecehecks",
+            "url": "https://twitch.tv/reecehecks"
+        },
+        {
+            "platform": "twitch",
+            "channel": "makeitmeansomething",
+            "url": "https://twitch.tv/makeitmeansomething"
+        },
+        {
+            "platform": "kick",
+            "channel": "makeitmeansomething",
+            "url": "https://kick.com/makeitmeansomething"
+        },
+        {
+            "platform": "twitch",
+            "channel": "emalee12",
+            "url": "https://twitch.tv/emalee12"
+        },
+        {
+            "platform": "kick",
+            "channel": "emalee12",
+            "url": "https://kick.com/emalee12"
+        }
+    ],
+    "The Guild": [
+        {
+            "platform": "twitch",
+            "channel": "traycee",
+            "url": "https://twitch.tv/traycee"
+        },
+        {
+            "platform": "kick",
+            "channel": "traycee",
+            "url": "https://kick.com/traycee"
+        },
+        {
+            "platform": "twitch",
+            "channel": "shadiko",
+            "url": "https://twitch.tv/shadiko"
+        },
+        {
+            "platform": "kick",
+            "channel": "shadiko",
+            "url": "https://kick.com/shadiko"
+        },
+        {
+            "platform": "twitch",
+            "channel": "svennoss",
+            "url": "https://twitch.tv/svennoss"
+        },
+        {
+            "platform": "twitch",
+            "channel": "eagleaye",
+            "url": "https://twitch.tv/eagleaye"
+        },
+        {
+            "platform": "kick",
+            "channel": "eagleaye",
+            "url": "https://kick.com/eagleaye"
+        },
+        {
+            "platform": "twitch",
+            "channel": "garek",
+            "url": "https://twitch.tv/garek"
+        },
+        {
+            "platform": "kick",
+            "channel": "garek",
+            "url": "https://kick.com/garek"
+        },
+        {
+            "platform": "twitch",
+            "channel": "fyzicul",
+            "url": "https://twitch.tv/fyzicul"
+        },
+        {
+            "platform": "kick",
+            "channel": "fyzicul",
+            "url": "https://kick.com/fyzicul"
+        },
+        {
+            "platform": "twitch",
+            "channel": "itsleslie",
+            "url": "https://twitch.tv/itsleslie"
+        },
+        {
+            "platform": "kick",
+            "channel": "itsleslie",
+            "url": "https://kick.com/itsleslie"
+        },
+        {
+            "platform": "twitch",
+            "channel": "kyliebitkin",
+            "url": "https://twitch.tv/kyliebitkin"
+        },
+        {
+            "platform": "kick",
+            "channel": "kyliebitkin",
+            "url": "https://kick.com/kyliebitkin"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hidaruma",
+            "url": "https://twitch.tv/hidaruma"
+        },
+        {
+            "platform": "twitch",
+            "channel": "auxidental",
+            "url": "https://twitch.tv/auxidental"
+        },
+        {
+            "platform": "twitch",
+            "channel": "vigors",
+            "url": "https://twitch.tv/vigors"
+        }
+    ],
+    "The Italians": [
+        {
+            "platform": "twitch",
+            "channel": "versa",
+            "url": "https://twitch.tv/versa"
+        },
+        {
+            "platform": "kick",
+            "channel": "versa",
+            "url": "https://kick.com/versa"
+        },
+        {
+            "platform": "twitch",
+            "channel": "thedastony",
+            "url": "https://twitch.tv/thedastony"
+        },
+        {
+            "platform": "kick",
+            "channel": "dastony",
+            "url": "https://kick.com/dastony"
+        },
+        {
+            "platform": "twitch",
+            "channel": "crocc",
+            "url": "https://twitch.tv/crocc"
+        },
+        {
+            "platform": "kick",
+            "channel": "crocc",
+            "url": "https://kick.com/crocc"
+        }
+    ],
+    "The Neon Circus": [
+        {
+            "platform": "twitch",
+            "channel": "ramenjd",
+            "url": "https://twitch.tv/ramenjd"
+        },
+        {
+            "platform": "twitch",
+            "channel": "PotatoboyPlays",
+            "url": "https://twitch.tv/PotatoboyPlays"
+        },
+        {
+            "platform": "twitch",
+            "channel": "manvaril",
+            "url": "https://twitch.tv/manvaril"
+        },
+        {
+            "platform": "twitch",
+            "channel": "hauce011",
+            "url": "https://twitch.tv/hauce011"
+        },
+        {
+            "platform": "twitch",
+            "channel": "willow_veil",
+            "url": "https://twitch.tv/willow_veil"
+        },
+        {
+            "platform": "twitch",
+            "channel": "madamegandalf",
+            "url": "https://twitch.tv/madamegandalf"
+        }
+    ]
+}

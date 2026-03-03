@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoPixel Directory</title>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        body {
+            background-color: #0b0e14; color: #ffffff;
+            font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; transition: padding 0.3s;
+        }
+        
+        h1 { text-align: center; color: #53fc18; margin-bottom: 5px; }
+        .status-bar { text-align: center; color: #a0a5b5; font-size: 12px; margin-bottom: 20px; }
+
+        /* --- TABS CSS --- */
+        .tab-navigation { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+        .tab-btn {
+            background-color: #1a1f29; color: #a0a5b5; border: 2px solid #2d3546;
+            padding: 10px 24px; border-radius: 8px; cursor: pointer; font-size: 15px;
+            font-weight: bold; transition: all 0.2s;
+        }
+        .tab-btn:hover { color: #ffffff; border-color: #53fc18; }
+        .tab-btn.active { background-color: #2d3546; color: #53fc18; border-color: #53fc18; box-shadow: 0 0 10px rgba(83, 252, 24, 0.2); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- NOTIFICATION TOAST CSS --- */
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            background-color: #1a1f29; color: #fff; padding: 12px 16px; border-left: 4px solid #ffcc00;
+            border-radius: 6px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            animation: slideIn 0.3s ease-out forwards; min-width: 280px; border: 1px solid #2d3546;
+        }
+        .toast-icon { font-size: 18px; }
+        .toast-msg { flex: 1; font-size: 14px; color: #e2e8f0; }
+        .toast-close { background: none; border: none; color: #a0a5b5; cursor: pointer; font-size: 16px; transition: 0.2s; }
+        .toast-close:hover { color: #fff; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        /* --- THEATER MODE CSS --- */
+        body.theater-mode { padding: 10px; overflow: hidden; }
+        body.theater-mode h1, body.theater-mode .status-bar, body.theater-mode .tab-navigation { display: none !important; }
+        body.theater-mode #multi-player-view { height: calc(100vh - 20px); }
+
+        /* --- STREAM GRID --- */
+        #stream-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto;
+        }
+        @media (min-width: 1200px) { #stream-grid { grid-template-columns: repeat(5, 1fr); } }
+        .stream-card {
+            background-color: #1a1f29; border-radius: 8px; overflow: hidden; transition: transform 0.2s, border 0.2s, box-shadow 0.2s;
+            border: 1px solid transparent; display: flex; flex-direction: column; position: relative; cursor: pointer; user-select: none;
+        }
+        .stream-card.kick-hover:hover { border: 1px solid #53fc18; box-shadow: 0 0 15px rgba(83, 252, 24, 0.2); }
+        .stream-card.twitch-hover:hover { border: 1px solid #9146FF; box-shadow: 0 0 15px rgba(145, 70, 255, 0.2); }
+        .drag-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; background-color: #00a8ff; color: #ffffff; text-align: center;
+            font-size: 12px; padding: 6px 0; font-weight: bold; letter-spacing: 1px; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 10;
+        }
+        .sortable-chosen { transform: scale(1.02); border: 1px solid #00a8ff !important; box-shadow: 0 0 20px rgba(0, 168, 255, 0.4) !important; }
+        .sortable-chosen .drag-overlay { opacity: 1; }
+        .sortable-ghost { opacity: 0.3; background-color: #1a1f29; border: 2px dashed #00a8ff !important; }
+        .thumbnail { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; pointer-events: none; }
+        .card-info { padding: 12px; pointer-events: none; }
+        .stream-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .refresh-tag { font-size: 10px; color: #666; margin-bottom: 8px; }
+        .stream-meta { font-size: 13px; color: #a0a5b5; display: flex; justify-content: space-between; align-items: center;}
+        .channel-name-area { display: flex; align-items: center; gap: 6px; }
+        .viewers { color: #ff4a4a; font-weight: bold; white-space: nowrap; }
+        .group-tag {
+            display: inline-block; color: #ffffff; padding: 2px 6px; border-radius: 12px;
+            font-size: 10px; font-weight: bold; text-transform: uppercase; box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .controls { text-align: center; margin-bottom: 30px; }
+        .filter-buttons { margin-bottom: 15px; }
+        .filter-btn {
+            background: #1a1f29; border: 1px solid #2d3546; color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer; margin: 0 5px; transition: all 0.2s;
+        }
+        .filter-btn:hover { background: #2d3546; }
+        #search-bar { width: 90%; max-width: 600px; padding: 12px; border-radius: 20px; border: 2px solid #2d3546; background: #1a1f29; color: white; outline: none; }
+        #search-bar:focus { border-color: #53fc18; }
+
+        /* --- MULTI-STREAM CSS --- */
+        .multi-setup-container { max-width: 700px; margin: 0 auto; background: #1a1f29; padding: 30px; border-radius: 12px; }
+        .multi-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
+        .multi-input { flex: 1; padding: 12px; background: #0b0e14; border: 1px solid #2d3546; color: white; border-radius: 6px; outline: none;}
+        .multi-input:focus { border-color: #53fc18; }
+        .multi-delete-btn { background: #ff4a4a; color: white; border: none; padding: 12px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;}
+        .multi-delete-btn:hover { background: #d93838; }
+        #multi-player-view { display: none; height: 82vh; flex-direction: column; transition: height 0.3s; }
+        .multi-layout { display: flex; flex: 1; gap: 15px; min-height: 0; margin-top: 15px; }
+        #multi-video-grid { flex: 1; display: grid; gap: 10px; }
+        
+        .multi-chat-panel { width: 350px; display: flex; flex-direction: column; background: #1a1f29; border-radius: 8px; overflow: hidden; }
+        #chat-tab-bar { display: flex; background: #0b0e14; overflow-x: auto; border-bottom: 2px solid #2d3546;}
+        .chat-tab-btn { flex: 1; padding: 12px; text-align: center; cursor: pointer; background: transparent; color: #a0a5b5; border: none; font-weight: bold; font-size: 13px; transition: 0.2s;}
+        .chat-tab-btn:hover { color: white; }
+        .chat-tab-btn.active { color: #53fc18; background: #1a1f29; border-bottom: 2px solid #53fc18; }
+        #chat-frames-container { flex: 1; position: relative; }
+        .chat-iframe { width: 100%; height: 100%; border: none; display: none; }
+        .chat-iframe.active { display: block; }
+
+        /* --- MULTI-VIDEO OVERLAY CONTROLS --- */
+        .multi-video-wrapper { 
+            position: relative; 
+            background: #000; 
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+        .multi-video-wrapper iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            display: block; 
+        }
+        
+        .player-overlay {
+            position: absolute; 
+            top: 0; left: 0; width: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            padding: 12px 15px; 
+            box-sizing: border-box;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            opacity: 0; 
+            transition: opacity 0.2s ease-in-out;
+            z-index: 10; 
+            pointer-events: none; 
+        }
+        
+        .multi-video-wrapper:hover .player-overlay { opacity: 1; pointer-events: auto; }
+        .player-overlay-title { color: white; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 3px black; }
+        
+        .player-overlay-controls button {
+            background: rgba(26, 31, 41, 0.8); border: 1px solid #2d3546; color: white; 
+            padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-left: 5px; 
+            transition: all 0.2s; font-size: 12px; font-weight: bold;
+        }
+        .player-overlay-controls button:hover { background: #2d3546; color: #53fc18; border-color: #53fc18; }
+
+    </style>
+</head>
+<body>
+
+    <div id="toast-container"></div>
+
+    <h1>🟢 NoPixel Directory (<span id="total-count">0</span>)</h1>
+    <div class="status-bar">
+        Status: <span id="api-status">Initializing...</span> | Last Sync: <span id="last-sync">Never</span>
+    </div>
+
+    <div class="tab-navigation">
+        <button class="tab-btn active" id="btn-streams" onclick="switchTab('streams')">Streams</button>
+        <button class="tab-btn" id="btn-multi" onclick="switchTab('multi')" style="border-color: #00a8ff;">Multi-Stream</button>
+        <button class="tab-btn" id="btn-events" onclick="switchTab('events')">Events</button>
+        <button class="tab-btn" id="btn-recap" onclick="switchTab('recap')">Recap</button>
+        <button class="tab-btn" id="btn-clips" onclick="switchTab('clips')">Clips</button>
+        <button class="tab-btn" id="btn-queue" onclick="switchTab('queue')">Clip Queue</button>
+        <button class="tab-btn" id="btn-groups" onclick="switchTab('groups')">Groups</button>
+        <span style="color: #666; font-size: 12px; align-self: center; margin-left: 10px;">(Press ` to cycle)</span>
+    </div>
+
+    <div id="tab-streams" class="tab-content active">
+        <div class="controls">
+            <div class="filter-buttons">
+                <button class="filter-btn" onclick="filterPlatform('all')">All Platforms</button>
+                <button class="filter-btn" onclick="filterPlatform('twitch')" style="border-color: #9146FF;">Twitch Only</button>
+                <button class="filter-btn" onclick="filterPlatform('kick')" style="border-color: #53fc18;">Kick Only</button>
+                <button class="filter-btn" onclick="resetOrder()" style="border-color: #ff4a4a; font-size: 11px;">Reset Layout</button>
+            </div>
+            <input type="text" id="search-bar" placeholder="🔍 Search streamer or title...">
+        </div>
+        <div id="stream-grid"></div>
+    </div>
+
+    <div id="tab-multi" class="tab-content">
+        <div id="multi-setup-view" class="multi-setup-container">
+            <h2 style="margin-top: 0; color: #53fc18; text-align: center; margin-bottom: 25px;">Startup a Multistream</h2>
+            <div id="multi-inputs-container"></div>
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button class="filter-btn" onclick="addMultiRow()" style="flex: 1; padding: 12px;">+ Add Streamer</button>
+                <button class="filter-btn" onclick="startMultiStream()" style="flex: 2; background: #53fc18; color: #000; border: none; font-weight: bold; font-size: 16px;">▶ Start Watching</button>
+            </div>
+        </div>
+
+        <div id="multi-player-view">
+            <div class="multi-player-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 15px;">
+                <button class="filter-btn" onclick="stopMultiStream()" style="border-color: #ff4a4a; margin: 0; white-space: nowrap;">⬅ Back to Setup</button>
+                
+                <div style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <input type="text" id="active-multi-search" placeholder="➕ Add streamer to view..." style="width: 100%; max-width: 400px; padding: 10px 15px; border-radius: 20px; border: 2px solid #2d3546; background: #1a1f29; color: white; outline: none;" onkeydown="if(event.key === 'Enter') addStreamToActive()">
+                    <button class="filter-btn" onclick="addStreamToActive()" style="border-color: #53fc18; margin: 0;">Add</button>
+                </div>
+
+                <button class="filter-btn" id="theater-toggle-btn" onclick="toggleTheaterMode()" style="border-color: #00a8ff; margin: 0; white-space: nowrap;">🎭 Theater Mode</button>
+            </div>
+
+            <div class="multi-layout">
+                <div id="multi-video-grid"></div>
+                <div class="multi-chat-panel">
+                    <div id="chat-tab-bar"></div>
+                    <div id="chat-frames-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-events" class="tab-content"><iframe src="https://lofi-nopixel.com/events" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-recap" class="tab-content"><iframe src="https://lofi-nopixel.com/recap" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-clips" class="tab-content"><iframe src="https://lofi-nopixel.com/clips" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-queue" class="tab-content"><iframe src="https://lofi-nopixel.com/clip-queue" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-groups" class="tab-content"><iframe src="https://lofi-nopixel.com/groups" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+
+    <script>
+        const API_URL = "http://localhost:8000/api/streams";
+        const grid = document.getElementById('stream-grid');
+        const searchBar = document.getElementById('search-bar');
+        const countDisplay = document.getElementById('total-count');
+        let allStreams = [];
+        let currentPlatform = 'all';
+        window.isInteracting = false; 
+
+        // Tracks unique IDs for dynamically adding/removing streams
+        let streamIdCounter = 0; 
+
+        // --- TOAST NOTIFICATIONS ---
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="toast-icon">⚠️</div>
+                <div class="toast-msg">${message}</div>
+                <button class="toast-close" onclick="this.parentElement.style.animation='fadeOut 0.3s forwards'; setTimeout(() => this.parentElement.remove(), 300)">✖</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => { if(toast.parentElement) { toast.style.animation = "fadeOut 0.3s forwards"; setTimeout(() => toast.remove(), 300); } }, 5000);
+        }
+
+        // --- GLOBAL TAB LOGIC ---
+        const tabList = ['streams', 'multi', 'events', 'recap', 'clips', 'queue', 'groups'];
+        let currentActiveTab = 'streams';
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${tabId}`).classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            currentActiveTab = tabId;
+            if (tabId !== 'multi') exitTheaterMode();
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.target.tagName.toLowerCase() === 'input') return;
+            if (event.key === '`') {
+                event.preventDefault(); 
+                let currentIndex = tabList.indexOf(currentActiveTab);
+                let nextIndex = (currentIndex + 1) % tabList.length;
+                switchTab(tabList[nextIndex]);
+            }
+        });
+
+        // --- MULTI-STREAM LOGIC ---
+        const multiInputsContainer = document.getElementById('multi-inputs-container');
+        
+        function initMultiSetup() {
+            multiInputsContainer.innerHTML = '';
+            for(let i=0; i<4; i++) addMultiRow();
+        }
+
+        function addMultiRow() {
+            const row = document.createElement('div');
+            row.className = 'multi-row';
+            row.innerHTML = `<input type="text" class="multi-input" placeholder="Enter username or paste URL..."><button class="multi-delete-btn" onclick="this.parentElement.remove()">🗑</button>`;
+            multiInputsContainer.appendChild(row);
+        }
+
+        function startMultiStream() {
+            const rows = document.querySelectorAll('.multi-row');
+            let streamsToLoad = [];
+            let hasErrors = false;
+
+            rows.forEach(row => {
+                const inputEl = row.querySelector('.multi-input');
+                let rawInput = inputEl.value.trim();
+                let validated = validateStreamInput(rawInput);
+                
+                if (validated.error) {
+                    showToast(validated.error);
+                    inputEl.value = ""; 
+                    hasErrors = true;
+                } else if (validated.success) {
+                    streamsToLoad.push(validated.data);
+                }
+            });
+
+            if(streamsToLoad.length === 0) {
+                if (!hasErrors) showToast("Please enter at least one stream!");
+                return; 
+            }
+
+            document.getElementById('multi-video-grid').innerHTML = '';
+            document.getElementById('chat-tab-bar').innerHTML = '';
+            document.getElementById('chat-frames-container').innerHTML = '';
+
+            streamsToLoad.forEach(stream => {
+                appendStreamToGrid(stream.platform, stream.channel);
+            });
+
+            document.getElementById('multi-setup-view').style.display = 'none';
+            document.getElementById('multi-player-view').style.display = 'flex';
+        }
+
+        // --- NEW: DYNAMICALLY ADD TO ACTIVE STREAM ---
+        function addStreamToActive() {
+            const inputEl = document.getElementById('active-multi-search');
+            let rawInput = inputEl.value.trim();
+            
+            let validated = validateStreamInput(rawInput);
+            if (validated.error) {
+                showToast(validated.error);
+                inputEl.value = ""; 
+            } else if (validated.success) {
+                appendStreamToGrid(validated.data.platform, validated.data.channel);
+                inputEl.value = ""; 
+            }
+        }
+
+        // Helper to validate input for both the Setup menu and the Active Bar
+        function validateStreamInput(rawInput) {
+            if(rawInput === "") return { success: false };
+
+            let channel = rawInput;
+            let platform = null;
+
+            if (channel.toLowerCase().includes('kick.com/')) {
+                platform = 'kick';
+                channel = channel.split(/kick\.com\//i).pop().split('?')[0].replace(/\/$/, "");
+            } else if (channel.toLowerCase().includes('twitch.tv/')) {
+                platform = 'twitch';
+                channel = channel.split(/twitch\.tv\//i).pop().split('?')[0].replace(/\/$/, "");
+            } else {
+                let matchedStreams = allStreams.filter(s => s.channel.toLowerCase() === channel.toLowerCase());
+                if (matchedStreams.length > 0) {
+                    let kickMatch = matchedStreams.find(s => s.platform === 'kick');
+                    if (kickMatch) { platform = 'kick'; channel = kickMatch.channel; } 
+                    else { platform = matchedStreams[0].platform; channel = matchedStreams[0].channel; }
+                } else {
+                    return { error: `User "<b>${channel}</b>" is offline or not found.` };
+                }
+            }
+            return { success: true, data: { platform, channel } };
+        }
+
+        // Generates the HTML for a single stream and dynamically resizes the grid
+        function appendStreamToGrid(platform, channel) {
+            streamIdCounter++;
+            const currentId = streamIdCounter;
+            
+            const videoGrid = document.getElementById('multi-video-grid');
+            const tabBar = document.getElementById('chat-tab-bar');
+            const framesContainer = document.getElementById('chat-frames-container');
+            const hostname = window.location.hostname || "localhost";
+
+            const isFirst = videoGrid.children.length === 0;
+
+            // 1. Create Video Wrapper
+            const wrapper = document.createElement('div');
+            wrapper.className = 'multi-video-wrapper';
+            wrapper.id = `vid-wrap-${currentId}`;
+            
+            const badge = platform === 'kick' ? '🟩' : '🟪';
+            let iframeHtml = platform === 'twitch' 
+                ? `<iframe id="iframe-${currentId}" src="https://player.twitch.tv/?channel=${channel}&parent=${hostname}&muted=false" allowfullscreen></iframe>`
+                : `<iframe id="iframe-${currentId}" src="https://player.kick.com/${channel}" allowfullscreen></iframe>`;
+
+            wrapper.innerHTML = `
+                <div class="player-overlay">
+                    <div class="player-overlay-title">${badge} ${channel.toUpperCase()}</div>
+                    <div class="player-overlay-controls">
+                        <button onclick="document.getElementById('iframe-${currentId}').src = document.getElementById('iframe-${currentId}').src" title="Refresh Stream">🔄 Refresh</button>
+                        <button onclick="removeStreamFromActive(${currentId})" title="Close Stream">❌ Close</button>
+                    </div>
+                </div>
+                ${iframeHtml}
+            `;
+            videoGrid.appendChild(wrapper);
+
+            // 2. Create Chat Tabs and Iframes
+            let chatUrl = platform === 'twitch' 
+                ? `https://www.twitch.tv/embed/${channel}/chat?parent=${hostname}&darkpopout` 
+                : `https://kick.com/${channel}/chatroom`;
+
+            const tabBtn = document.createElement('button');
+            tabBtn.className = `chat-tab-btn ${isFirst ? 'active' : ''}`;
+            tabBtn.id = `chat-btn-${currentId}`;
+            tabBtn.textContent = channel;
+            tabBtn.onclick = () => switchChat(currentId);
+            tabBar.appendChild(tabBtn);
+
+            const chatFrame = document.createElement('iframe');
+            chatFrame.src = chatUrl;
+            chatFrame.className = `chat-iframe ${isFirst ? 'active' : ''}`;
+            chatFrame.id = `chat-frame-${currentId}`;
+            framesContainer.appendChild(chatFrame);
+
+            // 3. Recalculate CSS Grid
+            const cols = Math.ceil(Math.sqrt(videoGrid.children.length)); 
+            videoGrid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        }
+
+        // Target destruction of a specific stream and auto-switch chat
+        function removeStreamFromActive(id) {
+            const vidWrap = document.getElementById(`vid-wrap-${id}`);
+            const chatBtn = document.getElementById(`chat-btn-${id}`);
+            const chatFrame = document.getElementById(`chat-frame-${id}`);
+            
+            if (vidWrap) vidWrap.remove();
+            if (chatBtn) {
+                const wasActive = chatBtn.classList.contains('active');
+                chatBtn.remove();
+                if (chatFrame) chatFrame.remove();
+                
+                // If you deleted the chat you were currently reading, swap to the next available one
+                if (wasActive) {
+                    const firstAvailableBtn = document.querySelector('.chat-tab-btn');
+                    if (firstAvailableBtn) firstAvailableBtn.click();
+                }
+            }
+            
+            const videoGrid = document.getElementById('multi-video-grid');
+            const currentCount = videoGrid.children.length;
+            if (currentCount > 0) {
+                const cols = Math.ceil(Math.sqrt(currentCount)); 
+                videoGrid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+            } else {
+                stopMultiStream(); // Exit if you close all streams
+            }
+        }
+
+        function switchChat(id) {
+            document.querySelectorAll('.chat-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.chat-iframe').forEach(frame => frame.classList.remove('active'));
+            
+            const selectedBtn = document.getElementById(`chat-btn-${id}`);
+            const selectedFrame = document.getElementById(`chat-frame-${id}`);
+            
+            if (selectedBtn) selectedBtn.classList.add('active');
+            if (selectedFrame) selectedFrame.classList.add('active');
+        }
+
+        function stopMultiStream() {
+            exitTheaterMode(); 
+            document.getElementById('multi-video-grid').innerHTML = '';
+            document.getElementById('chat-frames-container').innerHTML = '';
+            document.getElementById('multi-player-view').style.display = 'none';
+            document.getElementById('multi-setup-view').style.display = 'block';
+        }
+
+        // --- THEATER MODE LOGIC ---
+        function toggleTheaterMode() {
+            const body = document.body;
+            const btn = document.getElementById('theater-toggle-btn');
+            body.classList.toggle('theater-mode');
+            if (body.classList.contains('theater-mode')) { btn.innerHTML = '❌ Exit Theater Mode'; btn.style.borderColor = '#ff4a4a'; } 
+            else { btn.innerHTML = '🎭 Theater Mode'; btn.style.borderColor = '#00a8ff'; }
+        }
+        function exitTheaterMode() {
+            document.body.classList.remove('theater-mode');
+            const theaterBtn = document.getElementById('theater-toggle-btn');
+            if (theaterBtn) { theaterBtn.innerHTML = '🎭 Theater Mode'; theaterBtn.style.borderColor = '#00a8ff'; }
+        }
+
+        initMultiSetup();
+
+        // --- ORIGINAL DIRECTORY LOGIC ---
+        const sortable = new Sortable(grid, {
+            animation: 150, delay: 250, delayOnTouchOnly: false, touchStartThreshold: 10,
+            ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen',
+            onChoose: () => { window.isInteracting = true; },
+            onEnd: () => { setTimeout(() => { window.isInteracting = false; }, 100); localStorage.setItem('streamOrder', JSON.stringify(Array.from(grid.querySelectorAll('.stream-card')).map(el => el.dataset.id))); }
+        });
+
+        function renderStreams(streamsToRender) {
+            const savedOrder = JSON.parse(localStorage.getItem('streamOrder')) || [];
+            if (savedOrder.length > 0 && currentPlatform === 'all' && searchBar.value === '') {
+                streamsToRender.sort((a, b) => {
+                    let indexA = savedOrder.indexOf(a.channel); let indexB = savedOrder.indexOf(b.channel);
+                    return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+                });
+            }
+            grid.innerHTML = ''; 
+            streamsToRender.forEach(stream => {
+                const card = document.createElement('div');
+                card.className = `stream-card ${stream.platform === 'kick' ? 'kick-hover' : 'twitch-hover'}`;
+                card.dataset.id = stream.channel;
+                const streamUrl = stream.platform === 'kick' ? `https://kick.com/${stream.channel}` : `https://twitch.tv/${stream.channel}`;
+                card.onmouseup = () => { if (!window.isInteracting) window.open(streamUrl, '_blank'); };
+                const badgeColor = stream.platform === 'kick' ? '#53fc18' : '#9146FF';
+                const timeAgo = stream.platform === 'twitch' ? '(Updated 5m)' : '(Live)';
+                let tagsHtml = '';
+                if (stream.tags && stream.tags.length > 0) {
+                    tagsHtml = stream.tags.map(tag => `<span class="group-tag" style="background-color: ${tag.color};" title="${tag.rank}">${tag.label}</span>`).join('');
+                }
+                const cacheBuster = stream.thumbnail.includes('?') ? `&t=${Date.now()}` : `?t=${Date.now()}`;
+                card.innerHTML = `
+                    <div class="drag-overlay">⠿ DRAG TO REORDER ⠿</div>
+                    <img class="thumbnail" src="${stream.thumbnail}${cacheBuster}" draggable="false" alt="thumb">
+                    <div class="card-info">
+                        <div class="stream-title">${stream.title}</div>
+                        <div class="refresh-tag">${timeAgo}</div>
+                        <div class="stream-meta">
+                            <div class="channel-name-area">
+                                <b style="color: ${badgeColor}">[${stream.platform.toUpperCase()}]</b> 
+                                ${stream.channel} ${tagsHtml}
+                            </div>
+                            <span class="viewers">🔴 ${stream.viewers.toLocaleString()}</span>
+                        </div>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        async function fetchStreams() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                allStreams = data.streams;
+                countDisplay.textContent = data.count;
+                document.getElementById('api-status').textContent = data.status;
+                document.getElementById('last-sync').textContent = new Date().toLocaleTimeString();
+                if (!window.isInteracting) applySearch();
+            } catch (error) { console.error("Fetch error:", error); document.getElementById('api-status').textContent = "Offline"; }
+        }
+
+        function filterPlatform(platform) { currentPlatform = platform; applySearch(); }
+        function resetOrder() { localStorage.removeItem('streamOrder'); applySearch(); }
+
+        function applySearch() {
+            const searchTerm = searchBar.value.toLowerCase();
+            const filtered = allStreams.filter(stream => {
+                let matchesSearch = stream.channel.toLowerCase().includes(searchTerm) || stream.title.toLowerCase().includes(searchTerm);
+                if (stream.tags && stream.tags.length > 0) {
+                    matchesSearch = matchesSearch || stream.tags.some(tag => tag.label.toLowerCase().includes(searchTerm) || tag.rank.toLowerCase().includes(searchTerm));
+                }
+                return matchesSearch && (currentPlatform === 'all' || stream.platform === currentPlatform);
+            });
+            renderStreams(filtered);
+        }
+
+        searchBar.addEventListener('input', applySearch);
+        fetchStreams();
+        setInterval(fetchStreams, 30000);
+    </script>
+</body>
+</html>
