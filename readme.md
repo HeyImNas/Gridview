@@ -1,4 +1,4 @@
-# 🟢 NoPixel Stream Directory & Multi-Viewer
+# 🟢 Stream Directory & Multi-Viewer
 
 A lightweight, high-performance local web dashboard designed to track, filter, and watch GTA V RP (NoPixel) streams seamlessly across both Twitch and Kick. Built with a Python FastAPI backend and a dependency-free Vanilla JS/HTML/CSS frontend. This project is intended for personal use however if anyone else wants to access it your more than welcome to it. Might explore a hosted version down the line.
 
