@@ -15,6 +15,7 @@ from loguru import logger
 import time
 import requests
 from curl_cffi import requests as c_requests
+from curl_cffi.requests import AsyncSession
 
 # --- LOGGING SETUP ---
 # 1. Clear Loguru's default setup
@@ -111,10 +112,7 @@ def get_streamer_tags(channel_name, groups_data):
     channel_lower = channel_name.lower()
     
     for tag_label, info in groups_data.items():
-        # Get the members dictionary block safely
         members_dict = info.get("members", {})
-        
-        # Create a list of lowercased member names to check against
         members_lower = [k.lower() for k in members_dict.keys()]
         
         if channel_lower in members_lower:
@@ -137,7 +135,7 @@ async def get_twitch_token():
             data = await response.json()
             return data.get("access_token")
 
-async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, groups_data):
+async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, groups_data, channel_allowlist):
     headers = {"Client-ID": TWITCH_CLIENT_ID, "Authorization": f"Bearer {token}"}
     twitch_streams = []
 
@@ -153,17 +151,20 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                 if response.status == 200:
                     data = await response.json()
                     for stream in data.get("data", []):
-                        if stream.get("game_id") == "32982": # GTA V
+                        channel_name = stream.get("user_login")
+                        
+                        # --- THE ALLOWLIST BYPASS ---
+                        is_gta = stream.get("game_id") == "32982"
+                        is_allowed = channel_name.lower() in channel_allowlist
+                        
+                        if is_gta or is_allowed: 
                             title = stream.get("title", "").lower()
                             
                             # Title Filter
                             if any(term in title for term in title_blacklist):
                                 continue 
                                 
-                            channel_name = stream.get("user_login")
                             thumb = stream.get("thumbnail_url", "").replace("{width}", "640").replace("{height}", "360")
-                            
-                            # Attach Tags
                             tags = get_streamer_tags(channel_name, groups_data)
                             
                             twitch_streams.append({
@@ -176,7 +177,7 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                             })
                 else:
                     logger.warning(f"Twitch Batch {i} failed: {response.status}")
-                    
+                
             await asyncio.sleep(0.1) 
     return twitch_streams
 
@@ -198,26 +199,28 @@ async def fetch_streams_loop():
 
     try:
         while True:
+            # Safely load configurations
             blacklist_data = load_json_safe("blacklist.json", {"titles": [], "channels": []})
+            allowlist_data = load_json_safe("allowlist.json", {"channels": []})
             groups_data = load_json_safe("groups.json", {})
             
             title_blacklist = [str(t).lower() for t in blacklist_data.get("titles", [])]
             channel_blacklist = [str(c).lower() for c in blacklist_data.get("channels", [])]
+            channel_allowlist = [str(c).lower() for c in allowlist_data.get("channels", [])]
             
             valid_twitch_streamers = [name for name in known_streamers if name.lower() not in channel_blacklist]
 
             current_cycle_kick = []
-            #--- KICK Refresh ---
+            
+            # --- KICK Refresh (Category Scrape) ---
             try:
                 logger.info("Refreshing Kick...")
-                # 1. Cache Buster: Force Chrome to fetch a brand new page
                 live_kick_url = f"{KICK_API_URL}&_t={int(time.time())}"
                 page = await browser.get(live_kick_url)
                 
                 await page.sleep(4) 
                 content = await page.evaluate("document.body.innerText")
                 
-                # 2. Stale DOM Protection: Ensure we didn't just read an error page or old tab
                 if not content or "livestreams" not in content:
                     raise ValueError("Kick returned empty or invalid data this cycle.")
 
@@ -230,6 +233,7 @@ async def fetch_streams_loop():
                     if channel_lower in channel_blacklist:
                         continue
 
+                    # This scrapes strictly the GTA V category page
                     if s.get("category", {}).get("id") == 9818:
                         title = s.get("title", "").lower()
                         if any(term in title for term in title_blacklist):
@@ -246,15 +250,55 @@ async def fetch_streams_loop():
                             "tags": tags
                         })
             except Exception as e:
-                logger.error(f"Kick Error: {e}")
+                logger.error(f"Kick Category Error: {e}")
 
+            # --- KICK Allowlist Check (Bypassing Category) ---
+            if channel_allowlist:
+                try:
+                    # We use AsyncSession to safely bypass Cloudflare for direct Kick API hits
+                    async with AsyncSession(impersonate="chrome") as session:
+                        for allowed_user in channel_allowlist:
+                            # Skip if we already pulled them from the main GTA V page
+                            if any(s["channel"].lower() == allowed_user for s in current_cycle_kick):
+                                continue
+                            
+                            try:
+                                resp = await session.get(f"https://kick.com/api/v1/channels/{allowed_user}")
+                                if resp.status_code == 200:
+                                    user_data = resp.json()
+                                    livestream = user_data.get("livestream")
+                                    
+                                    # If they are currently broadcasting ANYTHING
+                                    if livestream:
+                                        title = livestream.get("session_title", "").lower()
+                                        if any(term in title for term in title_blacklist):
+                                            continue
+                                        
+                                        tags = get_streamer_tags(allowed_user, groups_data)
+                                        current_cycle_kick.append({
+                                            "platform": "kick",
+                                            "channel": allowed_user,
+                                            "title": livestream.get("session_title", "No Title"),
+                                            "viewers": livestream.get("viewer_count", 0),
+                                            "thumbnail": livestream.get("thumbnail", {}).get("url", ""),
+                                            "tags": tags
+                                        })
+                            except Exception:
+                                pass # Silently ignore users who aren't on Kick (they might be Twitch users)
+                            
+                            # A small delay to ensure we don't get IP banned for spamming the Kick API
+                            await asyncio.sleep(0.5) 
+                except Exception as e:
+                    logger.error(f"Kick Allowlist Error: {e}")
+
+            # --- TWITCH Refresh ---
             if twitch_counter >= 5:
                 try:
                     logger.info("Running 5-min Twitch batch query...")
                     token = await get_twitch_token()
                     if token and valid_twitch_streamers:
                         last_twitch_results = await fetch_twitch_streams_by_name(
-                            token, valid_twitch_streamers, title_blacklist, groups_data
+                            token, valid_twitch_streamers, title_blacklist, groups_data, channel_allowlist
                         )
                         logger.info(f"Twitch updated: {len(last_twitch_results)} live.")
                     twitch_counter = 0 
@@ -263,6 +307,7 @@ async def fetch_streams_loop():
             
             twitch_counter += 1
 
+            # --- Merge & Sort ---
             merged = current_cycle_kick + last_twitch_results
             merged.sort(key=lambda x: x["viewers"], reverse=True)
             
@@ -270,7 +315,6 @@ async def fetch_streams_loop():
             stream_cache["count"] = len(merged)
             stream_cache["status"] = "Live"
             
-            # Use colors=True and wrap the message in <magenta> for purple output
             logger.opt(colors=True).info(f"Cache updated with <magenta>{len(merged)} streams.</magenta> Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
             
             await asyncio.sleep(60)
@@ -299,15 +343,12 @@ app.add_middleware(
 async def get_nopixel_streams():
     return stream_cache
 
-#api for kick stream player -- used for controls
-
+# API for kick stream player -- kept for potential future proxy use
 @app.get("/api/kick-playback/{username}")
 def get_kick_playback(username: str):
     url = f"https://kick.com/api/v1/channels/{username}"
     try:
-        # impersonate="chrome" perfectly fakes a browser fingerprint to bypass Cloudflare
         response = c_requests.get(url, impersonate="chrome")
-
         if response.status_code == 200:
             data = response.json()
             playback_url = data.get("playback_url")
