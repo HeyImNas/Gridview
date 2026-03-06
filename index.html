@@ -4,15 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoPixel Directory</title>
+    
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <style>
         body {
             background-color: #0b0e14; color: #ffffff;
-            font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; transition: padding 0.3s;
+            font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; 
+            transition: padding 0.3s;
+            margin-left: 60px; /* Push body over to make room for sidebar */
         }
         
         h1 { text-align: center; color: #53fc18; margin-bottom: 5px; }
         .status-bar { text-align: center; color: #a0a5b5; font-size: 12px; margin-bottom: 20px; }
+
+        /* --- SIDEBAR CSS --- */
+        .sidebar {
+            position: fixed; top: 0; left: 0; height: 100vh; width: 60px;
+            background-color: #1a1f29; border-right: 2px solid #2d3546;
+            display: flex; flex-direction: column; align-items: center; padding-top: 20px; 
+            z-index: 100; gap: 15px; 
+        }
+        
+        .sidebar-icon {
+            width: 40px; height: 40px; border-radius: 8px; background: #0b0e14;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            font-size: 20px; position: relative; transition: 0.2s; border: 1px solid #2d3546;
+        }
+        .sidebar-icon:hover { border-color: #53fc18; background: #2d3546; }
+
+        /* Hover Tooltip */
+        .nav-tooltip {
+            position: absolute; left: 60px; top: 50%; transform: translateY(-50%);
+            background: #0b0e14; border: 1px solid #53fc18; padding: 10px 15px; border-radius: 6px;
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.2s; z-index: 101;
+            font-size: 13px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .sidebar-icon:hover .nav-tooltip { opacity: 1; left: 55px; }
+        .stat-highlight { color: #53fc18; font-size: 15px; }
+
+        /* --- MODALS CSS (Metrics & Factions) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 9999;
+        }
+        .modal-content {
+            background: #1a1f29; border: 2px solid #2d3546; border-radius: 12px;
+            padding: 25px; width: 90%; max-width: 800px; position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 15px; right: 20px; background: none; border: none;
+            color: #ff4a4a; font-size: 24px; cursor: pointer; font-weight: bold;
+        }
+        .chart-controls { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .chart-btn {
+            background: #0b0e14; border: 1px solid #2d3546; color: white; padding: 6px 12px;
+            border-radius: 4px; cursor: pointer; transition: 0.2s;
+        }
+        .chart-btn:hover { border-color: #00a8ff; }
+        .chart-btn.active { background: #00a8ff; color: #fff; font-weight: bold; }
 
         /* --- TABS CSS --- */
         .tab-navigation { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
@@ -42,8 +94,8 @@
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
         /* --- THEATER MODE CSS --- */
-        body.theater-mode { padding: 10px; overflow: hidden; }
-        body.theater-mode h1, body.theater-mode .status-bar, body.theater-mode .tab-navigation { display: none !important; }
+        body.theater-mode { padding: 10px; overflow: hidden; margin-left: 0; }
+        body.theater-mode .sidebar, body.theater-mode h1, body.theater-mode .status-bar, body.theater-mode .tab-navigation { display: none !important; }
         body.theater-mode #multi-player-view { height: calc(100vh - 20px); }
 
         /* --- STREAM GRID --- */
@@ -149,6 +201,66 @@
 <body>
 
     <div id="toast-container"></div>
+
+    <div class="sidebar">
+        <div class="sidebar-icon" onclick="openMetricsModal('general')" title="City Metrics History">
+            👁️
+            <div class="nav-tooltip">
+                Live Viewers: <span class="stat-highlight" id="hover-viewers">0</span>
+            </div>
+        </div>
+
+        <div class="sidebar-icon" onclick="openMetricsModal('general')" title="Streamers History">
+            🎥
+            <div class="nav-tooltip">
+                Live Streamers: <span class="stat-highlight" id="hover-streamers">0</span>
+            </div>
+        </div>
+
+        <div class="sidebar-icon" onclick="openMetricsModal('platform')" title="Platform Split History">
+            📺
+            <div class="nav-tooltip" style="text-align: left;">
+                <span style="color: #9146FF;">Twitch:</span> <span id="hover-tw-viewers" class="stat-highlight">0</span>v (<span id="hover-tw-streams">0</span>s)<br>
+                <span style="color: #53fc18;">Kick:</span> <span id="hover-kk-viewers" class="stat-highlight">0</span>v (<span id="hover-kk-streams">0</span>s)
+            </div>
+        </div>
+
+        <div class="sidebar-icon" onclick="openFactionModal()" title="Faction Leaderboard">
+            🛡️
+            <div class="nav-tooltip">
+                Top Faction:<br>
+                <span class="stat-highlight" id="hover-top-faction">None</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="metrics-modal" onclick="if(event.target === this) closeMetricsModal()">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeMetricsModal()">✖</button>
+            <h2 id="metrics-modal-title" style="margin-top: 0; color: #53fc18; text-align: center;">City Metrics History</h2>
+            
+            <div class="chart-controls">
+                <button class="chart-btn active" onclick="loadChartData('1h')">1 Hour</button>
+                <button class="chart-btn" onclick="loadChartData('12h')">12 Hours</button>
+                <button class="chart-btn" onclick="loadChartData('1d')">1 Day</button>
+                <button class="chart-btn" onclick="loadChartData('7d')">7 Days</button>
+                <button class="chart-btn" onclick="loadChartData('1m')">1 Month</button>
+            </div>
+            
+            <canvas id="metricsChart" height="100"></canvas>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="faction-modal" onclick="if(event.target === this) closeFactionModal()">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" onclick="closeFactionModal()">✖</button>
+            <h2 style="margin-top: 0; color: #53fc18; text-align: center;">🛡️ Faction Leaderboard</h2>
+            <p style="text-align: center; color: #a0a5b5; font-size: 13px; margin-top: -10px;">Live Viewers by Group</p>
+            
+            <div id="faction-list" style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+                </div>
+        </div>
+    </div>
 
     <h1>🟢 NoPixel Directory (<span id="total-count">0</span>)</h1>
     <div class="status-bar">
@@ -317,7 +429,6 @@
             document.getElementById('multi-player-view').style.display = 'flex';
         }
 
-        // --- NEW: DYNAMICALLY ADD TO ACTIVE STREAM ---
         function addStreamToActive() {
             const inputEl = document.getElementById('active-multi-search');
             let rawInput = inputEl.value.trim();
@@ -332,7 +443,6 @@
             }
         }
 
-        // Helper to validate input for both the Setup menu and the Active Bar
         function validateStreamInput(rawInput) {
             if(rawInput === "") return { success: false };
 
@@ -358,7 +468,6 @@
             return { success: true, data: { platform, channel } };
         }
 
-        // Generates the HTML for a single stream and dynamically resizes the grid
         function appendStreamToGrid(platform, channel) {
             streamIdCounter++;
             const currentId = streamIdCounter;
@@ -370,7 +479,6 @@
 
             const isFirst = videoGrid.children.length === 0;
 
-            // 1. Create Video Wrapper
             const wrapper = document.createElement('div');
             wrapper.className = 'multi-video-wrapper';
             wrapper.id = `vid-wrap-${currentId}`;
@@ -392,7 +500,6 @@
             `;
             videoGrid.appendChild(wrapper);
 
-            // 2. Create Chat Tabs and Iframes
             let chatUrl = platform === 'twitch' 
                 ? `https://www.twitch.tv/embed/${channel}/chat?parent=${hostname}&darkpopout` 
                 : `https://kick.com/${channel}/chatroom`;
@@ -410,12 +517,10 @@
             chatFrame.id = `chat-frame-${currentId}`;
             framesContainer.appendChild(chatFrame);
 
-            // 3. Recalculate CSS Grid
             const cols = Math.ceil(Math.sqrt(videoGrid.children.length)); 
             videoGrid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
         }
 
-        // Target destruction of a specific stream and auto-switch chat
         function removeStreamFromActive(id) {
             const vidWrap = document.getElementById(`vid-wrap-${id}`);
             const chatBtn = document.getElementById(`chat-btn-${id}`);
@@ -427,7 +532,6 @@
                 chatBtn.remove();
                 if (chatFrame) chatFrame.remove();
                 
-                // If you deleted the chat you were currently reading, swap to the next available one
                 if (wasActive) {
                     const firstAvailableBtn = document.querySelector('.chat-tab-btn');
                     if (firstAvailableBtn) firstAvailableBtn.click();
@@ -440,7 +544,7 @@
                 const cols = Math.ceil(Math.sqrt(currentCount)); 
                 videoGrid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
             } else {
-                stopMultiStream(); // Exit if you close all streams
+                stopMultiStream();
             }
         }
 
@@ -478,6 +582,175 @@
         }
 
         initMultiSetup();
+
+        // --- METRICS & CHART LOGIC ---
+        let metricsChartInstance = null;
+        let currentChartMode = 'general';
+
+        function updateHoverMetrics(totalViewers, totalStreamers) {
+            document.getElementById('hover-viewers').textContent = totalViewers.toLocaleString();
+            document.getElementById('hover-streamers').textContent = totalStreamers.toLocaleString();
+        }
+
+        function openMetricsModal(mode) {
+            currentChartMode = mode;
+            document.getElementById('metrics-modal').style.display = 'flex';
+            
+            const titleEl = document.getElementById('metrics-modal-title');
+            if (mode === 'platform') {
+                titleEl.textContent = 'Platform Viewership Split';
+            } else {
+                titleEl.textContent = 'City Metrics History';
+            }
+
+            loadChartData('1h'); 
+        }
+
+        function closeMetricsModal() {
+            document.getElementById('metrics-modal').style.display = 'none';
+        }
+
+        async function loadChartData(timeframe) {
+            document.querySelectorAll('.chart-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase().includes(timeframe.replace('h',' hour').replace('d',' day').replace('m', ' month')));
+            });
+
+            try {
+                const res = await fetch(`http://localhost:8000/api/metrics?timeframe=${timeframe}`);
+                const data = await res.json();
+
+                if (data.error) throw new Error(data.error);
+
+                const labels = data.timestamps.map(ts => {
+                    const d = new Date(ts + "Z"); 
+                    return d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                });
+
+                renderChart(labels, data);
+            } catch (err) {
+                console.error("Failed to load metrics:", err);
+                showToast("Failed to load historical data.");
+            }
+        }
+
+        function renderChart(labels, data) {
+            const ctx = document.getElementById('metricsChart').getContext('2d');
+            if (metricsChartInstance) metricsChartInstance.destroy();
+
+            let datasets = [];
+            let y1_axis_config = { display: false };
+
+            if (currentChartMode === 'general') {
+                datasets = [
+                    {
+                        label: 'Total Viewers', data: data.viewers,
+                        borderColor: '#53fc18', backgroundColor: 'rgba(83, 252, 24, 0.1)',
+                        borderWidth: 2, fill: true, yAxisID: 'y'
+                    },
+                    {
+                        label: 'Total Streamers', data: data.streamers,
+                        borderColor: '#00a8ff', backgroundColor: 'transparent',
+                        borderWidth: 2, borderDash: [5, 5], yAxisID: 'y1'
+                    }
+                ];
+                y1_axis_config = {
+                    type: 'linear', display: true, position: 'right',
+                    grid: { drawOnChartArea: false }, ticks: { color: '#a0a5b5' },
+                    title: { display: true, text: 'Streamers', color: '#00a8ff' }
+                };
+
+            } else if (currentChartMode === 'platform') {
+                datasets = [
+                    {
+                        label: 'Twitch Viewers', data: data.twitch_viewers,
+                        borderColor: '#9146FF', backgroundColor: 'rgba(145, 70, 255, 0.1)',
+                        borderWidth: 2, fill: true, yAxisID: 'y'
+                    },
+                    {
+                        label: 'Kick Viewers', data: data.kick_viewers,
+                        borderColor: '#53fc18', backgroundColor: 'rgba(83, 252, 24, 0.1)',
+                        borderWidth: 2, fill: true, yAxisID: 'y'
+                    }
+                ];
+            }
+
+            metricsChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: { labels: labels, datasets: datasets },
+                options: {
+                    responsive: true,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        x: { grid: { color: '#2d3546' }, ticks: { color: '#a0a5b5' } },
+                        y: { 
+                            type: 'linear', display: true, position: 'left',
+                            grid: { color: '#2d3546' }, ticks: { color: '#a0a5b5' },
+                            title: { display: true, text: 'Viewers', color: '#fff' }
+                        },
+                        y1: y1_axis_config
+                    },
+                    plugins: { legend: { labels: { color: '#ffffff' } } }
+                }
+            });
+        }
+
+        // Faction Modal Controls
+        function openFactionModal() { document.getElementById('faction-modal').style.display = 'flex'; }
+        function closeFactionModal() { document.getElementById('faction-modal').style.display = 'none'; }
+
+        // Advanced Metrics Calculator (Platform Split & Faction Leaderboard)
+        function updateAdvancedMetrics() {
+            let twViewers = 0, twStreams = 0;
+            let kkViewers = 0, kkStreams = 0;
+            let factionData = {};
+
+            allStreams.forEach(stream => {
+                if (stream.platform === 'twitch') {
+                    twViewers += stream.viewers; twStreams++;
+                } else if (stream.platform === 'kick') {
+                    kkViewers += stream.viewers; kkStreams++;
+                }
+
+                if (stream.tags && stream.tags.length > 0) {
+                    stream.tags.forEach(tag => {
+                        if (!factionData[tag.label]) {
+                            factionData[tag.label] = { viewers: 0, streamers: 0, color: tag.color };
+                        }
+                        factionData[tag.label].viewers += stream.viewers;
+                        factionData[tag.label].streamers++;
+                    });
+                }
+            });
+
+            document.getElementById('hover-tw-viewers').textContent = twViewers.toLocaleString();
+            document.getElementById('hover-tw-streams').textContent = twStreams;
+            document.getElementById('hover-kk-viewers').textContent = kkViewers.toLocaleString();
+            document.getElementById('hover-kk-streams').textContent = kkStreams;
+
+            let sortedFactions = Object.entries(factionData).sort((a, b) => b[1].viewers - a[1].viewers);
+            
+            if (sortedFactions.length > 0) {
+                document.getElementById('hover-top-faction').textContent = `${sortedFactions[0][0]} (${sortedFactions[0][1].viewers.toLocaleString()}v)`;
+            } else {
+                document.getElementById('hover-top-faction').textContent = "None Active";
+            }
+
+            const factionList = document.getElementById('faction-list');
+            factionList.innerHTML = '';
+            sortedFactions.forEach(([name, stats], index) => {
+                const row = document.createElement('div');
+                row.style.cssText = `display: flex; justify-content: space-between; align-items: center; background: #0b0e14; padding: 12px 16px; border-radius: 8px; border-left: 4px solid ${stats.color};`;
+                row.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <strong style="color: #a0a5b5; font-size: 16px;">#${index + 1}</strong>
+                        <strong style="font-size: 15px; color: #fff;">${name}</strong>
+                    </div>
+                    <span style="color: #a0a5b5; font-size: 14px;">🎥 ${stats.streamers} &nbsp;|&nbsp; 👁️ <b style="color: #53fc18;">${stats.viewers.toLocaleString()}</b></span>
+                `;
+                factionList.appendChild(row);
+            });
+        }
+
 
         // --- ORIGINAL DIRECTORY LOGIC ---
         const sortable = new Sortable(grid, {
@@ -535,6 +808,12 @@
                 countDisplay.textContent = data.count;
                 document.getElementById('api-status').textContent = data.status;
                 document.getElementById('last-sync').textContent = new Date().toLocaleTimeString();
+                
+                // Analytics Updaters
+                const totalViewers = allStreams.reduce((sum, stream) => sum + stream.viewers, 0);
+                updateHoverMetrics(totalViewers, allStreams.length);
+                updateAdvancedMetrics();
+
                 if (!window.isInteracting) applySearch();
             } catch (error) { console.error("Fetch error:", error); document.getElementById('api-status').textContent = "Offline"; }
         }

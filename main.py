@@ -16,6 +16,8 @@ import time
 import requests
 from curl_cffi import requests as c_requests
 from curl_cffi.requests import AsyncSession
+from datetime import datetime, timedelta
+
 
 # --- LOGGING SETUP ---
 # 1. Clear Loguru's default setup
@@ -93,6 +95,33 @@ def get_streamers_from_db():
     except sqlite3.Error as e:
         logger.error(f"DB Error: {e}")
         return []
+
+
+def init_metrics_db():
+    """Creates a database table to track viewer and streamer counts over time."""
+    db_path = os.path.join(base_path, "metrics.db")
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS metrics (
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            total_viewers INTEGER,
+            total_streamers INTEGER
+        )
+    """)
+    
+    # Automatically upgrade the existing database without deleting old data!
+    try:
+        cursor.execute("ALTER TABLE metrics ADD COLUMN twitch_viewers INTEGER DEFAULT 0")
+        cursor.execute("ALTER TABLE metrics ADD COLUMN kick_viewers INTEGER DEFAULT 0")
+    except sqlite3.OperationalError:
+        pass # Columns already exist
+
+    conn.commit()
+    conn.close()
+
+# Initialize it on startup
+init_metrics_db()
 
 def load_json_safe(filename, default_val):
     """Safely loads a JSON file without crashing the server if there's a typo."""
@@ -317,6 +346,36 @@ async def fetch_streams_loop():
             
             logger.opt(colors=True).info(f"Cache updated with <magenta>{len(merged)} streams.</magenta> Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
             
+            # --- Merge & Sort ---
+            merged = current_cycle_kick + last_twitch_results
+            merged.sort(key=lambda x: x["viewers"], reverse=True)
+            
+            stream_cache["streams"] = merged
+            stream_cache["count"] = len(merged)
+            stream_cache["status"] = "Live"
+            
+           # --- NEW: LOG METRICS TO DB ---
+            total_viewers = sum(s.get("viewers", 0) for s in merged)
+            tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
+            kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
+            
+            try:
+                metrics_db_path = os.path.join(base_path, "metrics.db")
+                conn = sqlite3.connect(metrics_db_path)
+                cursor = conn.cursor()
+                cursor.execute(
+                    "INSERT INTO metrics (total_viewers, total_streamers, twitch_viewers, kick_viewers) VALUES (?, ?, ?, ?)", 
+                    (total_viewers, len(merged), tw_viewers, kk_viewers)
+                )
+                conn.commit()
+                conn.close()
+            except Exception as e:
+                logger.error(f"Metrics DB Error: {e}")
+            
+            logger.opt(colors=True).info(f"Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
+            
+            await asyncio.sleep(60)
+           
             await asyncio.sleep(60)
     finally:
         if browser:
@@ -355,6 +414,36 @@ def get_kick_playback(username: str):
             return {"url": playback_url}
         else:
             return {"error": f"Kick API blocked request. Status: {response.status_code}"}
+    except Exception as e:
+        return {"error": str(e)}
+    
+@app.get("/api/metrics")
+def get_metrics(timeframe: str = "1h"):
+    db_path = os.path.join(base_path, "metrics.db")
+    
+    now = datetime.utcnow()
+    if timeframe == "1h": delta = now - timedelta(hours=1)
+    elif timeframe == "12h": delta = now - timedelta(hours=12)
+    elif timeframe == "1d": delta = now - timedelta(days=1)
+    elif timeframe == "7d": delta = now - timedelta(days=7)
+    elif timeframe == "1m": delta = now - timedelta(days=30)
+    else: delta = now - timedelta(hours=1)
+        
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        # Grab the new columns
+        cursor.execute("SELECT timestamp, total_viewers, total_streamers, twitch_viewers, kick_viewers FROM metrics WHERE timestamp >= ? ORDER BY timestamp ASC", (delta.strftime('%Y-%m-%d %H:%M:%S'),))
+        rows = cursor.fetchall()
+        conn.close()
+        
+        return {
+            "timestamps": [row[0] for row in rows], 
+            "viewers": [row[1] for row in rows], 
+            "streamers": [row[2] for row in rows],
+            "twitch_viewers": [row[3] for row in rows],
+            "kick_viewers": [row[4] for row in rows]
+        }
     except Exception as e:
         return {"error": str(e)}
 
