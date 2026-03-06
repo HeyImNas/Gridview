@@ -12,9 +12,10 @@
         body {
             background-color: #0b0e14; color: #ffffff;
             font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; 
-            transition: padding 0.3s;
+            transition: padding 0.3s, margin-left 0.3s ease;
             margin-left: 60px; /* Push body over to make room for sidebar */
         }
+        body.sidebar-collapsed { margin-left: 0; }
         
         h1 { text-align: center; color: #53fc18; margin-bottom: 5px; }
         .status-bar { text-align: center; color: #a0a5b5; font-size: 12px; margin-bottom: 20px; }
@@ -25,8 +26,20 @@
             background-color: #1a1f29; border-right: 2px solid #2d3546;
             display: flex; flex-direction: column; align-items: center; padding-top: 20px; 
             z-index: 100; gap: 15px; 
+            transition: transform 0.3s ease; /* Smooth slide animation */
         }
+        .sidebar.collapsed { transform: translateX(-100%); }
         
+        /* The clickable tab that sticks out */
+        .sidebar-toggle {
+            position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+            width: 20px; height: 50px; background: #1a1f29;
+            border: 2px solid #2d3546; border-left: none; border-radius: 0 8px 8px 0;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; color: #a0a5b5; font-size: 10px; transition: 0.2s;
+        }
+        .sidebar-toggle:hover { color: #53fc18; background: #2d3546; }
+
         .sidebar-icon {
             width: 40px; height: 40px; border-radius: 8px; background: #0b0e14;
             display: flex; justify-content: center; align-items: center; cursor: pointer;
@@ -202,7 +215,12 @@
 
     <div id="toast-container"></div>
 
-    <div class="sidebar">
+    <div class="sidebar" id="main-sidebar">
+        
+        <div class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
+            <span id="toggle-icon">◀</span>
+        </div>
+
         <div class="sidebar-icon" onclick="openMetricsModal('general')" title="City Metrics History">
             👁️
             <div class="nav-tooltip">
@@ -337,8 +355,6 @@
         let allStreams = [];
         let currentPlatform = 'all';
         window.isInteracting = false; 
-
-        // Tracks unique IDs for dynamically adding/removing streams
         let streamIdCounter = 0; 
 
         // --- TOAST NOTIFICATIONS ---
@@ -355,7 +371,7 @@
             setTimeout(() => { if(toast.parentElement) { toast.style.animation = "fadeOut 0.3s forwards"; setTimeout(() => toast.remove(), 300); } }, 5000);
         }
 
-        // --- GLOBAL TAB LOGIC ---
+        // --- GLOBAL TAB LOGIC & CTRL+F SHORTCUT ---
         const tabList = ['streams', 'multi', 'events', 'recap', 'clips', 'queue', 'groups'];
         let currentActiveTab = 'streams';
 
@@ -369,6 +385,19 @@
         }
 
         document.addEventListener('keydown', (event) => {
+            // CTRL+F to focus custom search bar
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'f') {
+                event.preventDefault(); 
+                if (currentActiveTab !== 'streams') {
+                    switchTab('streams');
+                }
+                const searchInput = document.getElementById('search-bar');
+                searchInput.focus();
+                searchInput.select();
+                return;
+            }
+
+            // Backtick Tab Cycling
             if (event.target.tagName.toLowerCase() === 'input') return;
             if (event.key === '`') {
                 event.preventDefault(); 
@@ -377,6 +406,31 @@
                 switchTab(tabList[nextIndex]);
             }
         });
+
+        // --- SIDEBAR TOGGLE LOGIC ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('main-sidebar');
+            const body = document.body;
+            const toggleIcon = document.getElementById('toggle-icon');
+            
+            sidebar.classList.toggle('collapsed');
+            body.classList.toggle('sidebar-collapsed');
+            
+            if (sidebar.classList.contains('collapsed')) {
+                toggleIcon.textContent = '▶';
+                localStorage.setItem('sidebarCollapsed', 'true');
+            } else {
+                toggleIcon.textContent = '◀';
+                localStorage.setItem('sidebarCollapsed', 'false');
+            }
+        }
+
+        // Check local storage on load
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.getElementById('main-sidebar').classList.add('collapsed');
+            document.body.classList.add('sidebar-collapsed');
+            document.getElementById('toggle-icon').textContent = '▶';
+        }
 
         // --- MULTI-STREAM LOGIC ---
         const multiInputsContainer = document.getElementById('multi-inputs-container');
@@ -750,7 +804,6 @@
                 factionList.appendChild(row);
             });
         }
-
 
         // --- ORIGINAL DIRECTORY LOGIC ---
         const sortable = new Sortable(grid, {
