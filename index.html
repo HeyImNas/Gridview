@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoPixel Directory</title>
+
+    <link rel="icon" type="image/png" href="icon.svg">
     
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -123,6 +125,9 @@
         }
         .stream-card.kick-hover:hover { border: 1px solid #53fc18; box-shadow: 0 0 15px rgba(83, 252, 24, 0.2); }
         .stream-card.twitch-hover:hover { border: 1px solid #9146FF; box-shadow: 0 0 15px rgba(145, 70, 255, 0.2); }
+        .stream-card.multi-hover:hover { border: 1px solid #00a8ff; box-shadow: 0 0 15px rgba(0, 168, 255, 0.3); z-index: 2; }
+        .stream-card:hover .stream-title { white-space: normal; overflow: visible; word-wrap: break-word; }
+
         .drag-overlay {
             position: absolute; top: 0; left: 0; width: 100%; background-color: #00a8ff; color: #ffffff; text-align: center;
             font-size: 12px; padding: 6px 0; font-weight: bold; letter-spacing: 1px; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 10;
@@ -208,6 +213,12 @@
             transition: all 0.2s; font-size: 12px; font-weight: bold;
         }
         .player-overlay-controls button:hover { background: #2d3546; color: #53fc18; border-color: #53fc18; }
+
+        .viewer-wrap { display: flex; flex-direction: column; align-items: flex-end; }
+        .total-viewers { color: #ff4a4a; font-weight: bold; }
+        .split-viewers { display: none; gap: 8px; font-size: 13px; font-weight: bold; }
+        .stream-card:hover .total-viewers { display: none; }
+        .stream-card:hover .split-viewers { display: flex; animation: fadeIn 0.2s; }
 
     </style>
 </head>
@@ -824,7 +835,18 @@
             grid.innerHTML = ''; 
             streamsToRender.forEach(stream => {
                 const card = document.createElement('div');
-                card.className = `stream-card ${stream.platform === 'kick' ? 'kick-hover' : 'twitch-hover'}`;
+                
+                // Determine the hover color based on viewer splits
+                let hoverClass = '';
+                if (stream.kick_viewers > 0 && stream.twitch_viewers > 0) {
+                    hoverClass = 'multi-hover'; // Glows Blue
+                } else if (stream.kick_viewers > 0) {
+                    hoverClass = 'kick-hover'; // Glows Green
+                } else {
+                    hoverClass = 'twitch-hover'; // Glows Purple
+                }
+
+                card.className = `stream-card ${hoverClass}`;
                 card.dataset.id = stream.channel;
                 const streamUrl = stream.platform === 'kick' ? `https://kick.com/${stream.channel}` : `https://twitch.tv/${stream.channel}`;
                 card.onmouseup = () => { if (!window.isInteracting) window.open(streamUrl, '_blank'); };
@@ -835,6 +857,17 @@
                     tagsHtml = stream.tags.map(tag => `<span class="group-tag" style="background-color: ${tag.color};" title="${tag.rank}">${tag.label}</span>`).join('');
                 }
                 const cacheBuster = stream.thumbnail.includes('?') ? `&t=${Date.now()}` : `?t=${Date.now()}`;
+
+                // Generate the split hover HTML
+                let splitHtml = '';
+                if (stream.kick_viewers > 0 && stream.twitch_viewers > 0) {
+                    splitHtml = `<span style="color: #53fc18;">🟩 ${stream.kick_viewers.toLocaleString()}</span> <span style="color: #9146FF;">🟪 ${stream.twitch_viewers.toLocaleString()}</span>`;
+                } else if (stream.kick_viewers > 0) {
+                    splitHtml = `<span style="color: #53fc18;">🟩 ${stream.kick_viewers.toLocaleString()}</span>`;
+                } else {
+                    splitHtml = `<span style="color: #9146FF;">🟪 ${stream.twitch_viewers.toLocaleString()}</span>`;
+                }
+
                 card.innerHTML = `
                     <div class="drag-overlay">⠿ DRAG TO REORDER ⠿</div>
                     <img class="thumbnail" src="${stream.thumbnail}${cacheBuster}" draggable="false" alt="thumb">
@@ -846,7 +879,10 @@
                                 <b style="color: ${badgeColor}">[${stream.platform.toUpperCase()}]</b> 
                                 ${stream.channel} ${tagsHtml}
                             </div>
-                            <span class="viewers">🔴 ${stream.viewers.toLocaleString()}</span>
+                            <div class="viewer-wrap">
+                                <span class="total-viewers">🔴 ${stream.viewers.toLocaleString()}</span>
+                                <div class="split-viewers">${splitHtml}</div>
+                            </div>
                         </div>
                     </div>`;
                 grid.appendChild(card);

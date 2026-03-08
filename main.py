@@ -17,6 +17,8 @@ import requests
 from curl_cffi import requests as c_requests
 from curl_cffi.requests import AsyncSession
 from datetime import datetime, timedelta
+import difflib
+import re
 
 
 # --- LOGGING SETUP ---
@@ -153,6 +155,27 @@ def get_streamer_tags(channel_name, groups_data):
             
     return tags
 
+def clean_username_for_matching(name):
+    """Cleans a username for fuzzy matching (removes symbols and 'tv' suffixes)."""
+    name = name.lower()
+    name = re.sub(r'[^a-z0-9]', '', name) # Remove all non-alphanumeric chars (like _ and -)
+    if name.endswith('ttv') and len(name) > 3:
+        name = name[:-3]
+    elif name.endswith('tv') and len(name) > 2:
+        name = name[:-2]
+    return name
+
+def is_similar_username(name1, name2, threshold=0.85):
+    """Returns True if usernames are roughly a 90% match."""
+    clean1 = clean_username_for_matching(name1)
+    clean2 = clean_username_for_matching(name2)
+    
+    if clean1 == clean2:
+        return True
+        
+    ratio = difflib.SequenceMatcher(None, clean1, clean2).ratio()
+    return ratio >= threshold
+
 def chunk_list(data_list, chunk_size):
     for i in range(0, len(data_list), chunk_size):
         yield data_list[i:i + chunk_size]
@@ -201,6 +224,8 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                                 "channel": channel_name,
                                 "title": stream.get("title", "No Title"),
                                 "viewers": stream.get("viewer_count", 0),
+                                "twitch_viewers": stream.get("viewer_count", 0), # NEW
+                                "kick_viewers": 0, # NEW
                                 "thumbnail": thumb,
                                 "tags": tags
                             })
@@ -272,12 +297,15 @@ async def fetch_streams_loop():
 
                         current_cycle_kick.append({
                             "platform": "kick",
-                            "channel": channel_name,
-                            "title": s.get("title", "No Title"),
-                            "viewers": s.get("viewer_count", 0),
+                            "channel": channel_name, # (or allowed_user for the allowlist block)
+                            "title": s.get("title", "No Title"), # (or livestream.get... for the allowlist block)
+                            "viewers": s.get("viewer_count", 0), # (or livestream.get... for the allowlist block)
+                            "kick_viewers": s.get("viewer_count", 0), # NEW (Matches viewers)
+                            "twitch_viewers": 0, # NEW
                             "thumbnail": s.get("thumbnail", {}).get("src", ""),
                             "tags": tags
                         })
+                        
             except Exception as e:
                 logger.error(f"Kick Category Error: {e}")
 
@@ -336,25 +364,36 @@ async def fetch_streams_loop():
             
             twitch_counter += 1
 
-            # --- Merge & Sort ---
-            merged = current_cycle_kick + last_twitch_results
+            # --- Merge, Deduplicate & Sort ---
+            raw_merged = current_cycle_kick + last_twitch_results
+            deduped_streams = []
+            
+            for stream in raw_merged:
+                channel = stream["channel"]
+                matched_existing = None
+                
+                # Check if we already processed a similar username
+                for existing in deduped_streams:
+                    if is_similar_username(channel, existing["channel"]):
+                        matched_existing = existing
+                        break
+                
+                if matched_existing:
+                    # Duplicate found! Combine the viewers into the total AND the specific platform splits
+                    matched_existing["viewers"] += stream.get("viewers", 0)
+                    matched_existing["twitch_viewers"] += stream.get("twitch_viewers", 0)
+                    matched_existing["kick_viewers"] += stream.get("kick_viewers", 0)
+                else:
+                    deduped_streams.append(stream)
+
+            merged = deduped_streams
             merged.sort(key=lambda x: x["viewers"], reverse=True)
             
             stream_cache["streams"] = merged
             stream_cache["count"] = len(merged)
             stream_cache["status"] = "Live"
             
-            logger.opt(colors=True).info(f"Cache updated with <magenta>{len(merged)} streams.</magenta> Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
-            
-            # --- Merge & Sort ---
-            merged = current_cycle_kick + last_twitch_results
-            merged.sort(key=lambda x: x["viewers"], reverse=True)
-            
-            stream_cache["streams"] = merged
-            stream_cache["count"] = len(merged)
-            stream_cache["status"] = "Live"
-            
-           # --- NEW: LOG METRICS TO DB ---
+            # --- LOG METRICS TO DB ---
             total_viewers = sum(s.get("viewers", 0) for s in merged)
             tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
             kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
@@ -374,8 +413,6 @@ async def fetch_streams_loop():
             
             logger.opt(colors=True).info(f"Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
             
-            await asyncio.sleep(60)
-           
             await asyncio.sleep(60)
     finally:
         if browser:
