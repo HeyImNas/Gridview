@@ -826,49 +826,36 @@
 
         function renderStreams(streamsToRender) {
             const savedOrder = JSON.parse(localStorage.getItem('streamOrder')) || [];
+            
+            // 1. Sort the streams (either by user's saved layout or by highest viewers)
             if (savedOrder.length > 0 && currentPlatform === 'all' && searchBar.value === '') {
                 streamsToRender.sort((a, b) => {
                     let indexA = savedOrder.indexOf(a.channel); let indexB = savedOrder.indexOf(b.channel);
                     return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
                 });
             }
-            grid.innerHTML = ''; 
-            streamsToRender.forEach(stream => {
-                const card = document.createElement('div');
-                
-                // Determine the hover color based on viewer splits
-                let hoverClass = '';
-                if (stream.kick_viewers > 0 && stream.twitch_viewers > 0) {
-                    hoverClass = 'multi-hover'; // Glows Blue
-                } else if (stream.kick_viewers > 0) {
-                    hoverClass = 'kick-hover'; // Glows Green
-                } else {
-                    hoverClass = 'twitch-hover'; // Glows Purple
-                }
 
-                card.className = `stream-card ${hoverClass}`;
-                card.dataset.id = stream.channel;
-                const streamUrl = stream.platform === 'kick' ? `https://kick.com/${stream.channel}` : `https://twitch.tv/${stream.channel}`;
-                card.onmouseup = () => { if (!window.isInteracting) window.open(streamUrl, '_blank'); };
+            const currentChannels = new Set();
+
+            // 2. Loop through the fresh data and update/create cards
+            streamsToRender.forEach(stream => {
+                currentChannels.add(stream.channel);
                 
-                // Determine the Badge Text and Color
+                // Determine the Badge, Hover Color, and Split Viewer HTML
+                let hoverClass = '';
                 let badgeText = stream.platform.toUpperCase();
                 let badgeColor = stream.platform === 'kick' ? '#53fc18' : '#9146FF';
-
-                // Override if they are multistreaming!
+                
                 if (stream.kick_viewers > 0 && stream.twitch_viewers > 0) {
+                    hoverClass = 'multi-hover';
                     badgeText = 'MULTI';
-                    badgeColor = '#00a8ff'; // Matches your blue hover border
+                    badgeColor = '#00a8ff';
+                } else if (stream.kick_viewers > 0) {
+                    hoverClass = 'kick-hover';
+                } else {
+                    hoverClass = 'twitch-hover';
                 }
 
-                const timeAgo = stream.platform === 'twitch' ? '(Updated 5m)' : '(Live)';
-                let tagsHtml = '';
-                if (stream.tags && stream.tags.length > 0) {
-                    tagsHtml = stream.tags.map(tag => `<span class="group-tag" style="background-color: ${tag.color};" title="${tag.rank}">${tag.label}</span>`).join('');
-                }
-                const cacheBuster = stream.thumbnail.includes('?') ? `&t=${Date.now()}` : `?t=${Date.now()}`;
-
-                // Generate the split hover HTML
                 let splitHtml = '';
                 if (stream.kick_viewers > 0 && stream.twitch_viewers > 0) {
                     splitHtml = `<span style="color: #53fc18;">🟩 ${stream.kick_viewers.toLocaleString()}</span> <span style="color: #9146FF;">🟪 ${stream.twitch_viewers.toLocaleString()}</span>`;
@@ -877,25 +864,78 @@
                 } else {
                     splitHtml = `<span style="color: #9146FF;">🟪 ${stream.twitch_viewers.toLocaleString()}</span>`;
                 }
+                
+                const timeAgo = stream.platform === 'twitch' ? '(Updated 5m)' : '(Live)';
+                const cacheBuster = stream.thumbnail.includes('?') ? `&t=${Date.now()}` : `?t=${Date.now()}`;
 
-                card.innerHTML = `
-                    <div class="drag-overlay">⠿ DRAG TO REORDER ⠿</div>
-                    <img class="thumbnail" src="${stream.thumbnail}${cacheBuster}" draggable="false" alt="thumb">
-                    <div class="card-info">
-                        <div class="stream-title">${stream.title}</div>
-                        <div class="refresh-tag">${timeAgo}</div>
-                        <div class="stream-meta">
-                            <div class="channel-name-area">
-                                <b style="color: ${badgeColor}">[${badgeText}]</b> 
-                                ${stream.channel} ${tagsHtml}
+                // Check if the card already exists on the screen
+                let card = grid.querySelector(`.stream-card[data-id="${stream.channel}"]`);
+
+                if (card) {
+                    // --- UPDATE EXISTING CARD IN-PLACE ---
+                    card.className = `stream-card ${hoverClass}`;
+                    
+                    const img = card.querySelector('.thumbnail');
+                    if (img && !window.isInteracting) img.src = `${stream.thumbnail}${cacheBuster}`;
+                    
+                    const titleDiv = card.querySelector('.stream-title');
+                    if (titleDiv && titleDiv.textContent !== stream.title) titleDiv.textContent = stream.title;
+                    
+                    const refreshDiv = card.querySelector('.refresh-tag');
+                    if (refreshDiv && refreshDiv.textContent !== timeAgo) refreshDiv.textContent = timeAgo;
+
+                    const viewerWrap = card.querySelector('.viewer-wrap');
+                    if (viewerWrap) {
+                        viewerWrap.innerHTML = `
+                            <span class="total-viewers">🔴 ${stream.viewers.toLocaleString()}</span>
+                            <div class="split-viewers">${splitHtml}</div>
+                        `;
+                    }
+                    
+                    // Appending an existing element doesn't copy it, it just moves it.
+                    // This naturally re-sorts the grid without destroying the HTML!
+                    grid.appendChild(card); 
+
+                } else {
+                    // --- CREATE NEW CARD ---
+                    card = document.createElement('div');
+                    card.className = `stream-card ${hoverClass}`;
+                    card.dataset.id = stream.channel;
+                    
+                    const streamUrl = stream.platform === 'kick' ? `https://kick.com/${stream.channel}` : `https://twitch.tv/${stream.channel}`;
+                    card.onmouseup = () => { if (!window.isInteracting) window.open(streamUrl, '_blank'); };
+                    
+                    let tagsHtml = '';
+                    if (stream.tags && stream.tags.length > 0) {
+                        tagsHtml = stream.tags.map(tag => `<span class="group-tag" style="background-color: ${tag.color};" title="${tag.rank}">${tag.label}</span>`).join('');
+                    }
+
+                    card.innerHTML = `
+                        <div class="drag-overlay">⠿ DRAG TO REORDER ⠿</div>
+                        <img class="thumbnail" src="${stream.thumbnail}${cacheBuster}" draggable="false" alt="thumb">
+                        <div class="card-info">
+                            <div class="stream-title">${stream.title}</div>
+                            <div class="refresh-tag">${timeAgo}</div>
+                            <div class="stream-meta">
+                                <div class="channel-name-area">
+                                    <b style="color: ${badgeColor}">[${badgeText}]</b> 
+                                    ${stream.channel} ${tagsHtml}
+                                </div>
+                                <div class="viewer-wrap">
+                                    <span class="total-viewers">🔴 ${stream.viewers.toLocaleString()}</span>
+                                    <div class="split-viewers">${splitHtml}</div>
+                                </div>
                             </div>
-                            <div class="viewer-wrap">
-                                <span class="total-viewers">🔴 ${stream.viewers.toLocaleString()}</span>
-                                <div class="split-viewers">${splitHtml}</div>
-                            </div>
-                        </div>
-                    </div>`;
-                grid.appendChild(card);
+                        </div>`;
+                    grid.appendChild(card);
+                }
+            });
+
+            // 3. Remove streamers who went offline or no longer match the filter
+            Array.from(grid.querySelectorAll('.stream-card')).forEach(card => {
+                if (!currentChannels.has(card.dataset.id)) {
+                    card.remove();
+                }
             });
         }
 
