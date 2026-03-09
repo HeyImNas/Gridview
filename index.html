@@ -850,7 +850,17 @@
                 card.dataset.id = stream.channel;
                 const streamUrl = stream.platform === 'kick' ? `https://kick.com/${stream.channel}` : `https://twitch.tv/${stream.channel}`;
                 card.onmouseup = () => { if (!window.isInteracting) window.open(streamUrl, '_blank'); };
-                const badgeColor = stream.platform === 'kick' ? '#53fc18' : '#9146FF';
+                
+                // Determine the Badge Text and Color
+                let badgeText = stream.platform.toUpperCase();
+                let badgeColor = stream.platform === 'kick' ? '#53fc18' : '#9146FF';
+
+                // Override if they are multistreaming!
+                if (stream.kick_viewers > 0 && stream.twitch_viewers > 0) {
+                    badgeText = 'MULTI';
+                    badgeColor = '#00a8ff'; // Matches your blue hover border
+                }
+
                 const timeAgo = stream.platform === 'twitch' ? '(Updated 5m)' : '(Live)';
                 let tagsHtml = '';
                 if (stream.tags && stream.tags.length > 0) {
@@ -876,7 +886,7 @@
                         <div class="refresh-tag">${timeAgo}</div>
                         <div class="stream-meta">
                             <div class="channel-name-area">
-                                <b style="color: ${badgeColor}">[${stream.platform.toUpperCase()}]</b> 
+                                <b style="color: ${badgeColor}">[${badgeText}]</b> 
                                 ${stream.channel} ${tagsHtml}
                             </div>
                             <div class="viewer-wrap">
