@@ -216,31 +216,33 @@ async def fetch_streams_loop():
     logger.info(f"Loaded {len(known_streamers)} streamers. Starting silent scraper...")
     
     last_twitch_results = []
+    last_kick_results = [] # NEW: Cache for Kick
     twitch_counter = 5 
 
-    while True:
-        blacklist_data = load_json_safe("blacklist.json", {"titles": [], "channels": []})
-        allowlist_data = load_json_safe("allowlist.json", {"channels": []})
-        groups_data = load_json_safe("groups.json", {})
-        
-        title_blacklist = [str(t).lower() for t in blacklist_data.get("titles", [])]
-        channel_blacklist = [str(c).lower() for c in blacklist_data.get("channels", [])]
-        channel_allowlist = [str(c).lower() for c in allowlist_data.get("channels", [])]
-        
-        valid_twitch_streamers = [name for name in known_streamers if name.lower() not in channel_blacklist]
+    # NEW: Move the session OUTSIDE the loop so it keeps its cookies!
+    async with AsyncSession(impersonate="chrome") as session:
+        while True:
+            blacklist_data = load_json_safe("blacklist.json", {"titles": [], "channels": []})
+            allowlist_data = load_json_safe("allowlist.json", {"channels": []})
+            groups_data = load_json_safe("groups.json", {})
+            
+            title_blacklist = [str(t).lower() for t in blacklist_data.get("titles", [])]
+            channel_blacklist = [str(c).lower() for c in blacklist_data.get("channels", [])]
+            channel_allowlist = [str(c).lower() for c in allowlist_data.get("channels", [])]
+            
+            valid_twitch_streamers = [name for name in known_streamers if name.lower() not in channel_blacklist]
 
-        current_cycle_kick = []
-        
-        # --- KICK Refresh (Using curl_cffi to bypass Cloudflare) ---
-        try:
-            logger.info("Refreshing Kick...")
-            async with AsyncSession(impersonate="chrome") as session:
+            current_cycle_kick = []
+            kick_scrape_successful = False
+            
+            # --- KICK Refresh ---
+            try:
+                logger.info("Refreshing Kick...")
                 
-                # 1. Main Category Scrape
                 live_kick_url = f"{KICK_API_URL}&_t={int(time.time())}"
-                resp = await session.get(live_kick_url)
+                resp = await session.get(live_kick_url, timeout=15)
                 
-                if resp.status_code == 200:
+                if resp.status_code == 200 and "livestreams" in resp.text:
                     data = resp.json()
                     for s in data.get("data", {}).get("livestreams", []):
                         channel_name = s.get("channel", {}).get("slug", "Unknown")
@@ -266,19 +268,20 @@ async def fetch_streams_loop():
                                 "thumbnail": s.get("thumbnail", {}).get("src", ""),
                                 "tags": tags
                             })
+                    kick_scrape_successful = True
                 else:
                     logger.warning(f"Kick Category API blocked. Status: {resp.status_code}")
 
                 # 2. Allowlist Check
-                if channel_allowlist:
+                if channel_allowlist and kick_scrape_successful:
                     for allowed_user in channel_allowlist:
                         if any(s["channel"].lower() == allowed_user for s in current_cycle_kick):
                             continue
                         
                         try:
-                            resp = await session.get(f"https://kick.com/api/v1/channels/{allowed_user}")
-                            if resp.status_code == 200:
-                                user_data = resp.json()
+                            resp_al = await session.get(f"https://kick.com/api/v1/channels/{allowed_user}", timeout=10)
+                            if resp_al.status_code == 200 and "livestream" in resp_al.text:
+                                user_data = resp_al.json()
                                 livestream = user_data.get("livestream")
                                 
                                 if livestream:
@@ -300,73 +303,81 @@ async def fetch_streams_loop():
                             await asyncio.sleep(0.5) 
                         except Exception:
                             pass 
-        except Exception as e:
-            logger.error(f"Kick Scrape Error: {e}")
-
-        # --- TWITCH Refresh ---
-        if twitch_counter >= 5:
-            try:
-                logger.info("Running 5-min Twitch batch query...")
-                token = await get_twitch_token()
-                if token and valid_twitch_streamers:
-                    last_twitch_results = await fetch_twitch_streams_by_name(
-                        token, valid_twitch_streamers, title_blacklist, groups_data, channel_allowlist
-                    )
-                    logger.info(f"Twitch updated: {len(last_twitch_results)} live.")
-                twitch_counter = 0 
             except Exception as e:
-                logger.error(f"Twitch Error: {e}")
-        
-        twitch_counter += 1
+                logger.error(f"Kick Scrape Error: {e}")
 
-        # --- Merge, Deduplicate & Sort ---
-        raw_merged = current_cycle_kick + last_twitch_results
-        deduped_streams = []
-        
-        for stream in raw_merged:
-            channel = stream["channel"]
-            matched_existing = None
-            
-            for existing in deduped_streams:
-                if is_similar_username(channel, existing["channel"]):
-                    matched_existing = existing
-                    break
-            
-            if matched_existing:
-                matched_existing["viewers"] += stream.get("viewers", 0)
-                matched_existing["twitch_viewers"] += stream.get("twitch_viewers", 0)
-                matched_existing["kick_viewers"] += stream.get("kick_viewers", 0)
+            # --- Kick Fallback Cache ---
+            if kick_scrape_successful:
+                last_kick_results = current_cycle_kick
             else:
-                deduped_streams.append(stream)
+                logger.warning("Kick scrape failed this cycle. Falling back to cached Kick data.")
+                current_cycle_kick = last_kick_results
 
-        merged = deduped_streams
-        merged.sort(key=lambda x: x["viewers"], reverse=True)
-        
-        stream_cache["streams"] = merged
-        stream_cache["count"] = len(merged)
-        stream_cache["status"] = "Live"
-        
-        # --- LOG METRICS TO DB ---
-        total_viewers = sum(s.get("viewers", 0) for s in merged)
-        tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
-        kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
-        
-        try:
-            metrics_db_path = os.path.join(base_path, "metrics.db")
-            conn = sqlite3.connect(metrics_db_path)
-            cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO metrics (total_viewers, total_streamers, twitch_viewers, kick_viewers) VALUES (?, ?, ?, ?)", 
-                (total_viewers, len(merged), tw_viewers, kk_viewers)
-            )
-            conn.commit()
-            conn.close()
-        except Exception as e:
-            logger.error(f"Metrics DB Error: {e}")
-        
-        logger.opt(colors=True).info(f"Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
-        
-        await asyncio.sleep(60)
+            # --- TWITCH Refresh ---
+            if twitch_counter >= 5:
+                try:
+                    logger.info("Running 5-min Twitch batch query...")
+                    token = await get_twitch_token()
+                    if token and valid_twitch_streamers:
+                        last_twitch_results = await fetch_twitch_streams_by_name(
+                            token, valid_twitch_streamers, title_blacklist, groups_data, channel_allowlist
+                        )
+                        logger.info(f"Twitch updated: {len(last_twitch_results)} live.")
+                    twitch_counter = 0 
+                except Exception as e:
+                    logger.error(f"Twitch Error: {e}")
+            
+            twitch_counter += 1
+
+            # --- Merge, Deduplicate & Sort ---
+            raw_merged = current_cycle_kick + last_twitch_results
+            deduped_streams = []
+            
+            for stream in raw_merged:
+                channel = stream["channel"]
+                matched_existing = None
+                
+                for existing in deduped_streams:
+                    if is_similar_username(channel, existing["channel"]):
+                        matched_existing = existing
+                        break
+                
+                if matched_existing:
+                    matched_existing["viewers"] += stream.get("viewers", 0)
+                    matched_existing["twitch_viewers"] += stream.get("twitch_viewers", 0)
+                    matched_existing["kick_viewers"] += stream.get("kick_viewers", 0)
+                else:
+                    # NEW: .copy() is required here so we don't permanently mutate the cached arrays!
+                    deduped_streams.append(stream.copy())
+
+            merged = deduped_streams
+            merged.sort(key=lambda x: x["viewers"], reverse=True)
+            
+            stream_cache["streams"] = merged
+            stream_cache["count"] = len(merged)
+            stream_cache["status"] = "Live"
+            
+            # --- LOG METRICS TO DB ---
+            total_viewers = sum(s.get("viewers", 0) for s in merged)
+            tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
+            kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
+            
+            try:
+                metrics_db_path = os.path.join(base_path, "metrics.db")
+                conn = sqlite3.connect(metrics_db_path)
+                cursor = conn.cursor()
+                cursor.execute(
+                    "INSERT INTO metrics (total_viewers, total_streamers, twitch_viewers, kick_viewers) VALUES (?, ?, ?, ?)", 
+                    (total_viewers, len(merged), tw_viewers, kk_viewers)
+                )
+                conn.commit()
+                conn.close()
+            except Exception as e:
+                logger.error(f"Metrics DB Error: {e}")
+            
+            logger.opt(colors=True).info(f"Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
+            
+            await asyncio.sleep(60)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
