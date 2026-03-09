@@ -13,7 +13,7 @@ A lightweight, high-performance local web dashboard designed to track, filter, a
 * **Smart Input Detection:** Paste a full URL (`kick.com/user` or `twitch.tv/user`) or just type a username. The system automatically cross-references the live cache to determine the correct platform.
 * **Dynamic Grid:** Add or remove streams on the fly. The CSS grid automatically mathematically recalculates to fill the screen perfectly (e.g., 1 stream, 2 side-by-side, 4 in a grid, etc.).
 * **Active View "Quick Add":** Add new streamers directly into an active multi-view session without having to stop and rebuild the layout.
-* **Lofi-Style Overlays:** Clean, hover-activated overlay controls on every video frame to instantly **Refresh** a frozen stream or **Close** a player.
+* **Lofi integrated Overlays:** Clean, hover-activated overlay controls on every video frame to instantly **Refresh** a frozen stream or **Close** a player.
 * **Integrated Chat:** A side-panel chat system with tabs to easily switch between the chatrooms of the streamers you are currently watching.
 * **Theater Mode:** A single button click hides the top navigation tabs, header, and search bar, expanding the video grid to 100% of the viewport.
 * **Error Handling:** Sleek, non-intrusive Toast Notifications alert you if a requested stream is offline or invalid without breaking the rest of the layout.
