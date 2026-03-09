@@ -5,37 +5,28 @@ import sqlite3
 import os
 import sys
 import logging
+import difflib
+import re
+import time
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
-import nodriver as uc
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from loguru import logger
-import time
-import requests
 from curl_cffi import requests as c_requests
 from curl_cffi.requests import AsyncSession
-from datetime import datetime, timedelta
-import difflib
-import re
-
 
 # --- LOGGING SETUP ---
-# 1. Clear Loguru's default setup
 logger.remove()
-
-# 2. Change INFO color to yellow
 logger.level("INFO", color="<yellow>")
-
-# 3. Add our custom format and force it to only show INFO and above
 logger.add(
     sys.stdout, 
     format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <2}</level> | {message}",
     level="INFO" 
 )
 
-# 4. Create an Interceptor for Uvicorn
 class InterceptHandler(logging.Handler):
     def emit(self, record):
         try:
@@ -50,16 +41,17 @@ class InterceptHandler(logging.Handler):
 
         message = record.getMessage()
         
-        # Colorize the 200 status code for the api/streams endpoint
+        # Silence the harmless Windows 10054 socket error
+        if "WinError 10054" in message or "An existing connection was forcibly closed" in message:
+            return 
+
         if record.name == "uvicorn.access" and "/api/streams" in message and message.endswith(" 200"):
             message = message[:-4] + " <green>200</green>"
 
-        # Use colors=True so Loguru translates the <green> tag into actual terminal color
         logger.opt(depth=depth, exception=record.exc_info, colors=True).log(level, message)
 
-# 5. Hijack Uvicorn's loggers and route them through the Interceptor
 logging.basicConfig(handlers=[InterceptHandler()], level=logging.INFO)
-for name in ["uvicorn", "uvicorn.error", "uvicorn.access"]:
+for name in ["uvicorn", "uvicorn.error", "uvicorn.access", "asyncio"]:
     logger_instance = logging.getLogger(name)
     logger_instance.handlers = [InterceptHandler()]
     logger_instance.propagate = False
@@ -67,8 +59,6 @@ for name in ["uvicorn", "uvicorn.error", "uvicorn.access"]:
 
 # --- CONFIGURATION ---
 KICK_API_URL = "https://web.kick.com/api/v1/livestreams?limit=100&sort=viewer_count_desc&category_id=9818"
-
-# --- ENVIRONMENT SETUP ---
 base_path = os.path.dirname(os.path.abspath(__file__))
 env_path = os.path.join(base_path, ".env")
 load_dotenv(dotenv_path=env_path)
@@ -85,6 +75,29 @@ stream_cache = {
     "status": "Initializing..."
 }
 
+# --- DATABASE & HELPERS ---
+def init_metrics_db():
+    db_path = os.path.join(base_path, "metrics.db")
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS metrics (
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            total_viewers INTEGER,
+            total_streamers INTEGER
+        )
+    """)
+    try:
+        cursor.execute("ALTER TABLE metrics ADD COLUMN twitch_viewers INTEGER DEFAULT 0")
+        cursor.execute("ALTER TABLE metrics ADD COLUMN kick_viewers INTEGER DEFAULT 0")
+    except sqlite3.OperationalError:
+        pass # Columns already exist
+
+    conn.commit()
+    conn.close()
+
+init_metrics_db()
+
 def get_streamers_from_db():
     try:
         db_path = os.path.join(base_path, "streamers.db")
@@ -98,35 +111,7 @@ def get_streamers_from_db():
         logger.error(f"DB Error: {e}")
         return []
 
-
-def init_metrics_db():
-    """Creates a database table to track viewer and streamer counts over time."""
-    db_path = os.path.join(base_path, "metrics.db")
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS metrics (
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-            total_viewers INTEGER,
-            total_streamers INTEGER
-        )
-    """)
-    
-    # Automatically upgrade the existing database without deleting old data!
-    try:
-        cursor.execute("ALTER TABLE metrics ADD COLUMN twitch_viewers INTEGER DEFAULT 0")
-        cursor.execute("ALTER TABLE metrics ADD COLUMN kick_viewers INTEGER DEFAULT 0")
-    except sqlite3.OperationalError:
-        pass # Columns already exist
-
-    conn.commit()
-    conn.close()
-
-# Initialize it on startup
-init_metrics_db()
-
 def load_json_safe(filename, default_val):
-    """Safely loads a JSON file without crashing the server if there's a typo."""
     filepath = os.path.join(base_path, filename)
     try:
         with open(filepath, "r", encoding="utf-8") as f:
@@ -138,27 +123,27 @@ def load_json_safe(filename, default_val):
         return default_val
 
 def get_streamer_tags(channel_name, groups_data):
-    """Matches a streamer to their groups based on the updated groups.json structure."""
     tags = []
     channel_lower = channel_name.lower()
-    
     for tag_label, info in groups_data.items():
         members_dict = info.get("members", {})
         members_lower = [k.lower() for k in members_dict.keys()]
-        
         if channel_lower in members_lower:
             tags.append({
                 "label": tag_label,
                 "rank": info.get("full_name", tag_label),
                 "color": info.get("color", "#888888")
             })
-            
     return tags
 
+def chunk_list(data_list, chunk_size):
+    for i in range(0, len(data_list), chunk_size):
+        yield data_list[i:i + chunk_size]
+
+# --- FUZZY MATCHING (DEDUPLICATION) ---
 def clean_username_for_matching(name):
-    """Cleans a username for fuzzy matching (removes symbols and 'tv' suffixes)."""
     name = name.lower()
-    name = re.sub(r'[^a-z0-9]', '', name) # Remove all non-alphanumeric chars (like _ and -)
+    name = re.sub(r'[^a-z0-9]', '', name)
     if name.endswith('ttv') and len(name) > 3:
         name = name[:-3]
     elif name.endswith('tv') and len(name) > 2:
@@ -166,20 +151,14 @@ def clean_username_for_matching(name):
     return name
 
 def is_similar_username(name1, name2, threshold=0.85):
-    """Returns True if usernames are roughly a 90% match."""
     clean1 = clean_username_for_matching(name1)
     clean2 = clean_username_for_matching(name2)
-    
     if clean1 == clean2:
         return True
-        
     ratio = difflib.SequenceMatcher(None, clean1, clean2).ratio()
     return ratio >= threshold
 
-def chunk_list(data_list, chunk_size):
-    for i in range(0, len(data_list), chunk_size):
-        yield data_list[i:i + chunk_size]
-
+# --- SCRAPERS ---
 async def get_twitch_token():
     url = f"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIENT_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials"
     async with aiohttp.ClientSession() as session:
@@ -205,14 +184,11 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                     for stream in data.get("data", []):
                         channel_name = stream.get("user_login")
                         
-                        # --- THE ALLOWLIST BYPASS ---
                         is_gta = stream.get("game_id") == "32982"
                         is_allowed = channel_name.lower() in channel_allowlist
                         
                         if is_gta or is_allowed: 
                             title = stream.get("title", "").lower()
-                            
-                            # Title Filter
                             if any(term in title for term in title_blacklist):
                                 continue 
                                 
@@ -224,8 +200,8 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                                 "channel": channel_name,
                                 "title": stream.get("title", "No Title"),
                                 "viewers": stream.get("viewer_count", 0),
-                                "twitch_viewers": stream.get("viewer_count", 0), # NEW
-                                "kick_viewers": 0, # NEW
+                                "twitch_viewers": stream.get("viewer_count", 0),
+                                "kick_viewers": 0,
                                 "thumbnail": thumb,
                                 "tags": tags
                             })
@@ -237,186 +213,160 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
 
 async def fetch_streams_loop():
     known_streamers = get_streamers_from_db()
-    logger.info(f"Loaded {len(known_streamers)} streamers. Initializing Browser...")
-    
-    app_data = os.getenv("LOCALAPPDATA") or base_path
-    profile_path = os.path.join(app_data, "KickScraperProfile")
-    
-    browser = await uc.start(
-        user_data_dir=profile_path,
-        headless=False, 
-        browser_args=["--window-position=-32000,-32000"]
-    )
+    logger.info(f"Loaded {len(known_streamers)} streamers. Starting silent scraper...")
     
     last_twitch_results = []
     twitch_counter = 5 
 
-    try:
-        while True:
-            # Safely load configurations
-            blacklist_data = load_json_safe("blacklist.json", {"titles": [], "channels": []})
-            allowlist_data = load_json_safe("allowlist.json", {"channels": []})
-            groups_data = load_json_safe("groups.json", {})
-            
-            title_blacklist = [str(t).lower() for t in blacklist_data.get("titles", [])]
-            channel_blacklist = [str(c).lower() for c in blacklist_data.get("channels", [])]
-            channel_allowlist = [str(c).lower() for c in allowlist_data.get("channels", [])]
-            
-            valid_twitch_streamers = [name for name in known_streamers if name.lower() not in channel_blacklist]
+    while True:
+        blacklist_data = load_json_safe("blacklist.json", {"titles": [], "channels": []})
+        allowlist_data = load_json_safe("allowlist.json", {"channels": []})
+        groups_data = load_json_safe("groups.json", {})
+        
+        title_blacklist = [str(t).lower() for t in blacklist_data.get("titles", [])]
+        channel_blacklist = [str(c).lower() for c in blacklist_data.get("channels", [])]
+        channel_allowlist = [str(c).lower() for c in allowlist_data.get("channels", [])]
+        
+        valid_twitch_streamers = [name for name in known_streamers if name.lower() not in channel_blacklist]
 
-            current_cycle_kick = []
-            
-            # --- KICK Refresh (Category Scrape) ---
-            try:
-                logger.info("Refreshing Kick...")
+        current_cycle_kick = []
+        
+        # --- KICK Refresh (Using curl_cffi to bypass Cloudflare) ---
+        try:
+            logger.info("Refreshing Kick...")
+            async with AsyncSession(impersonate="chrome") as session:
+                
+                # 1. Main Category Scrape
                 live_kick_url = f"{KICK_API_URL}&_t={int(time.time())}"
-                page = await browser.get(live_kick_url)
+                resp = await session.get(live_kick_url)
                 
-                await page.sleep(4) 
-                content = await page.evaluate("document.body.innerText")
-                
-                if not content or "livestreams" not in content:
-                    raise ValueError("Kick returned empty or invalid data this cycle.")
-
-                data = json.loads(content)
-                
-                for s in data.get("data", {}).get("livestreams", []):
-                    channel_name = s.get("channel", {}).get("slug", "Unknown")
-                    channel_lower = channel_name.lower()
-                    
-                    if channel_lower in channel_blacklist:
-                        continue
-
-                    # This scrapes strictly the GTA V category page
-                    if s.get("category", {}).get("id") == 9818:
-                        title = s.get("title", "").lower()
-                        if any(term in title for term in title_blacklist):
+                if resp.status_code == 200:
+                    data = resp.json()
+                    for s in data.get("data", {}).get("livestreams", []):
+                        channel_name = s.get("channel", {}).get("slug", "Unknown")
+                        channel_lower = channel_name.lower()
+                        
+                        if channel_lower in channel_blacklist:
                             continue
-                        
-                        tags = get_streamer_tags(channel_name, groups_data)
 
-                        current_cycle_kick.append({
-                            "platform": "kick",
-                            "channel": channel_name, # (or allowed_user for the allowlist block)
-                            "title": s.get("title", "No Title"), # (or livestream.get... for the allowlist block)
-                            "viewers": s.get("viewer_count", 0), # (or livestream.get... for the allowlist block)
-                            "kick_viewers": s.get("viewer_count", 0), # NEW (Matches viewers)
-                            "twitch_viewers": 0, # NEW
-                            "thumbnail": s.get("thumbnail", {}).get("src", ""),
-                            "tags": tags
-                        })
-                        
-            except Exception as e:
-                logger.error(f"Kick Category Error: {e}")
-
-            # --- KICK Allowlist Check (Bypassing Category) ---
-            if channel_allowlist:
-                try:
-                    # We use AsyncSession to safely bypass Cloudflare for direct Kick API hits
-                    async with AsyncSession(impersonate="chrome") as session:
-                        for allowed_user in channel_allowlist:
-                            # Skip if we already pulled them from the main GTA V page
-                            if any(s["channel"].lower() == allowed_user for s in current_cycle_kick):
+                        if s.get("category", {}).get("id") == 9818:
+                            title = s.get("title", "").lower()
+                            if any(term in title for term in title_blacklist):
                                 continue
                             
-                            try:
-                                resp = await session.get(f"https://kick.com/api/v1/channels/{allowed_user}")
-                                if resp.status_code == 200:
-                                    user_data = resp.json()
-                                    livestream = user_data.get("livestream")
-                                    
-                                    # If they are currently broadcasting ANYTHING
-                                    if livestream:
-                                        title = livestream.get("session_title", "").lower()
-                                        if any(term in title for term in title_blacklist):
-                                            continue
-                                        
-                                        tags = get_streamer_tags(allowed_user, groups_data)
-                                        current_cycle_kick.append({
-                                            "platform": "kick",
-                                            "channel": allowed_user,
-                                            "title": livestream.get("session_title", "No Title"),
-                                            "viewers": livestream.get("viewer_count", 0),
-                                            "thumbnail": livestream.get("thumbnail", {}).get("url", ""),
-                                            "tags": tags
-                                        })
-                            except Exception:
-                                pass # Silently ignore users who aren't on Kick (they might be Twitch users)
-                            
-                            # A small delay to ensure we don't get IP banned for spamming the Kick API
-                            await asyncio.sleep(0.5) 
-                except Exception as e:
-                    logger.error(f"Kick Allowlist Error: {e}")
+                            tags = get_streamer_tags(channel_name, groups_data)
 
-            # --- TWITCH Refresh ---
-            if twitch_counter >= 5:
-                try:
-                    logger.info("Running 5-min Twitch batch query...")
-                    token = await get_twitch_token()
-                    if token and valid_twitch_streamers:
-                        last_twitch_results = await fetch_twitch_streams_by_name(
-                            token, valid_twitch_streamers, title_blacklist, groups_data, channel_allowlist
-                        )
-                        logger.info(f"Twitch updated: {len(last_twitch_results)} live.")
-                    twitch_counter = 0 
-                except Exception as e:
-                    logger.error(f"Twitch Error: {e}")
-            
-            twitch_counter += 1
-
-            # --- Merge, Deduplicate & Sort ---
-            raw_merged = current_cycle_kick + last_twitch_results
-            deduped_streams = []
-            
-            for stream in raw_merged:
-                channel = stream["channel"]
-                matched_existing = None
-                
-                # Check if we already processed a similar username
-                for existing in deduped_streams:
-                    if is_similar_username(channel, existing["channel"]):
-                        matched_existing = existing
-                        break
-                
-                if matched_existing:
-                    # Duplicate found! Combine the viewers into the total AND the specific platform splits
-                    matched_existing["viewers"] += stream.get("viewers", 0)
-                    matched_existing["twitch_viewers"] += stream.get("twitch_viewers", 0)
-                    matched_existing["kick_viewers"] += stream.get("kick_viewers", 0)
+                            current_cycle_kick.append({
+                                "platform": "kick",
+                                "channel": channel_name,
+                                "title": s.get("title", "No Title"),
+                                "viewers": s.get("viewer_count", 0),
+                                "kick_viewers": s.get("viewer_count", 0),
+                                "twitch_viewers": 0,
+                                "thumbnail": s.get("thumbnail", {}).get("src", ""),
+                                "tags": tags
+                            })
                 else:
-                    deduped_streams.append(stream)
+                    logger.warning(f"Kick Category API blocked. Status: {resp.status_code}")
 
-            merged = deduped_streams
-            merged.sort(key=lambda x: x["viewers"], reverse=True)
-            
-            stream_cache["streams"] = merged
-            stream_cache["count"] = len(merged)
-            stream_cache["status"] = "Live"
-            
-            # --- LOG METRICS TO DB ---
-            total_viewers = sum(s.get("viewers", 0) for s in merged)
-            tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
-            kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
-            
+                # 2. Allowlist Check
+                if channel_allowlist:
+                    for allowed_user in channel_allowlist:
+                        if any(s["channel"].lower() == allowed_user for s in current_cycle_kick):
+                            continue
+                        
+                        try:
+                            resp = await session.get(f"https://kick.com/api/v1/channels/{allowed_user}")
+                            if resp.status_code == 200:
+                                user_data = resp.json()
+                                livestream = user_data.get("livestream")
+                                
+                                if livestream:
+                                    title = livestream.get("session_title", "").lower()
+                                    if any(term in title for term in title_blacklist):
+                                        continue
+                                    
+                                    tags = get_streamer_tags(allowed_user, groups_data)
+                                    current_cycle_kick.append({
+                                        "platform": "kick",
+                                        "channel": allowed_user,
+                                        "title": livestream.get("session_title", "No Title"),
+                                        "viewers": livestream.get("viewer_count", 0),
+                                        "kick_viewers": livestream.get("viewer_count", 0),
+                                        "twitch_viewers": 0,
+                                        "thumbnail": livestream.get("thumbnail", {}).get("url", ""),
+                                        "tags": tags
+                                    })
+                            await asyncio.sleep(0.5) 
+                        except Exception:
+                            pass 
+        except Exception as e:
+            logger.error(f"Kick Scrape Error: {e}")
+
+        # --- TWITCH Refresh ---
+        if twitch_counter >= 5:
             try:
-                metrics_db_path = os.path.join(base_path, "metrics.db")
-                conn = sqlite3.connect(metrics_db_path)
-                cursor = conn.cursor()
-                cursor.execute(
-                    "INSERT INTO metrics (total_viewers, total_streamers, twitch_viewers, kick_viewers) VALUES (?, ?, ?, ?)", 
-                    (total_viewers, len(merged), tw_viewers, kk_viewers)
-                )
-                conn.commit()
-                conn.close()
+                logger.info("Running 5-min Twitch batch query...")
+                token = await get_twitch_token()
+                if token and valid_twitch_streamers:
+                    last_twitch_results = await fetch_twitch_streams_by_name(
+                        token, valid_twitch_streamers, title_blacklist, groups_data, channel_allowlist
+                    )
+                    logger.info(f"Twitch updated: {len(last_twitch_results)} live.")
+                twitch_counter = 0 
             except Exception as e:
-                logger.error(f"Metrics DB Error: {e}")
+                logger.error(f"Twitch Error: {e}")
+        
+        twitch_counter += 1
+
+        # --- Merge, Deduplicate & Sort ---
+        raw_merged = current_cycle_kick + last_twitch_results
+        deduped_streams = []
+        
+        for stream in raw_merged:
+            channel = stream["channel"]
+            matched_existing = None
             
-            logger.opt(colors=True).info(f"Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
+            for existing in deduped_streams:
+                if is_similar_username(channel, existing["channel"]):
+                    matched_existing = existing
+                    break
             
-            await asyncio.sleep(60)
-    finally:
-        if browser:
-            browser.stop()
+            if matched_existing:
+                matched_existing["viewers"] += stream.get("viewers", 0)
+                matched_existing["twitch_viewers"] += stream.get("twitch_viewers", 0)
+                matched_existing["kick_viewers"] += stream.get("kick_viewers", 0)
+            else:
+                deduped_streams.append(stream)
+
+        merged = deduped_streams
+        merged.sort(key=lambda x: x["viewers"], reverse=True)
+        
+        stream_cache["streams"] = merged
+        stream_cache["count"] = len(merged)
+        stream_cache["status"] = "Live"
+        
+        # --- LOG METRICS TO DB ---
+        total_viewers = sum(s.get("viewers", 0) for s in merged)
+        tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
+        kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
+        
+        try:
+            metrics_db_path = os.path.join(base_path, "metrics.db")
+            conn = sqlite3.connect(metrics_db_path)
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO metrics (total_viewers, total_streamers, twitch_viewers, kick_viewers) VALUES (?, ?, ?, ?)", 
+                (total_viewers, len(merged), tw_viewers, kk_viewers)
+            )
+            conn.commit()
+            conn.close()
+        except Exception as e:
+            logger.error(f"Metrics DB Error: {e}")
+        
+        logger.opt(colors=True).info(f"Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{5 - (twitch_counter % 6)} min(s).</magenta>")
+        
+        await asyncio.sleep(60)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -439,26 +389,12 @@ app.add_middleware(
 async def get_nopixel_streams():
     return stream_cache
 
-# API for kick stream player -- kept for potential future proxy use
-@app.get("/api/kick-playback/{username}")
-def get_kick_playback(username: str):
-    url = f"https://kick.com/api/v1/channels/{username}"
-    try:
-        response = c_requests.get(url, impersonate="chrome")
-        if response.status_code == 200:
-            data = response.json()
-            playback_url = data.get("playback_url")
-            return {"url": playback_url}
-        else:
-            return {"error": f"Kick API blocked request. Status: {response.status_code}"}
-    except Exception as e:
-        return {"error": str(e)}
-    
 @app.get("/api/metrics")
 def get_metrics(timeframe: str = "1h"):
     db_path = os.path.join(base_path, "metrics.db")
     
-    now = datetime.utcnow()
+    # Updated timezone implementation to remove deprecation warning
+    now = datetime.now(timezone.utc)
     if timeframe == "1h": delta = now - timedelta(hours=1)
     elif timeframe == "12h": delta = now - timedelta(hours=12)
     elif timeframe == "1d": delta = now - timedelta(days=1)
@@ -469,7 +405,6 @@ def get_metrics(timeframe: str = "1h"):
     try:
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        # Grab the new columns
         cursor.execute("SELECT timestamp, total_viewers, total_streamers, twitch_viewers, kick_viewers FROM metrics WHERE timestamp >= ? ORDER BY timestamp ASC", (delta.strftime('%Y-%m-%d %H:%M:%S'),))
         rows = cursor.fetchall()
         conn.close()
@@ -481,6 +416,20 @@ def get_metrics(timeframe: str = "1h"):
             "twitch_viewers": [row[3] for row in rows],
             "kick_viewers": [row[4] for row in rows]
         }
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.get("/api/kick-playback/{username}")
+def get_kick_playback(username: str):
+    url = f"https://kick.com/api/v1/channels/{username}"
+    try:
+        response = c_requests.get(url, impersonate="chrome")
+        if response.status_code == 200:
+            data = response.json()
+            playback_url = data.get("playback_url")
+            return {"url": playback_url}
+        else:
+            return {"error": f"Kick API blocked request. Status: {response.status_code}"}
     except Exception as e:
         return {"error": str(e)}
 

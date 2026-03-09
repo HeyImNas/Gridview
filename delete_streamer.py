@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 # The name of the streamer you want to remove
-target_name = "jayytodd"
+target_name = "ReeClare"
 
 def delete_streamer(name):
     base_path = os.path.dirname(os.path.abspath(__file__))
