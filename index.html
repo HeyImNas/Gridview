@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoPixel Directory</title>
-
-    <link rel="icon" type="image/png" href="icon.svg">
     
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -115,17 +113,29 @@
 
         /* --- STREAM GRID --- */
         #stream-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px; padding: 20px; max-width: 1400px; margin: 0 auto;
+            display: grid; 
+            /* Increased min-width from 300px to 360px to make every card significantly wider */
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); 
+            gap: 20px; 
+            padding: 20px; 
+            /* Expanded max-width from 1400px to 1700px so wide monitors can still fit 4-5 cards comfortably */
+            max-width: 1700px; 
+            margin: 0 auto;
         }
-        @media (min-width: 1200px) { #stream-grid { grid-template-columns: repeat(5, 1fr); } }
+        
+        /* Base stream card */
         .stream-card {
             background-color: #1a1f29; border-radius: 8px; overflow: hidden; transition: transform 0.2s, border 0.2s, box-shadow 0.2s;
             border: 1px solid transparent; display: flex; flex-direction: column; position: relative; cursor: pointer; user-select: none;
         }
-        .stream-card.kick-hover:hover { border: 1px solid #53fc18; box-shadow: 0 0 15px rgba(83, 252, 24, 0.2); }
-        .stream-card.twitch-hover:hover { border: 1px solid #9146FF; box-shadow: 0 0 15px rgba(145, 70, 255, 0.2); }
+
+        /* Dynamic Hover Colors */
+        .stream-card.kick-hover:hover { border: 1px solid #53fc18; box-shadow: 0 0 15px rgba(83, 252, 24, 0.2); z-index: 2; }
+        .stream-card.twitch-hover:hover { border: 1px solid #9146FF; box-shadow: 0 0 15px rgba(145, 70, 255, 0.2); z-index: 2; }
         .stream-card.multi-hover:hover { border: 1px solid #00a8ff; box-shadow: 0 0 15px rgba(0, 168, 255, 0.3); z-index: 2; }
+
+        /* Expand title on hover */
+        .stream-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .stream-card:hover .stream-title { white-space: normal; overflow: visible; word-wrap: break-word; }
 
         .drag-overlay {
@@ -137,15 +147,60 @@
         .sortable-ghost { opacity: 0.3; background-color: #1a1f29; border: 2px dashed #00a8ff !important; }
         .thumbnail { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; pointer-events: none; }
         .card-info { padding: 12px; pointer-events: none; }
-        .stream-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
         .refresh-tag { font-size: 10px; color: #666; margin-bottom: 8px; }
         .stream-meta { font-size: 13px; color: #a0a5b5; display: flex; justify-content: space-between; align-items: center;}
-        .channel-name-area { display: flex; align-items: center; gap: 6px; }
-        .viewers { color: #ff4a4a; font-weight: bold; white-space: nowrap; }
+        
+        /* --- CHANNEL NAME & VIEWER ALIGNMENT --- */
+        .channel-name-area { 
+            display: flex; align-items: center; gap: 6px; 
+            min-width: 0; /* Allows long names to truncate */
+            flex: 1; /* Fills remaining space */
+        }
+        .channel-name-text {
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        
+        /* Viewer Hover Area */
+        .viewer-wrap { 
+            display: flex; flex-direction: column; align-items: flex-end; 
+            flex-shrink: 0; /* Protects viewer count from getting crushed */
+            margin-left: 10px;
+        }
+        .total-viewers { color: #ff4a4a; font-weight: bold; }
+        .split-viewers { display: none; gap: 8px; font-size: 13px; font-weight: bold; }
+        .stream-card:hover .total-viewers { display: none; }
+        .stream-card:hover .split-viewers { display: flex; animation: fadeIn 0.2s; }
+
         .group-tag {
             display: inline-block; color: #ffffff; padding: 2px 6px; border-radius: 12px;
             font-size: 10px; font-weight: bold; text-transform: uppercase; box-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
+
+        /* --- TAG HOVER EXPANSION CARD --- */
+        .tags-wrapper {
+            position: relative; display: flex; align-items: center; gap: 4px; pointer-events: auto;
+        }
+        .tag-count-badge {
+            background: #2d3546; color: #a0a5b5; border-radius: 12px;
+            font-size: 10px; font-weight: bold; padding: 2px 6px; cursor: help; transition: 0.2s;
+        }
+        .tags-wrapper:hover .tag-count-badge { color: #0b0e14; background: #53fc18; }
+        
+        .full-tags-card {
+            position: absolute; bottom: 140%; right: 0; /* Pops up and aligns to the right */
+            background: #1a1f29; border: 1px solid #2d3546; padding: 10px; border-radius: 8px;
+            display: flex; flex-direction: column; gap: 6px; opacity: 0; pointer-events: none; 
+            transition: all 0.2s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.8); z-index: 20;
+            min-width: max-content; transform: translateY(10px);
+        }
+        .tags-wrapper:hover .full-tags-card {
+            opacity: 1; pointer-events: auto; transform: translateY(0);
+        }
+        .full-tags-header {
+            font-size: 10px; color: #a0a5b5; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
+        }
+
         .controls { text-align: center; margin-bottom: 30px; }
         .filter-buttons { margin-bottom: 15px; }
         .filter-btn {
@@ -182,11 +237,12 @@
             border-radius: 8px; 
             overflow: hidden; 
         }
-        .multi-video-wrapper iframe { 
+        .multi-video-wrapper iframe, .multi-video-wrapper video { 
             width: 100%; 
             height: 100%; 
             border: none; 
             display: block; 
+            background: #000;
         }
         
         .player-overlay {
@@ -214,12 +270,6 @@
         }
         .player-overlay-controls button:hover { background: #2d3546; color: #53fc18; border-color: #53fc18; }
 
-        .viewer-wrap { display: flex; flex-direction: column; align-items: flex-end; }
-        .total-viewers { color: #ff4a4a; font-weight: bold; }
-        .split-viewers { display: none; gap: 8px; font-size: 13px; font-weight: bold; }
-        .stream-card:hover .total-viewers { display: none; }
-        .stream-card:hover .split-viewers { display: flex; animation: fadeIn 0.2s; }
-
     </style>
 </head>
 <body>
@@ -227,7 +277,6 @@
     <div id="toast-container"></div>
 
     <div class="sidebar" id="main-sidebar">
-        
         <div class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
             <span id="toggle-icon">◀</span>
         </div>
@@ -287,7 +336,7 @@
             <p style="text-align: center; color: #a0a5b5; font-size: 13px; margin-top: -10px;">Live Viewers by Group</p>
             
             <div id="faction-list" style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 10px;">
-                </div>
+            </div>
         </div>
     </div>
 
@@ -393,10 +442,14 @@
             document.getElementById(`tab-${tabId}`).classList.add('active');
             currentActiveTab = tabId;
             if (tabId !== 'multi') exitTheaterMode();
+            
+            // Instantly refresh the grid when coming back to the Streams tab
+            if (tabId === 'streams') {
+                fetchStreams();
+            }
         }
 
         document.addEventListener('keydown', (event) => {
-            // CTRL+F to focus custom search bar
             if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'f') {
                 event.preventDefault(); 
                 if (currentActiveTab !== 'streams') {
@@ -408,7 +461,6 @@
                 return;
             }
 
-            // Backtick Tab Cycling
             if (event.target.tagName.toLowerCase() === 'input') return;
             if (event.key === '`') {
                 event.preventDefault(); 
@@ -436,7 +488,6 @@
             }
         }
 
-        // Check local storage on load
         if (localStorage.getItem('sidebarCollapsed') === 'true') {
             document.getElementById('main-sidebar').classList.add('collapsed');
             document.body.classList.add('sidebar-collapsed');
@@ -549,22 +600,24 @@
             wrapper.id = `vid-wrap-${currentId}`;
             
             const badge = platform === 'kick' ? '🟩' : '🟪';
-            let iframeHtml = platform === 'twitch' 
-                ? `<iframe id="iframe-${currentId}" src="https://player.twitch.tv/?channel=${channel}&parent=${hostname}&muted=false" allowfullscreen></iframe>`
-                : `<iframe id="iframe-${currentId}" src="https://player.kick.com/${channel}" allowfullscreen></iframe>`;
+            
+            let mediaHtml = platform === 'twitch' 
+                ? `<iframe id="media-${currentId}" src="https://player.twitch.tv/?channel=${channel}&parent=${hostname}&muted=false" allowfullscreen></iframe>`
+                : `<iframe id="media-${currentId}" src="https://player.kick.com/${channel}" allowfullscreen></iframe>`;
 
             wrapper.innerHTML = `
                 <div class="player-overlay">
                     <div class="player-overlay-title">${badge} ${channel.toUpperCase()}</div>
                     <div class="player-overlay-controls">
-                        <button onclick="document.getElementById('iframe-${currentId}').src = document.getElementById('iframe-${currentId}').src" title="Refresh Stream">🔄 Refresh</button>
+                        <button onclick="document.getElementById('media-${currentId}').src = document.getElementById('media-${currentId}').src" title="Refresh Stream">🔄 Refresh</button>
                         <button onclick="removeStreamFromActive(${currentId})" title="Close Stream">❌ Close</button>
                     </div>
                 </div>
-                ${iframeHtml}
+                ${mediaHtml}
             `;
             videoGrid.appendChild(wrapper);
 
+            // --- Chat Setup ---
             let chatUrl = platform === 'twitch' 
                 ? `https://www.twitch.tv/embed/${channel}/chat?parent=${hostname}&darkpopout` 
                 : `https://kick.com/${channel}/chatroom`;
@@ -763,7 +816,7 @@
         function openFactionModal() { document.getElementById('faction-modal').style.display = 'flex'; }
         function closeFactionModal() { document.getElementById('faction-modal').style.display = 'none'; }
 
-        // Advanced Metrics Calculator (Platform Split & Faction Leaderboard)
+        // Advanced Metrics Calculator
         function updateAdvancedMetrics() {
             let twViewers = 0, twStreams = 0;
             let kkViewers = 0, kkStreams = 0;
@@ -816,7 +869,7 @@
             });
         }
 
-        // --- ORIGINAL DIRECTORY LOGIC ---
+        // --- DIRECTORY LOGIC ---
         const sortable = new Sortable(grid, {
             animation: 150, delay: 250, delayOnTouchOnly: false, touchStartThreshold: 10,
             ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen',
@@ -827,7 +880,7 @@
         function renderStreams(streamsToRender) {
             const savedOrder = JSON.parse(localStorage.getItem('streamOrder')) || [];
             
-            // 1. Sort the streams (either by user's saved layout or by highest viewers)
+            // 1. Sort the streams
             if (savedOrder.length > 0 && currentPlatform === 'all' && searchBar.value === '') {
                 streamsToRender.sort((a, b) => {
                     let indexA = savedOrder.indexOf(a.channel); let indexB = savedOrder.indexOf(b.channel);
@@ -868,6 +921,28 @@
                 const timeAgo = stream.platform === 'twitch' ? '(Updated 5m)' : '(Live)';
                 const cacheBuster = stream.thumbnail.includes('?') ? `&t=${Date.now()}` : `?t=${Date.now()}`;
 
+                let tagsHtml = '';
+                if (stream.tags && stream.tags.length > 0) {
+                    if (stream.tags.length === 1) {
+                        const tag = stream.tags[0];
+                        tagsHtml = `<span class="group-tag" style="background-color: ${tag.color};" title="${tag.rank}">${tag.label}</span>`;
+                    } else {
+                        const firstTag = stream.tags[0];
+                        const allTagsList = stream.tags.map(tag => `<span class="group-tag" style="background-color: ${tag.color}; width: fit-content;" title="${tag.rank}">${tag.label}</span>`).join('');
+                        
+                        tagsHtml = `
+                            <div class="tags-wrapper">
+                                <span class="group-tag" style="background-color: ${firstTag.color};" title="${firstTag.rank}">${firstTag.label}</span>
+                                <span class="tag-count-badge" title="View all factions">+${stream.tags.length - 1}</span>
+                                <div class="full-tags-card">
+                                    <div class="full-tags-header">All Factions</div>
+                                    ${allTagsList}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
                 // Check if the card already exists on the screen
                 let card = grid.querySelector(`.stream-card[data-id="${stream.channel}"]`);
 
@@ -892,8 +967,17 @@
                         `;
                     }
                     
-                    // Appending an existing element doesn't copy it, it just moves it.
-                    // This naturally re-sorts the grid without destroying the HTML!
+                    // Update the channel name area directly in case tags changed
+                    const nameArea = card.querySelector('.channel-name-area');
+                    if (nameArea) {
+                        nameArea.innerHTML = `
+                            <b style="color: ${badgeColor}; flex-shrink: 0;">[${badgeText}]</b> 
+                            <span class="channel-name-text">${stream.channel}</span> 
+                            ${tagsHtml}
+                        `;
+                    }
+
+                    // Appending an existing element doesn't copy it, it just moves it to correct sort position
                     grid.appendChild(card); 
 
                 } else {
@@ -904,11 +988,6 @@
                     
                     const streamUrl = stream.platform === 'kick' ? `https://kick.com/${stream.channel}` : `https://twitch.tv/${stream.channel}`;
                     card.onmouseup = () => { if (!window.isInteracting) window.open(streamUrl, '_blank'); };
-                    
-                    let tagsHtml = '';
-                    if (stream.tags && stream.tags.length > 0) {
-                        tagsHtml = stream.tags.map(tag => `<span class="group-tag" style="background-color: ${tag.color};" title="${tag.rank}">${tag.label}</span>`).join('');
-                    }
 
                     card.innerHTML = `
                         <div class="drag-overlay">⠿ DRAG TO REORDER ⠿</div>
@@ -918,8 +997,9 @@
                             <div class="refresh-tag">${timeAgo}</div>
                             <div class="stream-meta">
                                 <div class="channel-name-area">
-                                    <b style="color: ${badgeColor}">[${badgeText}]</b> 
-                                    ${stream.channel} ${tagsHtml}
+                                    <b style="color: ${badgeColor}; flex-shrink: 0;">[${badgeText}]</b> 
+                                    <span class="channel-name-text">${stream.channel}</span> 
+                                    ${tagsHtml}
                                 </div>
                                 <div class="viewer-wrap">
                                     <span class="total-viewers">🔴 ${stream.viewers.toLocaleString()}</span>
@@ -940,6 +1020,9 @@
         }
 
         async function fetchStreams() {
+            // THE ULTIMATE KILL SWITCH
+            if (currentActiveTab !== 'streams') return;
+
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
@@ -973,8 +1056,23 @@
         }
 
         searchBar.addEventListener('input', applySearch);
+
+        // --- INTERVAL SETUP ---
+        // 1. Clear ANY existing intervals in the browser's memory to kill ghosts
+        if (window.streamInterval) {
+            clearInterval(window.streamInterval);
+        }
+
+        // 2. Initial load
         fetchStreams();
-        setInterval(fetchStreams, 30000);
+        
+        // 3. Set the strict, tab-aware interval
+        window.streamInterval = setInterval(() => {
+            if (currentActiveTab === 'streams') {
+                fetchStreams();
+            }
+        }, 90000);
+
     </script>
 </body>
 </html>
