@@ -2610,7 +2610,1796 @@
   "PD": {
     "full_name": "Police Department",
     "color": "#1e90ff",
-    "members": {}
+    "members": {
+      "simo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/simo",
+          "kick": "https://kick.com/simo"
+        }
+      },
+      "crystalst": {
+        "platforms": {
+          "twitch": "https://twitch.tv/crystalst",
+          "kick": "https://kick.com/crystalst"
+        }
+      },
+      "manax": {
+        "platforms": {
+          "twitch": "https://twitch.tv/manax",
+          "kick": "https://kick.com/manax"
+        }
+      },
+      "blur_o7": {
+        "platforms": {
+          "twitch": "https://twitch.tv/blur_o7",
+          "kick": "https://kick.com/blur_o7"
+        }
+      },
+      "totallynotbelltower": {
+        "platforms": {
+          "twitch": "https://twitch.tv/totallynotbelltower"
+        }
+      },
+      "royalcreates": {
+        "platforms": {
+          "twitch": "https://twitch.tv/royalcreates"
+        }
+      },
+      "mungo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/mungo"
+        }
+      },
+      "mdrakoo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/mdrakoo",
+          "kick": "https://kick.com/mdrakoo"
+        }
+      },
+      "fragss": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fragss",
+          "kick": "https://kick.com/fragss"
+        }
+      },
+      "alex_3mm": {
+        "platforms": {
+          "twitch": "https://twitch.tv/alex_3mm"
+        }
+      },
+      "alex3mm": {
+        "platforms": {
+          "kick": "https://kick.com/alex3mm"
+        }
+      },
+      "silbullet": {
+        "platforms": {
+          "twitch": "https://twitch.tv/silbullet",
+          "kick": "https://kick.com/silbullet"
+        }
+      },
+      "ishyy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ishyy"
+        }
+      },
+      "asteroba": {
+        "platforms": {
+          "twitch": "https://twitch.tv/asteroba",
+          "kick": "https://kick.com/asteroba"
+        }
+      },
+      "fofoplays": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fofoplays"
+        }
+      },
+      "uhsnow": {
+        "platforms": {
+          "twitch": "https://twitch.tv/uhsnow",
+          "kick": "https://kick.com/uhsnow"
+        }
+      },
+      "jakson": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jakson",
+          "kick": "https://kick.com/jakson"
+        }
+      },
+      "kongfue": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kongfue",
+          "kick": "https://kick.com/kongfue"
+        }
+      },
+      "alliumm": {
+        "platforms": {
+          "twitch": "https://twitch.tv/alliumm"
+        }
+      },
+      "snowe": {
+        "platforms": {
+          "twitch": "https://twitch.tv/snowe",
+          "kick": "https://kick.com/snowe"
+        }
+      },
+      "stellarnaut": {
+        "platforms": {
+          "twitch": "https://twitch.tv/stellarnaut"
+        }
+      },
+      "ouna": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ouna"
+        }
+      },
+      "capped": {
+        "platforms": {
+          "twitch": "https://twitch.tv/capped",
+          "kick": "https://kick.com/capped"
+        }
+      },
+      "austin_bean": {
+        "platforms": {
+          "twitch": "https://twitch.tv/austin_bean"
+        }
+      },
+      "austinbean": {
+        "platforms": {
+          "kick": "https://kick.com/austinbean"
+        }
+      },
+      "moomoogamingtv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/moomoogamingtv"
+        }
+      },
+      "moomoogaming": {
+        "platforms": {
+          "kick": "https://kick.com/moomoogaming"
+        }
+      },
+      "tinystunt": {
+        "platforms": {
+          "twitch": "https://twitch.tv/tinystunt",
+          "kick": "https://kick.com/tinystunt"
+        }
+      },
+      "vanillayoshee": {
+        "platforms": {
+          "twitch": "https://twitch.tv/vanillayoshee",
+          "kick": "https://kick.com/vanillayoshee"
+        }
+      },
+      "angelina": {
+        "platforms": {
+          "twitch": "https://twitch.tv/angelina",
+          "kick": "https://kick.com/angelina"
+        }
+      },
+      "elhefe11": {
+        "platforms": {
+          "twitch": "https://twitch.tv/elhefe11",
+          "kick": "https://kick.com/elhefe11"
+        }
+      },
+      "animatedjf": {
+        "platforms": {
+          "twitch": "https://twitch.tv/animatedjf"
+        }
+      },
+      "hurnani": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hurnani",
+          "kick": "https://kick.com/hurnani"
+        }
+      },
+      "52chains": {
+        "platforms": {
+          "twitch": "https://twitch.tv/52chains",
+          "kick": "https://kick.com/52chains"
+        }
+      },
+      "bundie": {
+        "platforms": {
+          "twitch": "https://twitch.tv/bundie",
+          "kick": "https://kick.com/bundie"
+        }
+      },
+      "kinamazing": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kinamazing",
+          "kick": "https://kick.com/kinamazing"
+        }
+      },
+      "draghiiifly": {
+        "platforms": {
+          "twitch": "https://twitch.tv/draghiiifly",
+          "kick": "https://kick.com/draghiiifly"
+        }
+      },
+      "slasher2099": {
+        "platforms": {
+          "twitch": "https://twitch.tv/slasher2099",
+          "kick": "https://kick.com/slasher2099"
+        }
+      },
+      "2dex4u": {
+        "platforms": {
+          "twitch": "https://twitch.tv/2dex4u"
+        }
+      },
+      "dexk": {
+        "platforms": {
+          "kick": "https://kick.com/dexk"
+        }
+      },
+      "skorbnut": {
+        "platforms": {
+          "twitch": "https://twitch.tv/skorbnut",
+          "kick": "https://kick.com/skorbnut"
+        }
+      },
+      "myles_away": {
+        "platforms": {
+          "twitch": "https://twitch.tv/myles_away",
+          "kick": "https://kick.com/myles_away"
+        }
+      },
+      "blokeowski": {
+        "platforms": {
+          "twitch": "https://twitch.tv/blokeowski"
+        }
+      },
+      "katec": {
+        "platforms": {
+          "twitch": "https://twitch.tv/katec",
+          "kick": "https://kick.com/katec"
+        }
+      },
+      "martyrdomnz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/martyrdomnz",
+          "kick": "https://kick.com/martyrdomnz"
+        }
+      },
+      "error8d": {
+        "platforms": {
+          "twitch": "https://twitch.tv/error8d"
+        }
+      },
+      "irish_gt": {
+        "platforms": {
+          "twitch": "https://twitch.tv/irish_gt"
+        }
+      },
+      "irishgt": {
+        "platforms": {
+          "kick": "https://kick.com/irishgt"
+        }
+      },
+      "lysium": {
+        "platforms": {
+          "twitch": "https://twitch.tv/lysium",
+          "kick": "https://kick.com/lysium"
+        }
+      },
+      "thedlinquent": {
+        "platforms": {
+          "twitch": "https://twitch.tv/thedlinquent",
+          "kick": "https://kick.com/thedlinquent"
+        }
+      },
+      "deansocool": {
+        "platforms": {
+          "twitch": "https://twitch.tv/deansocool",
+          "kick": "https://kick.com/deansocool"
+        }
+      },
+      "clammy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/clammy"
+        }
+      },
+      "smoothinstincts": {
+        "platforms": {
+          "twitch": "https://twitch.tv/smoothinstincts"
+        }
+      },
+      "jack": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jack",
+          "kick": "https://kick.com/jack"
+        }
+      },
+      "xarisher": {
+        "platforms": {
+          "twitch": "https://twitch.tv/xarisher"
+        }
+      },
+      "sheepiemezz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sheepiemezz"
+        }
+      },
+      "cleeismad": {
+        "platforms": {
+          "twitch": "https://twitch.tv/cleeismad"
+        }
+      },
+      "cleerp": {
+        "platforms": {
+          "kick": "https://kick.com/cleerp"
+        }
+      },
+      "voiceofprodigy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/voiceofprodigy"
+        }
+      },
+      "africansnowball": {
+        "platforms": {
+          "twitch": "https://twitch.tv/africansnowball"
+        }
+      },
+      "itsnowas": {
+        "platforms": {
+          "twitch": "https://twitch.tv/itsnowas"
+        }
+      },
+      "nowas": {
+        "platforms": {
+          "kick": "https://kick.com/nowas"
+        }
+      },
+      "nooby117": {
+        "platforms": {
+          "twitch": "https://twitch.tv/nooby117"
+        }
+      },
+      "nikez": {
+        "platforms": {
+          "twitch": "https://twitch.tv/nikez",
+          "kick": "https://kick.com/nikez"
+        }
+      },
+      "kirst345": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kirst345",
+          "kick": "https://kick.com/kirst345"
+        }
+      },
+      "riptide248": {
+        "platforms": {
+          "twitch": "https://twitch.tv/riptide248",
+          "kick": "https://kick.com/riptide248"
+        }
+      },
+      "fayrmusic": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fayrmusic"
+        }
+      },
+      "mithering": {
+        "platforms": {
+          "kick": "https://kick.com/mithering"
+        }
+      },
+      "stoner_minded": {
+        "platforms": {
+          "twitch": "https://twitch.tv/stoner_minded"
+        }
+      },
+      "stonerminded": {
+        "platforms": {
+          "kick": "https://kick.com/stonerminded"
+        }
+      },
+      "coxybaws": {
+        "platforms": {
+          "twitch": "https://twitch.tv/coxybaws",
+          "kick": "https://kick.com/coxybaws"
+        }
+      },
+      "frododachi": {
+        "platforms": {
+          "twitch": "https://twitch.tv/frododachi"
+        }
+      },
+      "raided": {
+        "platforms": {
+          "twitch": "https://twitch.tv/raided",
+          "kick": "https://kick.com/raided"
+        }
+      },
+      "afro": {
+        "platforms": {
+          "twitch": "https://twitch.tv/afro",
+          "kick": "https://kick.com/afro"
+        }
+      },
+      "kingjayclouted": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kingjayclouted",
+          "kick": "https://kick.com/kingjayclouted"
+        }
+      },
+      "grandact": {
+        "platforms": {
+          "twitch": "https://twitch.tv/grandact",
+          "kick": "https://kick.com/grandact"
+        }
+      },
+      "glitterglock19": {
+        "platforms": {
+          "twitch": "https://twitch.tv/glitterglock19",
+          "kick": "https://kick.com/glitterglock19"
+        }
+      },
+      "henrychaos": {
+        "platforms": {
+          "twitch": "https://twitch.tv/henrychaos",
+          "kick": "https://kick.com/henrychaos"
+        }
+      },
+      "neloc_": {
+        "platforms": {
+          "twitch": "https://twitch.tv/neloc_"
+        }
+      },
+      "hdjaws": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hdjaws"
+        }
+      },
+      "leonarwho": {
+        "platforms": {
+          "twitch": "https://twitch.tv/leonarwho",
+          "kick": "https://kick.com/leonarwho"
+        }
+      },
+      "aus24": {
+        "platforms": {
+          "twitch": "https://twitch.tv/aus24",
+          "kick": "https://kick.com/aus24"
+        }
+      },
+      "koszull": {
+        "platforms": {
+          "twitch": "https://twitch.tv/koszull",
+          "kick": "https://kick.com/koszull"
+        }
+      },
+      "illinora": {
+        "platforms": {
+          "twitch": "https://twitch.tv/illinora"
+        }
+      },
+      "dripp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/dripp",
+          "kick": "https://kick.com/dripp"
+        }
+      },
+      "skimaskdaniel": {
+        "platforms": {
+          "twitch": "https://twitch.tv/skimaskdaniel",
+          "kick": "https://kick.com/skimaskdaniel"
+        }
+      },
+      "kindagloomy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kindagloomy",
+          "kick": "https://kick.com/kindagloomy"
+        }
+      },
+      "sudzog": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sudzog"
+        }
+      },
+      "nikkisariot": {
+        "platforms": {
+          "twitch": "https://twitch.tv/nikkisariot"
+        }
+      },
+      "nikkiriot": {
+        "platforms": {
+          "kick": "https://kick.com/nikkiriot"
+        }
+      },
+      "zimboobwe": {
+        "platforms": {
+          "twitch": "https://twitch.tv/zimboobwe",
+          "kick": "https://kick.com/zimboobwe"
+        }
+      },
+      "hitcher_tv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hitcher_tv"
+        }
+      },
+      "hydraplz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hydraplz"
+        }
+      },
+      "lstrictlylogicl": {
+        "platforms": {
+          "twitch": "https://twitch.tv/lstrictlylogicl"
+        }
+      },
+      "strictlylogic": {
+        "platforms": {
+          "kick": "https://kick.com/strictlylogic"
+        }
+      },
+      "jozukai": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jozukai"
+        }
+      },
+      "killoeog": {
+        "platforms": {
+          "twitch": "https://twitch.tv/killoeog",
+          "kick": "https://kick.com/killoeog"
+        }
+      },
+      "rambo_fletch": {
+        "platforms": {
+          "twitch": "https://twitch.tv/rambo_fletch"
+        }
+      },
+      "rambofletch": {
+        "platforms": {
+          "kick": "https://kick.com/rambofletch"
+        }
+      },
+      "upgrati": {
+        "platforms": {
+          "kick": "https://kick.com/upgrati"
+        }
+      },
+      "chelb": {
+        "platforms": {
+          "twitch": "https://twitch.tv/chelb",
+          "kick": "https://kick.com/chelb"
+        }
+      },
+      "shemnbuns": {
+        "platforms": {
+          "twitch": "https://twitch.tv/shemnbuns"
+        }
+      },
+      "catssarole": {
+        "platforms": {
+          "twitch": "https://twitch.tv/catssarole"
+        }
+      },
+      "pezbian": {
+        "platforms": {
+          "twitch": "https://twitch.tv/pezbian"
+        }
+      },
+      "larbeartv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/larbeartv"
+        }
+      },
+      "faithfultv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/faithfultv"
+        }
+      },
+      "faiithful": {
+        "platforms": {
+          "kick": "https://kick.com/faiithful"
+        }
+      },
+      "thebigmeech": {
+        "platforms": {
+          "twitch": "https://twitch.tv/thebigmeech"
+        }
+      },
+      "amusing_sloth": {
+        "platforms": {
+          "twitch": "https://twitch.tv/amusing_sloth"
+        }
+      },
+      "amusingsloth": {
+        "platforms": {
+          "kick": "https://kick.com/amusingsloth"
+        }
+      },
+      "luka_aus": {
+        "platforms": {
+          "twitch": "https://twitch.tv/luka_aus",
+          "kick": "https://kick.com/luka_aus"
+        }
+      },
+      "alonelyhawk": {
+        "platforms": {
+          "twitch": "https://twitch.tv/alonelyhawk"
+        }
+      },
+      "matteu": {
+        "platforms": {
+          "twitch": "https://twitch.tv/matteu",
+          "kick": "https://kick.com/matteu"
+        }
+      },
+      "justkiku": {
+        "platforms": {
+          "twitch": "https://twitch.tv/justkiku",
+          "kick": "https://kick.com/justkiku"
+        }
+      },
+      "twobirds_": {
+        "platforms": {
+          "twitch": "https://twitch.tv/twobirds_"
+        }
+      },
+      "pastel_spell": {
+        "platforms": {
+          "twitch": "https://twitch.tv/pastel_spell"
+        }
+      },
+      "sharaadrick": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sharaadrick"
+        }
+      },
+      "maybefaraday": {
+        "platforms": {
+          "twitch": "https://twitch.tv/maybefaraday",
+          "kick": "https://kick.com/maybefaraday"
+        }
+      },
+      "wraiyf": {
+        "platforms": {
+          "twitch": "https://twitch.tv/wraiyf",
+          "kick": "https://kick.com/wraiyf"
+        }
+      },
+      "curvyelephant": {
+        "platforms": {
+          "twitch": "https://twitch.tv/curvyelephant",
+          "kick": "https://kick.com/curvyelephant"
+        }
+      },
+      "rueben": {
+        "platforms": {
+          "twitch": "https://twitch.tv/rueben"
+        }
+      },
+      "yaboidr3w": {
+        "platforms": {
+          "twitch": "https://twitch.tv/yaboidr3w",
+          "kick": "https://kick.com/yaboidr3w"
+        }
+      },
+      "aristotelian": {
+        "platforms": {
+          "twitch": "https://twitch.tv/aristotelian",
+          "kick": "https://kick.com/aristotelian"
+        }
+      },
+      "roxmiral": {
+        "platforms": {
+          "twitch": "https://twitch.tv/roxmiral",
+          "kick": "https://kick.com/roxmiral"
+        }
+      },
+      "sayeed": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sayeed",
+          "kick": "https://kick.com/sayeed"
+        }
+      },
+      "fungletoe": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fungletoe"
+        }
+      },
+      "jaybritton": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jaybritton"
+        }
+      },
+      "mr_miills": {
+        "platforms": {
+          "twitch": "https://twitch.tv/mr_miills"
+        }
+      },
+      "lisajfc": {
+        "platforms": {
+          "twitch": "https://twitch.tv/lisajfc",
+          "kick": "https://kick.com/lisajfc"
+        }
+      },
+      "skannerz_": {
+        "platforms": {
+          "twitch": "https://twitch.tv/skannerz_"
+        }
+      },
+      "jennybeartv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jennybeartv",
+          "kick": "https://kick.com/jennybeartv"
+        }
+      },
+      "rose": {
+        "platforms": {
+          "twitch": "https://twitch.tv/rose"
+        }
+      },
+      "harmless": {
+        "platforms": {
+          "twitch": "https://twitch.tv/harmless",
+          "kick": "https://kick.com/harmless"
+        }
+      },
+      "travisrashguard": {
+        "platforms": {
+          "twitch": "https://twitch.tv/travisrashguard"
+        }
+      },
+      "vawwn": {
+        "platforms": {
+          "twitch": "https://twitch.tv/vawwn",
+          "kick": "https://kick.com/vawwn"
+        }
+      },
+      "linx6ix": {
+        "platforms": {
+          "twitch": "https://twitch.tv/linx6ix",
+          "kick": "https://kick.com/linx6ix"
+        }
+      },
+      "ray__c": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ray__c"
+        }
+      },
+      "rayc": {
+        "platforms": {
+          "kick": "https://kick.com/rayc"
+        }
+      },
+      "crimsonetv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/crimsonetv"
+        }
+      },
+      "mg4r": {
+        "platforms": {
+          "twitch": "https://twitch.tv/mg4r"
+        }
+      },
+      "hibikifox": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hibikifox",
+          "kick": "https://kick.com/hibikifox"
+        }
+      },
+      "sock22": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sock22",
+          "kick": "https://kick.com/sock22"
+        }
+      },
+      "nottics": {
+        "platforms": {
+          "twitch": "https://twitch.tv/nottics"
+        }
+      },
+      "agingercoin": {
+        "platforms": {
+          "twitch": "https://twitch.tv/agingercoin",
+          "kick": "https://kick.com/agingercoin"
+        }
+      },
+      "airborne": {
+        "platforms": {
+          "twitch": "https://twitch.tv/airborne"
+        }
+      },
+      "missbombastic": {
+        "platforms": {
+          "twitch": "https://twitch.tv/missbombastic",
+          "kick": "https://kick.com/missbombastic"
+        }
+      },
+      "thebbam": {
+        "platforms": {
+          "twitch": "https://twitch.tv/thebbam"
+        }
+      },
+      "bambamrp": {
+        "platforms": {
+          "kick": "https://kick.com/bambamrp"
+        }
+      },
+      "shugrvt": {
+        "platforms": {
+          "twitch": "https://twitch.tv/shugrvt",
+          "kick": "https://kick.com/shugrvt"
+        }
+      },
+      "rake": {
+        "platforms": {
+          "twitch": "https://twitch.tv/rake",
+          "kick": "https://kick.com/rake"
+        }
+      },
+      "cocobrooklyn": {
+        "platforms": {
+          "twitch": "https://twitch.tv/cocobrooklyn"
+        }
+      },
+      "sterling_live": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sterling_live"
+        }
+      },
+      "lunchyy": {
+        "platforms": {
+          "kick": "https://kick.com/lunchyy"
+        }
+      },
+      "littlefirestone": {
+        "platforms": {
+          "twitch": "https://twitch.tv/littlefirestone"
+        }
+      },
+      "kioshima_ff": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kioshima_ff"
+        }
+      },
+      "kioshima": {
+        "platforms": {
+          "kick": "https://kick.com/kioshima"
+        }
+      },
+      "itzbeetog": {
+        "platforms": {
+          "twitch": "https://twitch.tv/itzbeetog"
+        }
+      },
+      "five0anth0": {
+        "platforms": {
+          "twitch": "https://twitch.tv/five0anth0"
+        }
+      },
+      "donnzy": {
+        "platforms": {
+          "kick": "https://kick.com/donnzy"
+        }
+      },
+      "dadsyuk": {
+        "platforms": {
+          "twitch": "https://twitch.tv/dadsyuk"
+        }
+      },
+      "hellknight86": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hellknight86"
+        }
+      },
+      "berryyboo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/berryyboo",
+          "kick": "https://kick.com/berryyboo"
+        }
+      },
+      "skiliyo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/skiliyo",
+          "kick": "https://kick.com/skiliyo"
+        }
+      },
+      "nathankb_": {
+        "platforms": {
+          "twitch": "https://twitch.tv/nathankb_"
+        }
+      },
+      "nathankb": {
+        "platforms": {
+          "kick": "https://kick.com/nathankb"
+        }
+      },
+      "sqwallify": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sqwallify",
+          "kick": "https://kick.com/sqwallify"
+        }
+      },
+      "larkin10859": {
+        "platforms": {
+          "twitch": "https://twitch.tv/larkin10859"
+        }
+      },
+      "fatpally": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fatpally"
+        }
+      },
+      "louuis": {
+        "platforms": {
+          "twitch": "https://twitch.tv/louuis",
+          "kick": "https://kick.com/louuis"
+        }
+      },
+      "ealixer": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ealixer",
+          "kick": "https://kick.com/ealixer"
+        }
+      },
+      "ev_benoit": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ev_benoit"
+        }
+      },
+      "a2guapo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/a2guapo",
+          "kick": "https://kick.com/a2guapo"
+        }
+      },
+      "swizzmb": {
+        "platforms": {
+          "twitch": "https://twitch.tv/swizzmb"
+        }
+      },
+      "swizz": {
+        "platforms": {
+          "kick": "https://kick.com/swizz"
+        }
+      },
+      "icymindracer": {
+        "platforms": {
+          "twitch": "https://twitch.tv/icymindracer"
+        }
+      },
+      "koil": {
+        "platforms": {
+          "twitch": "https://twitch.tv/koil",
+          "kick": "https://kick.com/koil"
+        }
+      },
+      "defac3d": {
+        "platforms": {
+          "twitch": "https://twitch.tv/defac3d",
+          "kick": "https://kick.com/defac3d"
+        }
+      },
+      "kiwo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kiwo"
+        }
+      },
+      "gopnikrp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/gopnikrp",
+          "kick": "https://kick.com/gopnikrp"
+        }
+      },
+      "spaceboy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/spaceboy"
+        }
+      },
+      "zetark": {
+        "platforms": {
+          "twitch": "https://twitch.tv/zetark",
+          "kick": "https://kick.com/zetark"
+        }
+      },
+      "ms_star": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ms_star",
+          "kick": "https://kick.com/ms_star"
+        }
+      },
+      "rexs": {
+        "platforms": {
+          "twitch": "https://twitch.tv/rexs",
+          "kick": "https://kick.com/rexs"
+        }
+      },
+      "barnszzz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/barnszzz"
+        }
+      },
+      "barnsz": {
+        "platforms": {
+          "kick": "https://kick.com/barnsz"
+        }
+      },
+      "imaceinhd": {
+        "platforms": {
+          "twitch": "https://twitch.tv/imaceinhd",
+          "kick": "https://kick.com/imaceinhd"
+        }
+      },
+      "aintitadam": {
+        "platforms": {
+          "twitch": "https://twitch.tv/aintitadam",
+          "kick": "https://kick.com/aintitadam"
+        }
+      },
+      "unicornfrapp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/unicornfrapp"
+        }
+      },
+      "unicornfrappe": {
+        "platforms": {
+          "kick": "https://kick.com/unicornfrappe"
+        }
+      },
+      "acezproduction": {
+        "platforms": {
+          "twitch": "https://twitch.tv/acezproduction",
+          "kick": "https://kick.com/acezproduction"
+        }
+      },
+      "saturneighteen": {
+        "platforms": {
+          "twitch": "https://twitch.tv/saturneighteen",
+          "kick": "https://kick.com/saturneighteen"
+        }
+      },
+      "xnoctelle": {
+        "platforms": {
+          "twitch": "https://twitch.tv/xnoctelle",
+          "kick": "https://kick.com/xnoctelle"
+        }
+      },
+      "kemony": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kemony",
+          "kick": "https://kick.com/kemony"
+        }
+      },
+      "lauti": {
+        "platforms": {
+          "twitch": "https://twitch.tv/lauti",
+          "kick": "https://kick.com/lauti"
+        }
+      },
+      "cathie": {
+        "platforms": {
+          "twitch": "https://twitch.tv/cathie",
+          "kick": "https://kick.com/cathie"
+        }
+      },
+      "woowolfy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/woowolfy",
+          "kick": "https://kick.com/woowolfy"
+        }
+      },
+      "scratchrp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/scratchrp",
+          "kick": "https://kick.com/scratchrp"
+        }
+      },
+      "elochai": {
+        "platforms": {
+          "twitch": "https://twitch.tv/elochai",
+          "kick": "https://kick.com/elochai"
+        }
+      },
+      "arckon": {
+        "platforms": {
+          "twitch": "https://twitch.tv/arckon",
+          "kick": "https://kick.com/arckon"
+        }
+      },
+      "kerazane": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kerazane",
+          "kick": "https://kick.com/kerazane"
+        }
+      },
+      "napoleon": {
+        "platforms": {
+          "twitch": "https://twitch.tv/napoleon"
+        }
+      },
+      "justchelsay": {
+        "platforms": {
+          "twitch": "https://twitch.tv/justchelsay"
+        }
+      },
+      "chelsay": {
+        "platforms": {
+          "kick": "https://kick.com/chelsay"
+        }
+      },
+      "omicronzzz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/omicronzzz"
+        }
+      },
+      "neverossa": {
+        "platforms": {
+          "twitch": "https://twitch.tv/neverossa",
+          "kick": "https://kick.com/neverossa"
+        }
+      },
+      "fleenbiz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fleenbiz"
+        }
+      },
+      "goose_thegreat": {
+        "platforms": {
+          "twitch": "https://twitch.tv/goose_thegreat"
+        }
+      },
+      "bbeambee": {
+        "platforms": {
+          "twitch": "https://twitch.tv/bbeambee",
+          "kick": "https://kick.com/bbeambee"
+        }
+      },
+      "christombstone": {
+        "platforms": {
+          "twitch": "https://twitch.tv/christombstone",
+          "kick": "https://kick.com/christombstone"
+        }
+      },
+      "captainbard": {
+        "platforms": {
+          "twitch": "https://twitch.tv/captainbard"
+        }
+      },
+      "captainbarb": {
+        "platforms": {
+          "twitch": "https://twitch.tv/captainbarb"
+        }
+      },
+      "barbthekiwis": {
+        "platforms": {
+          "kick": "https://kick.com/barbthekiwis"
+        }
+      },
+      "gingersnap___": {
+        "platforms": {
+          "twitch": "https://twitch.tv/gingersnap___"
+        }
+      },
+      "itsginger": {
+        "platforms": {
+          "kick": "https://kick.com/itsginger"
+        }
+      },
+      "tinyspark": {
+        "platforms": {
+          "twitch": "https://twitch.tv/tinyspark",
+          "kick": "https://kick.com/tinyspark"
+        }
+      },
+      "bazza": {
+        "platforms": {
+          "twitch": "https://twitch.tv/bazza"
+        }
+      },
+      "boogie": {
+        "platforms": {
+          "twitch": "https://twitch.tv/boogie",
+          "kick": "https://kick.com/boogie"
+        }
+      },
+      "fahrenheit": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fahrenheit",
+          "kick": "https://kick.com/fahrenheit"
+        }
+      },
+      "madoreline": {
+        "platforms": {
+          "twitch": "https://twitch.tv/madoreline",
+          "kick": "https://kick.com/madoreline"
+        }
+      },
+      "moboking": {
+        "platforms": {
+          "twitch": "https://twitch.tv/moboking",
+          "kick": "https://kick.com/moboking"
+        }
+      },
+      "breakyx": {
+        "platforms": {
+          "twitch": "https://twitch.tv/breakyx"
+        }
+      },
+      "breaky": {
+        "platforms": {
+          "kick": "https://kick.com/breaky"
+        }
+      },
+      "tengreg": {
+        "platforms": {
+          "twitch": "https://twitch.tv/tengreg",
+          "kick": "https://kick.com/tengreg"
+        }
+      },
+      "belowthewaves": {
+        "platforms": {
+          "twitch": "https://twitch.tv/belowthewaves",
+          "kick": "https://kick.com/belowthewaves"
+        }
+      },
+      "jjfried": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jjfried",
+          "kick": "https://kick.com/jjfried"
+        }
+      },
+      "traumz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/traumz",
+          "kick": "https://kick.com/traumz"
+        }
+      },
+      "strikingcontact": {
+        "platforms": {
+          "twitch": "https://twitch.tv/strikingcontact",
+          "kick": "https://kick.com/strikingcontact"
+        }
+      },
+      "chasrp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/chasrp",
+          "kick": "https://kick.com/chasrp"
+        }
+      },
+      "l_d_c_c": {
+        "platforms": {
+          "twitch": "https://twitch.tv/l_d_c_c"
+        }
+      },
+      "l_d_c": {
+        "platforms": {
+          "kick": "https://kick.com/l_d_c"
+        }
+      },
+      "cazeytv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/cazeytv"
+        }
+      },
+      "cazey": {
+        "platforms": {
+          "kick": "https://kick.com/cazey"
+        }
+      },
+      "ash": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ash",
+          "kick": "https://kick.com/ash"
+        }
+      },
+      "pengwin": {
+        "platforms": {
+          "twitch": "https://twitch.tv/pengwin",
+          "kick": "https://kick.com/pengwin"
+        }
+      },
+      "kate": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kate",
+          "kick": "https://kick.com/kate"
+        }
+      },
+      "rerolldota": {
+        "platforms": {
+          "twitch": "https://twitch.tv/rerolldota",
+          "kick": "https://kick.com/rerolldota"
+        }
+      },
+      "kangaro0": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kangaro0"
+        }
+      },
+      "kripted": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kripted"
+        }
+      },
+      "dyoti": {
+        "platforms": {
+          "twitch": "https://twitch.tv/dyoti",
+          "kick": "https://kick.com/dyoti"
+        }
+      },
+      "johnlockwood": {
+        "platforms": {
+          "twitch": "https://twitch.tv/johnlockwood"
+        }
+      },
+      "thrustinjustin78": {
+        "platforms": {
+          "twitch": "https://twitch.tv/thrustinjustin78"
+        }
+      },
+      "thrustinjustin": {
+        "platforms": {
+          "kick": "https://kick.com/thrustinjustin"
+        }
+      },
+      "harry": {
+        "platforms": {
+          "twitch": "https://twitch.tv/harry",
+          "kick": "https://kick.com/harry"
+        }
+      },
+      "beetle": {
+        "platforms": {
+          "twitch": "https://twitch.tv/beetle",
+          "kick": "https://kick.com/beetle"
+        }
+      },
+      "yuukidav": {
+        "platforms": {
+          "twitch": "https://twitch.tv/yuukidav",
+          "kick": "https://kick.com/yuukidav"
+        }
+      },
+      "zaquelle": {
+        "platforms": {
+          "twitch": "https://twitch.tv/zaquelle"
+        }
+      },
+      "basedlore": {
+        "platforms": {
+          "twitch": "https://twitch.tv/basedlore",
+          "kick": "https://kick.com/basedlore"
+        }
+      },
+      "cydrose": {
+        "platforms": {
+          "twitch": "https://twitch.tv/cydrose",
+          "kick": "https://kick.com/cydrose"
+        }
+      },
+      "ollie2313": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ollie2313"
+        }
+      },
+      "hotted89": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hotted89",
+          "kick": "https://kick.com/hotted89"
+        }
+      },
+      "notgeega": {
+        "platforms": {
+          "twitch": "https://twitch.tv/notgeega"
+        }
+      },
+      "brownpaperbrick": {
+        "platforms": {
+          "twitch": "https://twitch.tv/brownpaperbrick"
+        }
+      },
+      "aidennortha": {
+        "platforms": {
+          "twitch": "https://twitch.tv/aidennortha",
+          "kick": "https://kick.com/aidennortha"
+        }
+      },
+      "julian": {
+        "platforms": {
+          "twitch": "https://twitch.tv/julian",
+          "kick": "https://kick.com/julian"
+        }
+      },
+      "wilsonyy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/wilsonyy"
+        }
+      },
+      "vindichee": {
+        "platforms": {
+          "twitch": "https://twitch.tv/vindichee"
+        }
+      },
+      "sgtapollo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sgtapollo",
+          "kick": "https://kick.com/sgtapollo"
+        }
+      },
+      "gregsstory": {
+        "platforms": {
+          "twitch": "https://twitch.tv/gregsstory",
+          "kick": "https://kick.com/gregsstory"
+        }
+      },
+      "xnerdxgirlx": {
+        "platforms": {
+          "twitch": "https://twitch.tv/xnerdxgirlx"
+        }
+      },
+      "b_hoopla": {
+        "platforms": {
+          "twitch": "https://twitch.tv/b_hoopla"
+        }
+      },
+      "b-hoopla": {
+        "platforms": {
+          "kick": "https://kick.com/b-hoopla"
+        }
+      },
+      "hedisaurus": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hedisaurus",
+          "kick": "https://kick.com/hedisaurus"
+        }
+      },
+      "realreincloud": {
+        "platforms": {
+          "twitch": "https://twitch.tv/realreincloud"
+        }
+      },
+      "jonlaw_": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jonlaw_"
+        }
+      },
+      "jonlaw": {
+        "platforms": {
+          "kick": "https://kick.com/jonlaw"
+        }
+      },
+      "sannmann_": {
+        "platforms": {
+          "twitch": "https://twitch.tv/sannmann_"
+        }
+      },
+      "sannmann": {
+        "platforms": {
+          "kick": "https://kick.com/sannmann"
+        }
+      },
+      "kiloau": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kiloau",
+          "kick": "https://kick.com/kiloau"
+        }
+      },
+      "theobrosia": {
+        "platforms": {
+          "twitch": "https://twitch.tv/theobrosia",
+          "kick": "https://kick.com/theobrosia"
+        }
+      },
+      "niki_iremia": {
+        "platforms": {
+          "twitch": "https://twitch.tv/niki_iremia"
+        }
+      },
+      "chidori_senpai": {
+        "platforms": {
+          "twitch": "https://twitch.tv/chidori_senpai"
+        }
+      },
+      "chidori-senpai": {
+        "platforms": {
+          "kick": "https://kick.com/chidori-senpai"
+        }
+      },
+      "twiggycow": {
+        "platforms": {
+          "twitch": "https://twitch.tv/twiggycow"
+        }
+      },
+      "hol_stream": {
+        "platforms": {
+          "twitch": "https://twitch.tv/hol_stream"
+        }
+      },
+      "speed0804": {
+        "platforms": {
+          "twitch": "https://twitch.tv/speed0804"
+        }
+      },
+      "speedmeister": {
+        "platforms": {
+          "kick": "https://kick.com/speedmeister"
+        }
+      },
+      "brakketts": {
+        "platforms": {
+          "twitch": "https://twitch.tv/brakketts"
+        }
+      },
+      "kaaleesi": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kaaleesi"
+        }
+      },
+      "makeitmeansomething": {
+        "platforms": {
+          "twitch": "https://twitch.tv/makeitmeansomething",
+          "kick": "https://kick.com/makeitmeansomething"
+        }
+      },
+      "travpiper": {
+        "platforms": {
+          "twitch": "https://twitch.tv/travpiper",
+          "kick": "https://kick.com/travpiper"
+        }
+      },
+      "jason_plays_games": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jason_plays_games"
+        }
+      },
+      "ottoman673": {
+        "platforms": {
+          "kick": "https://kick.com/ottoman673"
+        }
+      },
+      "zpapz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/zpapz",
+          "kick": "https://kick.com/zpapz"
+        }
+      },
+      "viscosepower": {
+        "platforms": {
+          "twitch": "https://twitch.tv/viscosepower"
+        }
+      },
+      "workszy": {
+        "platforms": {
+          "twitch": "https://twitch.tv/workszy",
+          "kick": "https://kick.com/workszy"
+        }
+      },
+      "pan_derp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/pan_derp"
+        }
+      },
+      "panderp": {
+        "platforms": {
+          "kick": "https://kick.com/panderp"
+        }
+      },
+      "min1moo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/min1moo"
+        }
+      },
+      "nnslul": {
+        "platforms": {
+          "twitch": "https://twitch.tv/nnslul"
+        }
+      },
+      "nnsdev": {
+        "platforms": {
+          "kick": "https://kick.com/nnsdev"
+        }
+      },
+      "ming": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ming",
+          "kick": "https://kick.com/ming"
+        }
+      },
+      "silent": {
+        "platforms": {
+          "twitch": "https://twitch.tv/silent",
+          "kick": "https://kick.com/silent"
+        }
+      },
+      "vigors": {
+        "platforms": {
+          "twitch": "https://twitch.tv/vigors"
+        }
+      },
+      "jonthebroski": {
+        "platforms": {
+          "twitch": "https://twitch.tv/jonthebroski",
+          "kick": "https://kick.com/jonthebroski"
+        }
+      },
+      "peppo": {
+        "platforms": {
+          "twitch": "https://twitch.tv/peppo",
+          "kick": "https://kick.com/peppo"
+        }
+      },
+      "kameu": {
+        "platforms": {
+          "twitch": "https://twitch.tv/kameu"
+        }
+      },
+      "kam_eu": {
+        "platforms": {
+          "kick": "https://kick.com/kam_eu"
+        }
+      },
+      "mollyruu": {
+        "platforms": {
+          "twitch": "https://twitch.tv/mollyruu",
+          "kick": "https://kick.com/mollyruu"
+        }
+      },
+      "lt_raven": {
+        "platforms": {
+          "twitch": "https://twitch.tv/lt_raven"
+        }
+      },
+      "lt-raven": {
+        "platforms": {
+          "kick": "https://kick.com/lt-raven"
+        }
+      },
+      "dasmehdi": {
+        "platforms": {
+          "twitch": "https://twitch.tv/dasmehdi",
+          "kick": "https://kick.com/dasmehdi"
+        }
+      },
+      "cheever7": {
+        "platforms": {
+          "twitch": "https://twitch.tv/cheever7",
+          "kick": "https://kick.com/cheever7"
+        }
+      },
+      "bondjens": {
+        "platforms": {
+          "twitch": "https://twitch.tv/bondjens",
+          "kick": "https://kick.com/bondjens"
+        }
+      },
+      "walkemdownx": {
+        "platforms": {
+          "kick": "https://kick.com/walkemdownx"
+        }
+      },
+      "varaktv": {
+        "platforms": {
+          "twitch": "https://twitch.tv/varaktv"
+        }
+      },
+      "varak": {
+        "platforms": {
+          "kick": "https://kick.com/varak"
+        }
+      },
+      "eagleaye": {
+        "platforms": {
+          "twitch": "https://twitch.tv/eagleaye",
+          "kick": "https://kick.com/eagleaye"
+        }
+      },
+      "neskrp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/neskrp"
+        }
+      },
+      "vertex84": {
+        "platforms": {
+          "twitch": "https://twitch.tv/vertex84",
+          "kick": "https://kick.com/vertex84"
+        }
+      },
+      "katfires": {
+        "platforms": {
+          "twitch": "https://twitch.tv/katfires",
+          "kick": "https://kick.com/katfires"
+        }
+      },
+      "barnacle_bandito": {
+        "platforms": {
+          "twitch": "https://twitch.tv/barnacle_bandito"
+        }
+      },
+      "barnacle-bandito": {
+        "platforms": {
+          "kick": "https://kick.com/barnacle-bandito"
+        }
+      },
+      "restrictedorder": {
+        "platforms": {
+          "twitch": "https://twitch.tv/restrictedorder",
+          "kick": "https://kick.com/restrictedorder"
+        }
+      },
+      "itsfabelz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/itsfabelz",
+          "kick": "https://kick.com/itsfabelz"
+        }
+      },
+      "latenightlane": {
+        "platforms": {
+          "kick": "https://kick.com/latenightlane"
+        }
+      },
+      "ray308win": {
+        "platforms": {
+          "twitch": "https://twitch.tv/ray308win",
+          "kick": "https://kick.com/ray308win"
+        }
+      },
+      "nixety": {
+        "platforms": {
+          "twitch": "https://twitch.tv/nixety",
+          "kick": "https://kick.com/nixety"
+        }
+      },
+      "lt_custard": {
+        "platforms": {
+          "twitch": "https://twitch.tv/lt_custard",
+          "kick": "https://kick.com/lt_custard"
+        }
+      },
+      "cathfawr": {
+        "platforms": {
+          "twitch": "https://twitch.tv/cathfawr",
+          "kick": "https://kick.com/cathfawr"
+        }
+      },
+      "malcolmglass": {
+        "platforms": {
+          "twitch": "https://twitch.tv/malcolmglass",
+          "kick": "https://kick.com/malcolmglass"
+        }
+      },
+      "fatbluntrp": {
+        "platforms": {
+          "twitch": "https://twitch.tv/fatbluntrp",
+          "kick": "https://kick.com/fatbluntrp"
+        }
+      },
+      "graewan": {
+        "platforms": {
+          "twitch": "https://twitch.tv/graewan"
+        }
+      },
+      "brodycurtis_": {
+        "platforms": {
+          "twitch": "https://twitch.tv/brodycurtis_"
+        }
+      },
+      "brodycurtis": {
+        "platforms": {
+          "kick": "https://kick.com/brodycurtis"
+        }
+      },
+      "wildflowerwonder": {
+        "platforms": {
+          "twitch": "https://twitch.tv/wildflowerwonder",
+          "kick": "https://kick.com/wildflowerwonder"
+        }
+      },
+      "owenseven": {
+        "platforms": {
+          "twitch": "https://twitch.tv/owenseven",
+          "kick": "https://kick.com/owenseven"
+        }
+      },
+      "orazz": {
+        "platforms": {
+          "twitch": "https://twitch.tv/orazz"
+        }
+      }
+    }
   },
   "Raiders MC": {
     "full_name": "Raiders MC",
