@@ -1,3 +1,4 @@
 .env
 metrics.db
 metrics.db
+.continue/agents/new-config.yaml

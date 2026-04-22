@@ -281,10 +281,10 @@
           "twitch": "https://twitch.tv/kurupt"
         }
       },
-      "ambush": {
+      "jack": {
         "platforms": {
-          "twitch": "https://twitch.tv/ambush",
-          "kick": "https://kick.com/ambush"
+          "twitch": "https://twitch.tv/jack",
+          "kick": "https://kick.com/jack"
         }
       }
     }
@@ -1000,7 +1000,7 @@
   },
   "Habibis": {
     "full_name": "Habibis",
-    "color": "#fdcb6e",
+    "color": "#f59300",
     "members": {
       "acezproduction": {
         "platforms": {
@@ -1135,7 +1135,7 @@
           "kick": "https://kick.com/blur_o7"
         }
       },
-      "ray__c": {
+      "rayc": {
         "platforms": {
           "twitch": "https://twitch.tv/ray__c",
           "kick": "https://kick.com/RayC"
@@ -1181,6 +1181,21 @@
         "platforms": {
           "twitch": "https://twitch.tv/WooWolfy",
           "kick": "https://kick.com/WooWolfy"
+        }
+      },
+      "catssrage": {
+        "platforms": {
+          "kick": "https://kick.com/catssrage"
+        }
+      },
+      "kieron": {
+        "platforms": {
+          "kick": "https://kick.com/kieron"
+        }
+      },
+      "carrzzz": {
+        "platforms": {
+          "kick": "http://kick.com/carrzzz"
         }
       }
     }
@@ -1901,6 +1916,11 @@
         "platforms": {
           "twitch": "https://twitch.tv/laserwolf"
         }
+      },
+      "xtaigavt": {
+        "platforms": {
+          "kick": "https://kick.com/xtaigavt"
+        }
       }
     }
   },
@@ -2462,12 +2482,6 @@
         "platforms": {
           "twitch": "https://twitch.tv/harry",
           "kick": "https://kick.com/harry"
-        }
-      },
-      "jack": {
-        "platforms": {
-          "twitch": "https://twitch.tv/jack",
-          "kick": "https://kick.com/jack"
         }
       },
       "fahrenheit": {
