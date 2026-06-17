@@ -2565,6 +2565,23 @@
           "twitch": "https://twitch.tv/synced3d",
           "kick": "https://kick.com/synced3d"
         }
+      },
+      "anthonyz": {
+        "platforms": {
+          "twitch": "https://www.twitch.tv/anthonyz",
+          "kick": "https://www.kick.com/anthonyz"
+        }
+      },
+      "slimeoz": {
+        "platforms": {
+          "kick": "https://www.kick.com/slimeoz"
+        }
+      },
+      "lysium": {
+        "platforms": {
+          "twitch": "https://www.twitch.tv/lysium",
+          "kick": "https://www.kick.com/lysium"
+        }
       }
     }
   },

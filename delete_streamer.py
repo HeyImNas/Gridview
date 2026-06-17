@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 # The name of the streamer you want to remove - CASE SENSATIVE
-target_name = "Keeno"
+target_name = "Tyrone"
 
 def delete_streamer(name):
     base_path = os.path.dirname(os.path.abspath(__file__))

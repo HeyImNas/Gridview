@@ -11,7 +11,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from loguru import logger
@@ -21,7 +21,6 @@ from curl_cffi.requests import AsyncSession
 # ==========================================
 # 1. LOGGING & SERVER SETUP
 # ==========================================
-# We use Loguru for pretty terminal outputs and intercept standard Uvicorn logs
 logger.remove()
 logger.level("INFO", color="<yellow>")
 logger.add(
@@ -31,7 +30,6 @@ logger.add(
 )
 
 class InterceptHandler(logging.Handler):
-    """Intercepts standard Python logging and routes it to Loguru."""
     def emit(self, record):
         try:
             level = logger.level(record.levelname).name
@@ -44,18 +42,14 @@ class InterceptHandler(logging.Handler):
             depth += 1
 
         message = record.getMessage()
-        
-        # Silence harmless socket disconnect errors from Windows
         if "WinError 10054" in message or "An existing connection was forcibly closed" in message:
             return 
 
-        # Colorize the 200 OK status codes for easier reading
         if record.name == "uvicorn.access" and "/api/streams" in message and message.endswith(" 200"):
             message = message[:-4] + " <green>200</green>"
 
         logger.opt(depth=depth, exception=record.exc_info, colors=True).log(level, message)
 
-# Apply the custom logger
 logging.basicConfig(handlers=[InterceptHandler()], level=logging.INFO)
 for name in ["uvicorn", "uvicorn.error", "uvicorn.access", "asyncio"]:
     logger_instance = logging.getLogger(name)
@@ -76,19 +70,21 @@ TWITCH_CLIENT_SECRET = os.getenv("TWITCH_CLIENT_SECRET")
 if not TWITCH_CLIENT_ID or not TWITCH_CLIENT_SECRET:
     logger.critical(f"Credentials missing! Checked path: {env_path}")
 
-# This dictionary holds the live data in memory so FastAPI can serve it instantly
 stream_cache = {
-    "count": 0,
-    "streams": [],
-    "status": "Initializing..."
+    "nopixel": {"count": 0, "streams": [], "status": "Initializing..."},
+    "prodigy": {"count": 0, "streams": [], "status": "Initializing..."}
 }
+
+SERVERS = [
+    {"id": "nopixel", "url": "https://lofi-nopixel.com/multipov"},
+    {"id": "prodigy", "url": "https://lofi-prodigy.com/multipov"}
+]
 
 
 # ==========================================
 # 3. DATABASE & HELPER FUNCTIONS
 # ==========================================
 def init_metrics_db():
-    """Initializes the SQLite database used to track historical viewership metrics."""
     db_path = os.path.join(base_path, "metrics.db")
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -99,12 +95,16 @@ def init_metrics_db():
             total_streamers INTEGER
         )
     """)
-    # Safely try to add new columns if upgrading from an older DB version
     try:
         cursor.execute("ALTER TABLE metrics ADD COLUMN twitch_viewers INTEGER DEFAULT 0")
         cursor.execute("ALTER TABLE metrics ADD COLUMN kick_viewers INTEGER DEFAULT 0")
     except sqlite3.OperationalError:
         pass 
+        
+    try:
+        cursor.execute("ALTER TABLE metrics ADD COLUMN server TEXT DEFAULT 'nopixel'")
+    except sqlite3.OperationalError:
+        pass
 
     conn.commit()
     conn.close()
@@ -112,21 +112,23 @@ def init_metrics_db():
 init_metrics_db()
 
 def get_streamers_from_db():
-    """Loads the master list of known NoPixel streamers to check on Twitch."""
     try:
         db_path = os.path.join(base_path, "streamers.db")
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        cursor.execute("SELECT username FROM streamers")
-        names = [row[0] for row in cursor.fetchall()]
+        try:
+            cursor.execute("SELECT username, server FROM streamers")
+            data = {row[0].lower(): row[1] for row in cursor.fetchall()}
+        except sqlite3.OperationalError:
+            cursor.execute("SELECT username FROM streamers")
+            data = {row[0].lower(): "nopixel" for row in cursor.fetchall()}
         conn.close()
-        return names
+        return data
     except sqlite3.Error as e:
         logger.error(f"DB Error: {e}")
-        return []
+        return {}
 
 def load_json_safe(filename, default_val):
-    """Safely loads JSON config files (like groups.json), returning defaults if missing."""
     filepath = os.path.join(base_path, filename)
     try:
         with open(filepath, "r", encoding="utf-8") as f:
@@ -137,28 +139,12 @@ def load_json_safe(filename, default_val):
         logger.warning(f"Could not load {filename}: {e}")
         return default_val
 
-def get_streamer_tags(channel_name, groups_data):
-    """Scans groups.json to see if a streamer belongs to any factions (e.g., LSPD, CG)."""
-    tags = []
-    channel_lower = channel_name.lower()
-    for tag_label, info in groups_data.items():
-        for member_key, member_data in info.get("members", {}).items():
-            platforms = member_data.get("platforms", {})
-            kick_handle = platforms.get("kick", "").rstrip('/').split('/')[-1].lower()
-            twitch_handle = platforms.get("twitch", "").rstrip('/').split('/')[-1].lower()
-            
-            # Check if the channel name matches their JSON key or their platform URLs
-            if channel_lower == member_key.lower() or channel_lower == kick_handle or channel_lower == twitch_handle:
-                tags.append({
-                    "label": tag_label,
-                    "rank": info.get("full_name", tag_label),
-                    "color": info.get("color", "#888888")
-                })
-                break 
-    return tags
+def get_color_for_group(group_name):
+    colors = ["#ff4a4a", "#53fc18", "#00a8ff", "#9146FF", "#ffcc00", "#ff00ff", "#00ffff", "#ff8800"]
+    hash_val = sum(ord(c) for c in group_name)
+    return colors[hash_val % len(colors)]
 
 def chunk_list(data_list, chunk_size):
-    """Splits a large list into smaller chunks (used for Twitch API limits)."""
     for i in range(0, len(data_list), chunk_size):
         yield data_list[i:i + chunk_size]
 
@@ -167,7 +153,6 @@ def chunk_list(data_list, chunk_size):
 # 4. DEDUPLICATION (FUZZY MATCHING)
 # ==========================================
 def clean_username_for_matching(name):
-    """Strips special characters and common prefixes/suffixes (like 'ttv') for accurate comparisons."""
     name = name.lower()
     name = re.sub(r'[^a-z0-9]', '', name)
     if name.endswith('ttv') and len(name) > 3:
@@ -179,7 +164,6 @@ def clean_username_for_matching(name):
     return name
 
 def is_similar_username(name1, name2, threshold=0.85):
-    """Checks if two usernames are highly similar to merge multi-streamers into one card."""
     clean1 = clean_username_for_matching(name1)
     clean2 = clean_username_for_matching(name2)
     if clean1 == clean2:
@@ -192,15 +176,13 @@ def is_similar_username(name1, name2, threshold=0.85):
 # 5. SCRAPING ENGINES
 # ==========================================
 async def get_twitch_token():
-    """Generates an OAuth token for the Twitch API."""
     url = f"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIENT_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials"
     async with aiohttp.ClientSession() as session:
         async with session.post(url) as response:
             data = await response.json()
             return data.get("access_token")
 
-async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, groups_data, channel_allowlist):
-    """Queries the Twitch API in batches of 100 to find live streamers."""
+async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, dynamic_tags, channel_allowlist):
     headers = {"Client-ID": TWITCH_CLIENT_ID, "Authorization": f"Bearer {token}"}
     twitch_streams = []
 
@@ -218,7 +200,6 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                     for stream in data.get("data", []):
                         channel_name = stream.get("user_login")
                         
-                        # Only accept GTA V streams (ID: 32982) OR manually whitelisted channels
                         is_gta = stream.get("game_id") == "32982"
                         is_allowed = channel_name.lower() in channel_allowlist
                         
@@ -228,7 +209,7 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                                 continue 
                                 
                             thumb = stream.get("thumbnail_url", "").replace("{width}", "640").replace("{height}", "360")
-                            tags = get_streamer_tags(channel_name, groups_data)
+                            tags = dynamic_tags.get(channel_name.lower(), [])
                             
                             twitch_streams.append({
                                 "platform": "twitch",
@@ -243,28 +224,52 @@ async def fetch_twitch_streams_by_name(token, valid_streamers, title_blacklist, 
                 else:
                     logger.warning(f"Twitch Batch {i} failed: {response.status}")
                 
-            await asyncio.sleep(0.1) # Be polite to the API
+            await asyncio.sleep(0.1) 
     return twitch_streams
 
-async def fetch_kick_streams_from_lofi(session, groups_data, channel_blacklist):
-    """Extracts Kick streams directly from Lofi-Nopixel's internal SvelteKit JSON data."""
+async def fetch_lofi_data(session, target_url, channel_blacklist, tag_overrides):
     try:
-        logger.info("Fetching Kick streams via Lofi-Nopixel bypass...")
-        resp = await session.get("https://lofi-nopixel.com/multipov", timeout=15)
+        resp = await session.get(target_url, timeout=15)
         
         if resp.status_code != 200:
-            logger.warning(f"Lofi-Nopixel blocked/failed. Status: {resp.status_code}")
-            return None
+            return None, {}, set()
             
         html = resp.text
+        handle_to_tags = {}
+        base_handles = set() 
+        
+        for block in html.split('displayName:"')[1:]:
+            group_matches = re.findall(r'group:\{id:"[^"]+",name:"([^"]+)"', block)
+            unique_groups = list(set(group_matches))
+            
+            raw_tags = []
+            for g in unique_groups:
+                if g.lower() == "other": continue
+                
+                override = tag_overrides.get(g.lower(), {})
+                color = override.get("color", get_color_for_group(g))
+                priority = override.get("priority", 99) 
+                display_label = override.get("label", g)
+                
+                raw_tags.append({
+                    "label": display_label,
+                    "rank": g,
+                    "color": color,
+                    "priority": priority
+                })
+                
+            raw_tags.sort(key=lambda x: x["priority"])
+            clean_tags = [{"label": t["label"], "rank": t["rank"], "color": t["color"]} for t in raw_tags]
+            
+            for h in re.findall(r'platformHandle:"([^"]+)"', block):
+                handle_lower = h.lower()
+                handle_to_tags[handle_lower] = clean_tags
+                base_handles.add(handle_lower) 
+                
         kick_streams = []
         seen_handles = set()
         
-        # Split the raw HTML code by Kick platform tags to isolate streamer objects
-        blocks = html.split('platform:"kick"')
-        
-        for block in blocks[1:]:
-            # 1. Extract Handle
+        for block in html.split('platform:"kick"')[1:]:
             handle_m = re.search(r'platformHandle:"([^"]+)"', block)
             if not handle_m: continue
             handle = handle_m.group(1).lower()
@@ -272,33 +277,23 @@ async def fetch_kick_streams_from_lofi(session, groups_data, channel_blacklist):
             if handle in channel_blacklist or handle in seen_handles:
                 continue
                 
-            # 2. STRICT CATEGORY FILTER (Kick Game ID for GTA V is "8")
             game_m = re.search(r'gameId:"([^"]+)"', block)
-            game_id = game_m.group(1) if game_m else ""
-            
-            # If they switched to Just Chatting or Slots, drop them from the directory
-            if game_id != "8":
+            if not game_m or game_m.group(1) != "8":
                 continue
                 
             seen_handles.add(handle)
-            
-            # 3. Extract Title (Handles escaped internal quotes)
             title_m = re.search(r'streamTitle:(null|"(?:\\.|[^"\\])*")', block)
             title = "No Title"
             if title_m and title_m.group(1) != "null":
                 title = title_m.group(1)[1:-1].replace('\\"', '"').replace('\\\\', '\\')
                 
-            # 4. Extract Viewers
             viewer_m = re.search(r'viewerCount:(\d+)', block)
             viewers = int(viewer_m.group(1)) if viewer_m else 0
             
-            # 5. Extract High-Res Thumbnail
             thumb_m = re.search(r'thumbnailUrl:(null|"(?:\\.|[^"\\])*")', block)
             thumb = ""
             if thumb_m and thumb_m.group(1) != "null":
                 thumb = thumb_m.group(1)[1:-1].replace('\\"', '"').replace('\\\\', '\\')
-                
-            tags = get_streamer_tags(handle, groups_data)
             
             kick_streams.append({
                 "platform": "kick",
@@ -308,138 +303,256 @@ async def fetch_kick_streams_from_lofi(session, groups_data, channel_blacklist):
                 "kick_viewers": viewers,
                 "twitch_viewers": 0,
                 "thumbnail": thumb,
-                "tags": tags
+                "tags": handle_to_tags.get(handle, [])
             })
             
-        return kick_streams
-        
+        return kick_streams, handle_to_tags, base_handles
     except Exception as e:
-        logger.error(f"Lofi-Nopixel scrape error: {e}")
-        return None
+        logger.error(f"Lofi scrape error: {e}")
+        return None, {}, set()
 
+async def fetch_hasroot_prodigy(session, channel_blacklist, title_blacklist):
+    try:
+        logger.info("Fetching Prodigy streams via HasRoot...")
+        resp = await session.get("https://prodigyrp.hasroot.com/", timeout=15)
+        
+        if resp.status_code != 200:
+            return []
+            
+        match = re.search(r'var ourData = (\{.*?\});\s*var JSON_TAGLIST', resp.text, re.DOTALL)
+        if not match:
+            return []
+            
+        data = json.loads(match.group(1))
+        streams = []
+        
+        for handle, info in data.get("streams", {}).items():
+            if info.get("gameID") != 1: continue
+            
+            channel_name = info.get("name", "").lower()
+            if channel_name in channel_blacklist:
+                continue
+                
+            title = info.get("status", "No Title").lower()
+            if any(term in title for term in title_blacklist):
+                continue
+            
+            streams.append({
+                "platform": "twitch",
+                "channel": info.get("name"),
+                "title": info.get("status", "No Title"),
+                "viewers": info.get("viewers", 0),
+                "twitch_viewers": info.get("viewers", 0),
+                "kick_viewers": 0,
+                "thumbnail": f"https://static-cdn.jtvnw.net/previews-ttv/live_user_{info.get('name')}-640x360.jpg",
+                "tags": [] 
+            })
+        return streams
+    except Exception as e:
+        logger.error(f"HasRoot scrape error: {e}")
+        return []
 
 # ==========================================
 # 6. MASTER LOOP
 # ==========================================
 async def fetch_streams_loop():
-    """Infinite background loop that continuously feeds the cache with fresh data."""
-    known_streamers = get_streamers_from_db()
-    logger.info(f"Loaded {len(known_streamers)} streamers. Starting scraper...")
+    known_streamers_dict = get_streamers_from_db()
+    logger.info(f"Loaded {len(known_streamers_dict)} streamers. Starting scraper...")
     
-    last_twitch_results = []
-    last_kick_results = [] 
-    
-    # We use raw datetimes instead of loop counters to completely fix the "PC Sleep" bug!
-    # Initialize these in the past so they trigger immediately on the first loop
-    last_twitch_update = datetime.min.replace(tzinfo=timezone.utc)
-    last_kick_update = datetime.min.replace(tzinfo=timezone.utc)
+    # We added the `last_hasroot` property to safely track DNS failures
+    server_state = {
+        "nopixel": {"last_twitch": datetime.min.replace(tzinfo=timezone.utc), "last_kick": datetime.min.replace(tzinfo=timezone.utc), "last_hasroot": datetime.min.replace(tzinfo=timezone.utc), "kick_cache": [], "twitch_cache": [], "hasroot_cache": [], "dynamic_tags": {}, "base_handles": set()},
+        "prodigy": {"last_twitch": datetime.min.replace(tzinfo=timezone.utc), "last_kick": datetime.min.replace(tzinfo=timezone.utc), "last_hasroot": datetime.min.replace(tzinfo=timezone.utc), "kick_cache": [], "twitch_cache": [], "hasroot_cache": [], "dynamic_tags": {}, "base_handles": set()}
+    }
 
-    # We use an impersonating session to beat Cloudflare on scraping targets
     async with AsyncSession(impersonate="chrome116") as session:
         while True:
             now = datetime.now(timezone.utc)
             
-            # Reload JSON configs dynamically so you don't have to restart the server when updating groups
+            # Load standard lists
             blacklist_data = load_json_safe("blacklist.json", {"titles": [], "channels": []})
             allowlist_data = load_json_safe("allowlist.json", {"channels": []})
-            groups_data = load_json_safe("groups.json", {})
+            
+            # Load tag overrides
+            raw_overrides = load_json_safe("tag_overrides.json", {})
+            tag_overrides = {k.lower(): v for k, v in raw_overrides.items()}
+            
+            # Load the new HARD SERVER OVERRIDES
+            raw_server_overrides = load_json_safe("server_overrides.json", {})
+            server_overrides = {k.lower(): str(v).lower() for k, v in raw_server_overrides.items()}
             
             title_blacklist = [str(t).lower() for t in blacklist_data.get("titles", [])]
             channel_blacklist = [str(c).lower() for c in blacklist_data.get("channels", [])]
             channel_allowlist = [str(c).lower() for c in allowlist_data.get("channels", [])]
             
-            valid_twitch_streamers = [name for name in known_streamers if name.lower() not in channel_blacklist]
+            valid_twitch_streamers = [name for name in known_streamers_dict.keys() if name not in channel_blacklist]
 
-            # --- KICK Refresh (Runs every 1 minute) ---
-            lofi_kick_results = await fetch_kick_streams_from_lofi(session, groups_data, channel_blacklist)
-            
-            if lofi_kick_results is not None:
-                current_cycle_kick = []
-                for s in lofi_kick_results:
-                    # Enforce title blacklist (e.g., blocking other RP servers)
-                    if not any(term in s["title"].lower() for term in title_blacklist):
-                        current_cycle_kick.append(s)
+            for server in SERVERS:
+                server_id = server["id"]
+                target_url = server["url"]
+                state = server_state[server_id]
+
+                # --- HASROOT, KICK & TAGS Refresh ---
+                if server_id == "prodigy":
+                    hasroot_streams = await fetch_hasroot_prodigy(session, channel_blacklist, title_blacklist)
+                    
+                    # Apply 10-Minute Grace Period logic to HasRoot
+                    if hasroot_streams:
+                        state["hasroot_cache"] = hasroot_streams
+                        state["last_hasroot"] = now
+                    else:
+                        if (now - state["last_hasroot"]).total_seconds() > 600:
+                            logger.warning(f"HasRoot API unreachable for 10 mins on {server_id}. Clearing stale cache.")
+                            state["hasroot_cache"] = []
+                        else:
+                            logger.warning(f"HasRoot scrape failed on {server_id}. Falling back to cached data.")
                 
-                last_kick_results = current_cycle_kick # Save to cache
-                last_kick_update = now
-            else:
-                # If PC went to sleep and the internet drops, clear the cache to prevent ghosts!
-                if (now - last_kick_update).total_seconds() > 600:
-                    logger.warning("Kick API unreachable for 10 minutes. Clearing stale Kick cache.")
-                    last_kick_results = []
+                lofi_kick_results, dynamic_tags, base_handles = await fetch_lofi_data(session, target_url, channel_blacklist, tag_overrides)
+                
+                if lofi_kick_results is not None:
+                    current_cycle_kick = []
+                    for s in lofi_kick_results:
+                        if not any(term in s["title"].lower() for term in title_blacklist):
+                            current_cycle_kick.append(s)
+                    
+                    state["kick_cache"] = current_cycle_kick
+                    state["dynamic_tags"] = dynamic_tags 
+                    state["base_handles"] = base_handles 
+                    state["last_kick"] = now
                 else:
-                    logger.warning("Kick scrape failed this cycle. Falling back to cached Kick data.")
-                current_cycle_kick = last_kick_results
+                    if (now - state["last_kick"]).total_seconds() > 600:
+                        logger.warning(f"Kick API unreachable on {server_id}. Clearing stale Kick cache.")
+                        state["kick_cache"] = []
+                    current_cycle_kick = state["kick_cache"]
 
-            # --- TWITCH Refresh (Runs every 5 minutes to save API quota) ---
-            if (now - last_twitch_update).total_seconds() >= 300:
+                # --- TWITCH Refresh ---
+                if server_id == "nopixel": 
+                    if (now - state["last_twitch"]).total_seconds() >= 300:
+                        try:
+                            logger.info("Running 5-min Twitch batch query...")
+                            token = await get_twitch_token()
+                            if token and valid_twitch_streamers:
+                                
+                                combined_tags = {**server_state["nopixel"].get("dynamic_tags", {}), **server_state["prodigy"].get("dynamic_tags", {})}
+                                
+                                fresh_twitch = await fetch_twitch_streams_by_name(
+                                    token, valid_twitch_streamers, title_blacklist, combined_tags, channel_allowlist
+                                )
+                                
+                                nopixel_twitch = []
+                                prodigy_twitch = []
+                                
+                                np_keywords = ["nopixel", "nopixel rp", "nopixelrp", "nopixel 4.0", "nopixel rp 4.0"]
+                                prod_keywords = ["prodigy", "prodigy rp", "prodigy rp 4.0", "prodigy 4.0", "prod 4.0", "prod rp"]
+                                
+                                prodigy_roster = server_state["prodigy"]["base_handles"]
+                                
+                                for stream in fresh_twitch:
+                                    raw_title = stream["title"].lower()
+                                    channel = stream["channel"].lower()
+                                    
+                                    clean_title = re.sub(r'[^a-z0-9\s]', ' ', raw_title)
+                                    
+                                    forced_server = server_overrides.get(channel)
+                                    is_prodigy = any(kw in clean_title for kw in prod_keywords) or re.search(r'\bprod\b', clean_title)
+                                    is_nopixel = any(kw in clean_title for kw in np_keywords)
+                                    db_server = known_streamers_dict.get(channel, "nopixel")
+                                    
+                                    # PRIORITY 0: Hard Server Override
+                                    if forced_server == "prodigy":
+                                        prodigy_twitch.append(stream)
+                                    elif forced_server == "nopixel":
+                                        nopixel_twitch.append(stream)
+                                    # Priority 1: Title Keywords
+                                    elif is_prodigy:
+                                        prodigy_twitch.append(stream)
+                                    elif is_nopixel:
+                                        nopixel_twitch.append(stream)
+                                    # Priority 2: Roster Fallback 
+                                    elif channel in prodigy_roster or db_server == "prodigy":
+                                        prodigy_twitch.append(stream)
+                                    else:
+                                        # Priority 3: Default Catch-all 
+                                        nopixel_twitch.append(stream)
+                                        
+                                logger.info(f"Twitch sorted: {len(nopixel_twitch)} NoPixel, {len(prodigy_twitch)} Prodigy.")
+                                
+                                server_state["nopixel"]["twitch_cache"] = nopixel_twitch
+                                server_state["prodigy"]["twitch_cache"] = prodigy_twitch
+                                
+                            server_state["nopixel"]["last_twitch"] = now
+                            server_state["prodigy"]["last_twitch"] = now
+                        except Exception as e:
+                            logger.error(f"Twitch Error: {e}")
+                            if (now - state["last_twitch"]).total_seconds() > 600:
+                                server_state["nopixel"]["twitch_cache"] = []
+                                server_state["prodigy"]["twitch_cache"] = []
+
+                # --- Merge, Deduplicate & Sort ---
+                raw_merged = current_cycle_kick + state["twitch_cache"]
+                
+                # Strip out any Kick streamers that were forced to the other server
+                raw_merged = [s for s in raw_merged if server_overrides.get(s["channel"].lower(), server_id) == server_id]
+                
+                if server_id == "prodigy":
+                    for hr_stream in state.get("hasroot_cache", []):
+                        chan = hr_stream["channel"].lower()
+                        # Apply forced override filtering to HasRoot too
+                        if server_overrides.get(chan, "prodigy") != "prodigy":
+                            continue
+                        hr_stream["tags"] = state["dynamic_tags"].get(chan, [])
+                        raw_merged.append(hr_stream)
+
+                deduped_streams = []
+                
+                for stream in raw_merged:
+                    channel = stream["channel"]
+                    matched_existing = None
+                    
+                    for existing in deduped_streams:
+                        if is_similar_username(channel, existing["channel"]):
+                            matched_existing = existing
+                            break
+                    
+                    if matched_existing:
+                        matched_existing["viewers"] += stream.get("viewers", 0)
+                        matched_existing["twitch_viewers"] += stream.get("twitch_viewers", 0)
+                        matched_existing["kick_viewers"] += stream.get("kick_viewers", 0)
+                        
+                        if not matched_existing.get("tags") and stream.get("tags"):
+                            matched_existing["tags"] = stream.get("tags")
+                    else:
+                        deduped_streams.append(stream.copy())
+
+                merged = deduped_streams
+                merged.sort(key=lambda x: x["viewers"], reverse=True)
+                
+                stream_cache[server_id]["streams"] = merged
+                stream_cache[server_id]["count"] = len(merged)
+                stream_cache[server_id]["status"] = "Live"
+                
+                total_viewers = sum(s.get("viewers", 0) for s in merged)
+                tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
+                kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
+                
                 try:
-                    logger.info("Running 5-min Twitch batch query...")
-                    token = await get_twitch_token()
-                    if token and valid_twitch_streamers:
-                        last_twitch_results = await fetch_twitch_streams_by_name(
-                            token, valid_twitch_streamers, title_blacklist, groups_data, channel_allowlist
-                        )
-                    last_twitch_update = datetime.now(timezone.utc)
+                    metrics_db_path = os.path.join(base_path, "metrics.db")
+                    conn = sqlite3.connect(metrics_db_path)
+                    cursor = conn.cursor()
+                    cursor.execute(
+                        "INSERT INTO metrics (server, total_viewers, total_streamers, twitch_viewers, kick_viewers) VALUES (?, ?, ?, ?, ?)", 
+                        (server_id, total_viewers, len(merged), tw_viewers, kk_viewers)
+                    )
+                    conn.commit()
+                    conn.close()
                 except Exception as e:
-                    logger.error(f"Twitch Error: {e}")
-
-            # --- Merge, Deduplicate & Sort ---
-            raw_merged = current_cycle_kick + last_twitch_results
-            deduped_streams = []
-            
-            for stream in raw_merged:
-                channel = stream["channel"]
-                matched_existing = None
+                    pass
                 
-                # Check if this streamer is already in the deduped list (Multi-streaming)
-                for existing in deduped_streams:
-                    if is_similar_username(channel, existing["channel"]):
-                        matched_existing = existing
-                        break
+                seconds_since_twitch = (datetime.now(timezone.utc) - server_state["nopixel"]["last_twitch"]).total_seconds()
+                mins_until_twitch = max(0, int((300 - seconds_since_twitch) // 60))
                 
-                if matched_existing:
-                    # Combine viewer counts for multi-streamers
-                    matched_existing["viewers"] += stream.get("viewers", 0)
-                    matched_existing["twitch_viewers"] += stream.get("twitch_viewers", 0)
-                    matched_existing["kick_viewers"] += stream.get("kick_viewers", 0)
-                else:
-                    # Append a copy to prevent mutating the cached arrays
-                    deduped_streams.append(stream.copy())
-
-            # Sort the final list by highest viewers first
-            merged = deduped_streams
-            merged.sort(key=lambda x: x["viewers"], reverse=True)
+                logger.opt(colors=True).info(f"[{server_id.upper()}] Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{mins_until_twitch} min(s).</magenta>")
             
-            # Commit to cache
-            stream_cache["streams"] = merged
-            stream_cache["count"] = len(merged)
-            stream_cache["status"] = "Live"
-            
-            # --- LOG METRICS TO DB ---
-            total_viewers = sum(s.get("viewers", 0) for s in merged)
-            tw_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "twitch")
-            kk_viewers = sum(s.get("viewers", 0) for s in merged if s.get("platform") == "kick")
-            
-            try:
-                metrics_db_path = os.path.join(base_path, "metrics.db")
-                conn = sqlite3.connect(metrics_db_path)
-                cursor = conn.cursor()
-                cursor.execute(
-                    "INSERT INTO metrics (total_viewers, total_streamers, twitch_viewers, kick_viewers) VALUES (?, ?, ?, ?)", 
-                    (total_viewers, len(merged), tw_viewers, kk_viewers)
-                )
-                conn.commit()
-                conn.close()
-            except Exception as e:
-                logger.error(f"Metrics DB Error: {e}")
-            
-            seconds_since_twitch = (datetime.now(timezone.utc) - last_twitch_update).total_seconds()
-            mins_until_twitch = max(0, int((300 - seconds_since_twitch) // 60))
-            
-            logger.opt(colors=True).info(f"Cache updated: <magenta>{len(merged)} streams</magenta> | <green>{total_viewers} viewers</green>. Next Twitch in <magenta>{mins_until_twitch} min(s).</magenta>")
-            
-            # Wait 60 seconds before looping again
             await asyncio.sleep(60)
 
 
@@ -448,7 +561,6 @@ async def fetch_streams_loop():
 # ==========================================
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Manages the background loop's lifecycle so it starts/stops cleanly with the server."""
     task = asyncio.create_task(fetch_streams_loop())
     yield
     task.cancel()
@@ -456,7 +568,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-# Allow the frontend application to pull data from this API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -466,15 +577,14 @@ app.add_middleware(
 )
 
 @app.get("/api/streams")
-async def get_nopixel_streams():
-    """Endpoint: Returns the current live directory data."""
-    return stream_cache
+async def get_nopixel_streams(server: str = "nopixel"):
+    if server in stream_cache:
+        return stream_cache[server]
+    return stream_cache["nopixel"]
 
 @app.get("/api/metrics")
-def get_metrics(timeframe: str = "1h"):
-    """Endpoint: Returns historical viewership data for charts."""
+def get_metrics(timeframe: str = "1h", server: str = "nopixel"):
     db_path = os.path.join(base_path, "metrics.db")
-    
     now = datetime.now(timezone.utc)
     if timeframe == "1h": delta = now - timedelta(hours=1)
     elif timeframe == "12h": delta = now - timedelta(hours=12)
@@ -486,7 +596,7 @@ def get_metrics(timeframe: str = "1h"):
     try:
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        cursor.execute("SELECT timestamp, total_viewers, total_streamers, twitch_viewers, kick_viewers FROM metrics WHERE timestamp >= ? ORDER BY timestamp ASC", (delta.strftime('%Y-%m-%d %H:%M:%S'),))
+        cursor.execute("SELECT timestamp, total_viewers, total_streamers, twitch_viewers, kick_viewers FROM metrics WHERE timestamp >= ? AND server = ? ORDER BY timestamp ASC", (delta.strftime('%Y-%m-%d %H:%M:%S'), server))
         rows = cursor.fetchall()
         conn.close()
         
@@ -500,22 +610,48 @@ def get_metrics(timeframe: str = "1h"):
     except Exception as e:
         return {"error": str(e)}
 
+@app.get("/api/tags")
+def get_tags():
+    return load_json_safe("tag_overrides.json", {})
+
+@app.post("/api/tags")
+async def update_tags(request: Request):
+    try:
+        data = await request.json()
+        filepath = os.path.join(base_path, "tag_overrides.json")
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+        return {"status": "success"}
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.get("/api/overrides")
+def get_overrides():
+    return load_json_safe("server_overrides.json", {})
+
+@app.post("/api/overrides")
+async def update_overrides(request: Request):
+    try:
+        data = await request.json()
+        filepath = os.path.join(base_path, "server_overrides.json")
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+        return {"status": "success"}
+    except Exception as e:
+        return {"error": str(e)}
+
 @app.get("/api/kick-playback/{username}")
 def get_kick_playback(username: str):
-    """Endpoint: Helper route to get the raw .m3u8 video URL for a Kick streamer."""
     url = f"https://kick.com/api/v1/channels/{username}"
     try:
-        # Use curl_cffi to bypass Cloudflare on the Kick channel API
         response = c_requests.get(url, impersonate="chrome")
         if response.status_code == 200:
             data = response.json()
-            playback_url = data.get("playback_url")
-            return {"url": playback_url}
+            return {"url": data.get("playback_url")}
         else:
-            return {"error": f"Kick API blocked request. Status: {response.status_code}"}
+            return {"error": f"Kick API blocked request."}
     except Exception as e:
         return {"error": str(e)}
 
 if __name__ == "__main__":
-    # Start the local server
     uvicorn.run(app, host="0.0.0.0", port=8000, log_config=None)

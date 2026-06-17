@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoPixel Directory</title>
+    <title>RP Directory</title>
     
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,12 +13,43 @@
             background-color: #0b0e14; color: #ffffff;
             font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; 
             transition: padding 0.3s, margin-left 0.3s ease;
-            margin-left: 60px; /* Push body over to make room for sidebar */
+            margin-left: 60px;
         }
         body.sidebar-collapsed { margin-left: 0; }
         
         h1 { text-align: center; color: #53fc18; margin-bottom: 5px; }
         .status-bar { text-align: center; color: #a0a5b5; font-size: 12px; margin-bottom: 20px; }
+
+        /* --- SERVER TOGGLE CSS --- */
+        .server-toggle-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            background: #1a1f29;
+            border: 2px solid #2d3546;
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 100;
+        }
+        .server-toggle-btn {
+            background: transparent;
+            color: #a0a5b5;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .server-toggle-btn.active {
+            background: #53fc18;
+            color: #0b0e14;
+        }
+        .server-toggle-btn:hover:not(.active) {
+            color: #ffffff;
+            background: #2d3546;
+        }
 
         /* --- SIDEBAR CSS --- */
         .sidebar {
@@ -26,11 +57,10 @@
             background-color: #1a1f29; border-right: 2px solid #2d3546;
             display: flex; flex-direction: column; align-items: center; padding-top: 20px; 
             z-index: 100; gap: 15px; 
-            transition: transform 0.3s ease; /* Smooth slide animation */
+            transition: transform 0.3s ease;
         }
         .sidebar.collapsed { transform: translateX(-100%); }
         
-        /* The clickable tab that sticks out */
         .sidebar-toggle {
             position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
             width: 20px; height: 50px; background: #1a1f29;
@@ -47,7 +77,6 @@
         }
         .sidebar-icon:hover { border-color: #53fc18; background: #2d3546; }
 
-        /* Hover Tooltip */
         .nav-tooltip {
             position: absolute; left: 60px; top: 50%; transform: translateY(-50%);
             background: #0b0e14; border: 1px solid #53fc18; padding: 10px 15px; border-radius: 6px;
@@ -57,7 +86,7 @@
         .sidebar-icon:hover .nav-tooltip { opacity: 1; left: 55px; }
         .stat-highlight { color: #53fc18; font-size: 15px; }
 
-        /* --- MODALS CSS (Metrics & Factions) --- */
+        /* --- MODALS CSS --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px);
@@ -78,6 +107,26 @@
         }
         .chart-btn:hover { border-color: #00a8ff; }
         .chart-btn.active { background: #00a8ff; color: #fff; font-weight: bold; }
+
+        /* --- EDITOR ROWS CSS --- */
+        .tag-edit-row {
+            display: flex; gap: 10px; margin-bottom: 10px; align-items: center;
+            background: #0b0e14; padding: 10px; border-radius: 8px; border: 1px solid #2d3546;
+        }
+        .tag-input {
+            flex: 1; padding: 8px; background: #1a1f29; border: 1px solid #2d3546; 
+            color: white; border-radius: 4px; outline: none; font-size: 13px;
+        }
+        .tag-input:focus { border-color: #53fc18; }
+        .tag-color-input {
+            width: 40px; height: 35px; padding: 0; border: none; border-radius: 4px; cursor: pointer;
+            background: transparent;
+        }
+        .tag-delete-btn {
+            background: transparent; color: #ff4a4a; border: 1px solid #ff4a4a; 
+            padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s;
+        }
+        .tag-delete-btn:hover { background: #ff4a4a; color: white; }
 
         /* --- TABS CSS --- */
         .tab-navigation { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
@@ -108,33 +157,28 @@
 
         /* --- THEATER MODE CSS --- */
         body.theater-mode { padding: 10px; overflow: hidden; margin-left: 0; }
-        body.theater-mode .sidebar, body.theater-mode h1, body.theater-mode .status-bar, body.theater-mode .tab-navigation { display: none !important; }
+        body.theater-mode .sidebar, body.theater-mode h1, body.theater-mode .status-bar, body.theater-mode .tab-navigation, body.theater-mode .server-toggle-container { display: none !important; }
         body.theater-mode #multi-player-view { height: calc(100vh - 20px); }
 
         /* --- STREAM GRID --- */
         #stream-grid {
             display: grid; 
-            /* Increased min-width from 300px to 360px to make every card significantly wider */
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); 
             gap: 20px; 
             padding: 20px; 
-            /* Expanded max-width from 1400px to 1700px so wide monitors can still fit 4-5 cards comfortably */
             max-width: 1700px; 
             margin: 0 auto;
         }
         
-        /* Base stream card */
         .stream-card {
             background-color: #1a1f29; border-radius: 8px; overflow: hidden; transition: transform 0.2s, border 0.2s, box-shadow 0.2s;
             border: 1px solid transparent; display: flex; flex-direction: column; position: relative; cursor: pointer; user-select: none;
         }
 
-        /* Dynamic Hover Colors */
         .stream-card.kick-hover:hover { border: 1px solid #53fc18; box-shadow: 0 0 15px rgba(83, 252, 24, 0.2); z-index: 2; }
         .stream-card.twitch-hover:hover { border: 1px solid #9146FF; box-shadow: 0 0 15px rgba(145, 70, 255, 0.2); z-index: 2; }
         .stream-card.multi-hover:hover { border: 1px solid #00a8ff; box-shadow: 0 0 15px rgba(0, 168, 255, 0.3); z-index: 2; }
 
-        /* Expand title on hover */
         .stream-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .stream-card:hover .stream-title { white-space: normal; overflow: visible; word-wrap: break-word; }
 
@@ -151,22 +195,10 @@
         .refresh-tag { font-size: 10px; color: #666; margin-bottom: 8px; }
         .stream-meta { font-size: 13px; color: #a0a5b5; display: flex; justify-content: space-between; align-items: center;}
         
-        /* --- CHANNEL NAME & VIEWER ALIGNMENT --- */
-        .channel-name-area { 
-            display: flex; align-items: center; gap: 6px; 
-            min-width: 0; /* Allows long names to truncate */
-            flex: 1; /* Fills remaining space */
-        }
-        .channel-name-text {
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
+        .channel-name-area { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
+        .channel-name-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        /* Viewer Hover Area */
-        .viewer-wrap { 
-            display: flex; flex-direction: column; align-items: flex-end; 
-            flex-shrink: 0; /* Protects viewer count from getting crushed */
-            margin-left: 10px;
-        }
+        .viewer-wrap { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; margin-left: 10px;}
         .total-viewers { color: #ff4a4a; font-weight: bold; }
         .split-viewers { display: none; gap: 8px; font-size: 13px; font-weight: bold; }
         .stream-card:hover .total-viewers { display: none; }
@@ -177,10 +209,7 @@
             font-size: 10px; font-weight: bold; text-transform: uppercase; box-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
-        /* --- TAG HOVER EXPANSION CARD --- */
-        .tags-wrapper {
-            position: relative; display: flex; align-items: center; gap: 4px; pointer-events: auto;
-        }
+        .tags-wrapper { position: relative; display: flex; align-items: center; gap: 4px; pointer-events: auto; }
         .tag-count-badge {
             background: #2d3546; color: #a0a5b5; border-radius: 12px;
             font-size: 10px; font-weight: bold; padding: 2px 6px; cursor: help; transition: 0.2s;
@@ -188,18 +217,14 @@
         .tags-wrapper:hover .tag-count-badge { color: #0b0e14; background: #53fc18; }
         
         .full-tags-card {
-            position: absolute; bottom: 140%; right: 0; /* Pops up and aligns to the right */
+            position: absolute; bottom: 140%; right: 0; 
             background: #1a1f29; border: 1px solid #2d3546; padding: 10px; border-radius: 8px;
             display: flex; flex-direction: column; gap: 6px; opacity: 0; pointer-events: none; 
             transition: all 0.2s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.8); z-index: 20;
             min-width: max-content; transform: translateY(10px);
         }
-        .tags-wrapper:hover .full-tags-card {
-            opacity: 1; pointer-events: auto; transform: translateY(0);
-        }
-        .full-tags-header {
-            font-size: 10px; color: #a0a5b5; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
-        }
+        .tags-wrapper:hover .full-tags-card { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .full-tags-header { font-size: 10px; color: #a0a5b5; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
 
         .controls { text-align: center; margin-bottom: 30px; }
         .filter-buttons { margin-bottom: 15px; }
@@ -230,45 +255,18 @@
         .chat-iframe { width: 100%; height: 100%; border: none; display: none; }
         .chat-iframe.active { display: block; }
 
-        /* --- MULTI-VIDEO OVERLAY CONTROLS --- */
-        .multi-video-wrapper { 
-            position: relative; 
-            background: #000; 
-            border-radius: 8px; 
-            overflow: hidden; 
-        }
-        .multi-video-wrapper iframe, .multi-video-wrapper video { 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-            display: block; 
-            background: #000;
-        }
-        .tester{
-        background-color: #f59300;
-        }
+        .multi-video-wrapper { position: relative; background: #000; border-radius: 8px; overflow: hidden; }
+        .multi-video-wrapper iframe, .multi-video-wrapper video { width: 100%; height: 100%; border: none; display: block; background: #000; }
         .player-overlay {
-            position: absolute; 
-            top: 0; left: 0; width: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
-            padding: 12px 15px; 
-            box-sizing: border-box;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            opacity: 0; 
-            transition: opacity 0.2s ease-in-out;
-            z-index: 10; 
-            pointer-events: none; 
+            position: absolute; top: 0; left: 0; width: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            padding: 12px 15px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center;
+            opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 10; pointer-events: none; 
         }
-        
         .multi-video-wrapper:hover .player-overlay { opacity: 1; pointer-events: auto; }
         .player-overlay-title { color: white; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 3px black; }
-        
         .player-overlay-controls button {
             background: rgba(26, 31, 41, 0.8); border: 1px solid #2d3546; color: white; 
-            padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-left: 5px; 
-            transition: all 0.2s; font-size: 12px; font-weight: bold;
+            padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-left: 5px; transition: all 0.2s; font-size: 12px; font-weight: bold;
         }
         .player-overlay-controls button:hover { background: #2d3546; color: #53fc18; border-color: #53fc18; }
 
@@ -277,6 +275,11 @@
 <body>
 
     <div id="toast-container"></div>
+
+    <div class="server-toggle-container">
+        <button class="server-toggle-btn active" id="btn-server-nopixel" onclick="switchServer('nopixel')">NoPixel</button>
+        <button class="server-toggle-btn" id="btn-server-prodigy" onclick="switchServer('prodigy')">Prodigy</button>
+    </div>
 
     <div class="sidebar" id="main-sidebar">
         <div class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
@@ -312,6 +315,60 @@
                 <span class="stat-highlight" id="hover-top-faction">None</span>
             </div>
         </div>
+
+        <div class="sidebar-icon" onclick="openTagsModal()" title="Tag Customization">
+            🏷️
+            <div class="nav-tooltip">Edit Group Tags</div>
+        </div>
+
+        <div class="sidebar-icon" onclick="openOverrideModal()" title="Server Overrides">
+            📌
+            <div class="nav-tooltip">Force Streamer Server</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="tags-modal" onclick="if(event.target === this) closeTagsModal()">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close" onclick="closeTagsModal()">✖</button>
+            <h2 style="margin-top: 0; color: #53fc18; text-align: center;">🏷️ Tag Overrides</h2>
+            <p style="text-align: center; color: #a0a5b5; font-size: 13px; margin-top: -10px; margin-bottom: 20px;">Customize group colors, labels, and sorting priority.</p>
+            
+            <div style="display: flex; gap: 10px; padding: 0 10px; margin-bottom: 5px; color: #a0a5b5; font-size: 12px; font-weight: bold;">
+                <div style="flex: 1;">Original ID</div>
+                <div style="flex: 1;">Display Label</div>
+                <div style="width: 40px; text-align: center;">Color</div>
+                <div style="width: 60px; text-align: center;">Priority</div>
+                <div style="width: 32px;"></div>
+            </div>
+
+            <div id="tags-list" style="max-height: 50vh; overflow-y: auto; padding-right: 5px;"></div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="filter-btn" onclick="addNewTagRow()" style="flex: 1;">+ Add Override</button>
+                <button class="filter-btn" onclick="saveTags()" style="flex: 1; background: #53fc18; color: #000; border: none; font-weight: bold;">💾 Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="override-modal" onclick="if(event.target === this) closeOverrideModal()">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" onclick="closeOverrideModal()">✖</button>
+            <h2 style="margin-top: 0; color: #53fc18; text-align: center;">📌 Server Overrides</h2>
+            <p style="text-align: center; color: #a0a5b5; font-size: 13px; margin-top: -10px; margin-bottom: 20px;">Force specific streamers into a directory.</p>
+            
+            <div style="display: flex; gap: 10px; padding: 0 10px; margin-bottom: 5px; color: #a0a5b5; font-size: 12px; font-weight: bold;">
+                <div style="flex: 1;">Twitch/Kick Handle</div>
+                <div style="flex: 1;">Forced Server</div>
+                <div style="width: 32px;"></div>
+            </div>
+
+            <div id="override-list" style="max-height: 50vh; overflow-y: auto; padding-right: 5px;"></div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="filter-btn" onclick="addNewOverrideRow()" style="flex: 1;">+ Add Override</button>
+                <button class="filter-btn" onclick="saveOverrides()" style="flex: 1; background: #53fc18; color: #000; border: none; font-weight: bold;">💾 Save Changes</button>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="metrics-modal" onclick="if(event.target === this) closeMetricsModal()">
@@ -342,7 +399,7 @@
         </div>
     </div>
 
-    <h1>🟢 NoPixel Directory (<span id="total-count">0</span>)</h1>
+    <h1>🟢 <span id="directory-title-text">NoPixel</span> Directory (<span id="total-count">0</span>)</h1>
     <div class="status-bar">
         Status: <span id="api-status">Initializing...</span> | Last Sync: <span id="last-sync">Never</span>
     </div>
@@ -403,23 +460,31 @@
         </div>
     </div>
 
-    <div id="tab-events" class="tab-content"><iframe src="https://lofi-nopixel.com/events" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
-    <div id="tab-recaps" class="tab-content"><iframe src="https://lofi-nopixel.com/recaps" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
-    <div id="tab-clips" class="tab-content"><iframe src="https://lofi-nopixel.com/clips" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
-    <div id="tab-queue" class="tab-content"><iframe src="https://lofi-nopixel.com/clip-queue" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
-    <div id="tab-groups" class="tab-content"><iframe src="https://lofi-nopixel.com/groups" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-events" class="tab-content"><iframe id="iframe-events" src="https://lofi-nopixel.com/events" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-recaps" class="tab-content"><iframe id="iframe-recaps" src="https://lofi-nopixel.com/recaps" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-clips" class="tab-content"><iframe id="iframe-clips" src="https://lofi-nopixel.com/clips" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-queue" class="tab-content"><iframe id="iframe-queue" src="https://lofi-nopixel.com/clip-queue" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
+    <div id="tab-groups" class="tab-content"><iframe id="iframe-groups" src="https://lofi-nopixel.com/groups" style="width: 100%; height: 85vh; border: none; border-radius: 8px; background-color: #1a1f29;"></iframe></div>
 
     <script>
         const API_URL = "http://localhost:8000/api/streams";
+        const TAGS_API_URL = "http://localhost:8000/api/tags";
+        const OVERRIDE_API_URL = "http://localhost:8000/api/overrides";
+        
         const grid = document.getElementById('stream-grid');
         const searchBar = document.getElementById('search-bar');
         const countDisplay = document.getElementById('total-count');
+        
+        // --- RESTORED GLOBAL STATE VARIABLES ---
         let allStreams = [];
         let currentPlatform = 'all';
+        let currentServer = 'nopixel'; 
+        let currentChartTimeframe = '1h'; 
         window.isInteracting = false; 
         let streamIdCounter = 0; 
+        const tabList = ['streams', 'multi', 'events', 'recaps', 'clips', 'queue', 'groups'];
+        let currentActiveTab = 'streams';
 
-        // --- TOAST NOTIFICATIONS ---
         function showToast(message) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -433,9 +498,204 @@
             setTimeout(() => { if(toast.parentElement) { toast.style.animation = "fadeOut 0.3s forwards"; setTimeout(() => toast.remove(), 300); } }, 5000);
         }
 
-        // --- GLOBAL TAB LOGIC & CTRL+F SHORTCUT ---
-        const tabList = ['streams', 'multi', 'events', 'recaps', 'clips', 'queue', 'groups'];
-        let currentActiveTab = 'streams';
+        // --- NEW SERVER OVERRIDE LOGIC ---
+        async function openOverrideModal() {
+            document.getElementById('override-modal').style.display = 'flex';
+            const list = document.getElementById('override-list');
+            list.innerHTML = '<div style="text-align:center; padding:20px; color:#a0a5b5;">Loading overrides...</div>';
+            
+            try {
+                const res = await fetch(OVERRIDE_API_URL);
+                const data = await res.json();
+                
+                list.innerHTML = '';
+                for (const [handle, server] of Object.entries(data)) {
+                    addExistingOverrideRow(handle, server);
+                }
+            } catch (err) {
+                list.innerHTML = '<div style="text-align:center; padding:20px; color:#ff4a4a;">Failed to load overrides.</div>';
+            }
+        }
+
+        function closeOverrideModal() {
+            document.getElementById('override-modal').style.display = 'none';
+        }
+
+        function addExistingOverrideRow(handle, server) {
+            const list = document.getElementById('override-list');
+            const row = document.createElement('div');
+            row.className = 'tag-edit-row';
+            row.innerHTML = `
+                <input type="text" class="tag-input override-handle" value="${handle}" placeholder="e.g. whippy" readonly style="opacity:0.7; cursor:not-allowed;">
+                <select class="tag-input override-server">
+                    <option value="nopixel" ${server === 'nopixel' ? 'selected' : ''}>NoPixel</option>
+                    <option value="prodigy" ${server === 'prodigy' ? 'selected' : ''}>Prodigy</option>
+                </select>
+                <button class="tag-delete-btn" onclick="this.parentElement.remove()">✖</button>
+            `;
+            list.appendChild(row);
+        }
+
+        function addNewOverrideRow() {
+            const list = document.getElementById('override-list');
+            if (list.innerHTML.includes('Loading') || list.innerHTML.includes('Failed')) list.innerHTML = '';
+            
+            const row = document.createElement('div');
+            row.className = 'tag-edit-row';
+            row.innerHTML = `
+                <input type="text" class="tag-input override-handle" placeholder="e.g. whippy">
+                <select class="tag-input override-server">
+                    <option value="nopixel">NoPixel</option>
+                    <option value="prodigy">Prodigy</option>
+                </select>
+                <button class="tag-delete-btn" onclick="this.parentElement.remove()">✖</button>
+            `;
+            list.appendChild(row);
+        }
+
+        async function saveOverrides() {
+            const rows = document.querySelectorAll('#override-list .tag-edit-row');
+            const newOverrides = {};
+            
+            rows.forEach(row => {
+                const handle = row.querySelector('.override-handle').value.trim().toLowerCase();
+                const server = row.querySelector('.override-server').value;
+                
+                if (handle) {
+                    newOverrides[handle] = server;
+                }
+            });
+
+            try {
+                const res = await fetch(OVERRIDE_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newOverrides)
+                });
+                const data = await res.json();
+                
+                if (data.status === "success") {
+                    showToast("✅ Server overrides saved! They will apply on the next background sync.");
+                    closeOverrideModal();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                showToast("❌ Failed to save overrides: " + err.message);
+            }
+        }
+
+        // --- TAG EDITOR LOGIC ---
+        async function openTagsModal() {
+            document.getElementById('tags-modal').style.display = 'flex';
+            const list = document.getElementById('tags-list');
+            list.innerHTML = '<div style="text-align:center; padding:20px; color:#a0a5b5;">Loading tags...</div>';
+            
+            try {
+                const res = await fetch(TAGS_API_URL);
+                const data = await res.json();
+                
+                list.innerHTML = '';
+                for (const [key, details] of Object.entries(data)) {
+                    addExistingTagRow(key, details.label, details.color, details.priority);
+                }
+            } catch (err) {
+                list.innerHTML = '<div style="text-align:center; padding:20px; color:#ff4a4a;">Failed to load tags.</div>';
+            }
+        }
+
+        function closeTagsModal() {
+            document.getElementById('tags-modal').style.display = 'none';
+        }
+
+        function addExistingTagRow(key, label, color, priority) {
+            const list = document.getElementById('tags-list');
+            const row = document.createElement('div');
+            row.className = 'tag-edit-row';
+            row.innerHTML = `
+                <input type="text" class="tag-input tag-key" value="${key}" placeholder="e.g. bsk" readonly style="opacity:0.7; cursor:not-allowed;">
+                <input type="text" class="tag-input tag-label" value="${label || key}" placeholder="Display Name">
+                <input type="color" class="tag-color-input tag-color" value="${color || '#888888'}">
+                <input type="number" class="tag-input tag-priority" value="${priority || 99}" min="1" max="99" style="width: 60px;">
+                <button class="tag-delete-btn" onclick="this.parentElement.remove()">✖</button>
+            `;
+            list.appendChild(row);
+        }
+
+        function addNewTagRow() {
+            const list = document.getElementById('tags-list');
+            if (list.innerHTML.includes('Loading') || list.innerHTML.includes('Failed')) list.innerHTML = '';
+            
+            const row = document.createElement('div');
+            row.className = 'tag-edit-row';
+            row.innerHTML = `
+                <input type="text" class="tag-input tag-key" placeholder="e.g. bsk">
+                <input type="text" class="tag-input tag-label" placeholder="Display Name">
+                <input type="color" class="tag-color-input tag-color" value="#53fc18">
+                <input type="number" class="tag-input tag-priority" value="99" min="1" max="99" style="width: 60px;">
+                <button class="tag-delete-btn" onclick="this.parentElement.remove()">✖</button>
+            `;
+            list.appendChild(row);
+        }
+
+        async function saveTags() {
+            const rows = document.querySelectorAll('#tags-list .tag-edit-row');
+            const newTags = {};
+            
+            rows.forEach(row => {
+                const key = row.querySelector('.tag-key').value.trim().toLowerCase();
+                const label = row.querySelector('.tag-label').value.trim();
+                const color = row.querySelector('.tag-color').value;
+                const priority = parseInt(row.querySelector('.tag-priority').value) || 99;
+                
+                if (key) {
+                    newTags[key] = { label: label || key, color: color, priority: priority };
+                }
+            });
+
+            try {
+                const res = await fetch(TAGS_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newTags)
+                });
+                const data = await res.json();
+                
+                if (data.status === "success") {
+                    showToast("✅ Tags successfully saved! They will apply on the next server sync.");
+                    closeTagsModal();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                showToast("❌ Failed to save tags: " + err.message);
+            }
+        }
+
+        // --- SERVER TOGGLE LOGIC ---
+        function switchServer(server) {
+            if (currentServer === server) return;
+            currentServer = server;
+            
+            document.getElementById('btn-server-nopixel').classList.toggle('active', server === 'nopixel');
+            document.getElementById('btn-server-prodigy').classList.toggle('active', server === 'prodigy');
+            
+            document.getElementById('directory-title-text').textContent = server === 'nopixel' ? 'NoPixel' : 'Prodigy';
+            
+            const baseUrl = server === 'nopixel' ? 'https://lofi-nopixel.com' : 'https://lofi-prodigy.com';
+            document.getElementById('iframe-events').src = baseUrl + '/events';
+            document.getElementById('iframe-recaps').src = baseUrl + '/recaps';
+            document.getElementById('iframe-clips').src = baseUrl + '/clips';
+            document.getElementById('iframe-queue').src = baseUrl + '/clip-queue';
+            document.getElementById('iframe-groups').src = baseUrl + '/groups';
+
+            grid.innerHTML = '';
+            fetchStreams();
+            
+            if (document.getElementById('metrics-modal').style.display === 'flex') {
+                loadChartData(currentChartTimeframe);
+            }
+        }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -445,7 +705,6 @@
             currentActiveTab = tabId;
             if (tabId !== 'multi') exitTheaterMode();
             
-            // Instantly refresh the grid when coming back to the Streams tab
             if (tabId === 'streams') {
                 fetchStreams();
             }
@@ -472,7 +731,6 @@
             }
         });
 
-        // --- SIDEBAR TOGGLE LOGIC ---
         function toggleSidebar() {
             const sidebar = document.getElementById('main-sidebar');
             const body = document.body;
@@ -496,7 +754,6 @@
             document.getElementById('toggle-icon').textContent = '▶';
         }
 
-        // --- MULTI-STREAM LOGIC ---
         const multiInputsContainer = document.getElementById('multi-inputs-container');
         
         function initMultiSetup() {
@@ -619,7 +876,6 @@
             `;
             videoGrid.appendChild(wrapper);
 
-            // --- Chat Setup ---
             let chatUrl = platform === 'twitch' 
                 ? `https://www.twitch.tv/embed/${channel}/chat?parent=${hostname}&darkpopout` 
                 : `https://kick.com/${channel}/chatroom`;
@@ -687,7 +943,6 @@
             document.getElementById('multi-setup-view').style.display = 'block';
         }
 
-        // --- THEATER MODE LOGIC ---
         function toggleTheaterMode() {
             const body = document.body;
             const btn = document.getElementById('theater-toggle-btn');
@@ -703,7 +958,6 @@
 
         initMultiSetup();
 
-        // --- METRICS & CHART LOGIC ---
         let metricsChartInstance = null;
         let currentChartMode = 'general';
 
@@ -723,7 +977,7 @@
                 titleEl.textContent = 'City Metrics History';
             }
 
-            loadChartData('1h'); 
+            loadChartData(currentChartTimeframe); 
         }
 
         function closeMetricsModal() {
@@ -731,31 +985,41 @@
         }
 
         async function loadChartData(timeframe) {
+            currentChartTimeframe = timeframe;
             document.querySelectorAll('.chart-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.textContent.toLowerCase().includes(timeframe.replace('h',' hour').replace('d',' day').replace('m', ' month')));
             });
 
             try {
-                const res = await fetch(`http://localhost:8000/api/metrics?timeframe=${timeframe}`);
+                const res = await fetch(`http://localhost:8000/api/metrics?timeframe=${timeframe}&server=${currentServer}`);
                 const data = await res.json();
 
                 if (data.error) throw new Error(data.error);
 
                 const labels = data.timestamps.map(ts => {
                     const d = new Date(ts + "Z"); 
-                    return d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    if (timeframe === '1m') {
+                        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    } else if (timeframe === '7d') {
+                        return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                    } else {
+                        return d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    }
                 });
 
-                renderChart(labels, data);
+                renderChart(labels, data, timeframe);
             } catch (err) {
                 console.error("Failed to load metrics:", err);
                 showToast("Failed to load historical data.");
             }
         }
 
-        function renderChart(labels, data) {
+        function renderChart(labels, data, timeframe) {
             const ctx = document.getElementById('metricsChart').getContext('2d');
             if (metricsChartInstance) metricsChartInstance.destroy();
+
+            const pRadius = (timeframe === '7d' || timeframe === '1m') ? 0 : 2;
+            const pCurve = 0.3; 
 
             let datasets = [];
             let y1_axis_config = { display: false };
@@ -765,18 +1029,21 @@
                     {
                         label: 'Total Viewers', data: data.viewers,
                         borderColor: '#53fc18', backgroundColor: 'rgba(83, 252, 24, 0.1)',
-                        borderWidth: 2, fill: true, yAxisID: 'y'
+                        borderWidth: 2, fill: true, yAxisID: 'y',
+                        pointRadius: pRadius, tension: pCurve, pointHoverRadius: 6
                     },
                     {
                         label: 'Total Streamers', data: data.streamers,
                         borderColor: '#00a8ff', backgroundColor: 'transparent',
-                        borderWidth: 2, borderDash: [5, 5], yAxisID: 'y1'
+                        borderWidth: 2, borderDash: [5, 5], yAxisID: 'y1',
+                        pointRadius: pRadius, tension: pCurve, pointHoverRadius: 6
                     }
                 ];
                 y1_axis_config = {
                     type: 'linear', display: true, position: 'right',
                     grid: { drawOnChartArea: false }, ticks: { color: '#a0a5b5' },
-                    title: { display: true, text: 'Streamers', color: '#00a8ff' }
+                    title: { display: true, text: 'Streamers', color: '#00a8ff' },
+                    beginAtZero: true
                 };
 
             } else if (currentChartMode === 'platform') {
@@ -784,12 +1051,14 @@
                     {
                         label: 'Twitch Viewers', data: data.twitch_viewers,
                         borderColor: '#9146FF', backgroundColor: 'rgba(145, 70, 255, 0.1)',
-                        borderWidth: 2, fill: true, yAxisID: 'y'
+                        borderWidth: 2, fill: true, yAxisID: 'y',
+                        pointRadius: pRadius, tension: pCurve, pointHoverRadius: 6
                     },
                     {
                         label: 'Kick Viewers', data: data.kick_viewers,
                         borderColor: '#53fc18', backgroundColor: 'rgba(83, 252, 24, 0.1)',
-                        borderWidth: 2, fill: true, yAxisID: 'y'
+                        borderWidth: 2, fill: true, yAxisID: 'y',
+                        pointRadius: pRadius, tension: pCurve, pointHoverRadius: 6
                     }
                 ];
             }
@@ -801,11 +1070,20 @@
                     responsive: true,
                     interaction: { mode: 'index', intersect: false },
                     scales: {
-                        x: { grid: { color: '#2d3546' }, ticks: { color: '#a0a5b5' } },
+                        x: { 
+                            grid: { color: '#2d3546' }, 
+                            ticks: { 
+                                color: '#a0a5b5',
+                                maxTicksLimit: (timeframe === '1m' || timeframe === '7d') ? 12 : 15,
+                                maxRotation: 45,
+                                minRotation: 45
+                            } 
+                        },
                         y: { 
                             type: 'linear', display: true, position: 'left',
                             grid: { color: '#2d3546' }, ticks: { color: '#a0a5b5' },
-                            title: { display: true, text: 'Viewers', color: '#fff' }
+                            title: { display: true, text: 'Viewers', color: '#fff' },
+                            beginAtZero: true
                         },
                         y1: y1_axis_config
                     },
@@ -814,11 +1092,9 @@
             });
         }
 
-        // Faction Modal Controls
         function openFactionModal() { document.getElementById('faction-modal').style.display = 'flex'; }
         function closeFactionModal() { document.getElementById('faction-modal').style.display = 'none'; }
 
-        // Advanced Metrics Calculator
         function updateAdvancedMetrics() {
             let twViewers = 0, twStreams = 0;
             let kkViewers = 0, kkStreams = 0;
@@ -871,18 +1147,21 @@
             });
         }
 
-        // --- DIRECTORY LOGIC ---
+        // --- NEW FIX: Use onStart and onUnchoose to prevent UI freezing ---
         const sortable = new Sortable(grid, {
             animation: 150, delay: 250, delayOnTouchOnly: false, touchStartThreshold: 10,
             ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen',
-            onChoose: () => { window.isInteracting = true; },
-            onEnd: () => { setTimeout(() => { window.isInteracting = false; }, 100); localStorage.setItem('streamOrder', JSON.stringify(Array.from(grid.querySelectorAll('.stream-card')).map(el => el.dataset.id))); }
+            onStart: () => { window.isInteracting = true; }, 
+            onUnchoose: () => { window.isInteracting = false; }, 
+            onEnd: () => { 
+                setTimeout(() => { window.isInteracting = false; }, 100); 
+                localStorage.setItem('streamOrder', JSON.stringify(Array.from(grid.querySelectorAll('.stream-card')).map(el => el.dataset.id))); 
+            }
         });
 
         function renderStreams(streamsToRender) {
             const savedOrder = JSON.parse(localStorage.getItem('streamOrder')) || [];
             
-            // 1. Sort the streams
             if (savedOrder.length > 0 && currentPlatform === 'all' && searchBar.value === '') {
                 streamsToRender.sort((a, b) => {
                     let indexA = savedOrder.indexOf(a.channel); let indexB = savedOrder.indexOf(b.channel);
@@ -892,11 +1171,9 @@
 
             const currentChannels = new Set();
 
-            // 2. Loop through the fresh data and update/create cards
-            streamsToRender.forEach(stream => {
+            streamsToRender.forEach((stream, index) => {
                 currentChannels.add(stream.channel);
                 
-                // Determine the Badge, Hover Color, and Split Viewer HTML
                 let hoverClass = '';
                 let badgeText = stream.platform.toUpperCase();
                 let badgeColor = stream.platform === 'kick' ? '#53fc18' : '#9146FF';
@@ -921,8 +1198,14 @@
                 }
                 
                 const timeAgo = stream.platform === 'twitch' ? '(Updated 5m)' : '(Live)';
-                const cacheBuster = stream.thumbnail.includes('?') ? `&t=${Date.now()}` : `?t=${Date.now()}`;
 
+                // --- THUMBNAIL IMAGE FIX: 2-Minute Time Bucket ---
+                // Generates a number that only changes exactly every 2 minutes
+                const timeBucket = Math.floor(Date.now() / 120000);
+                const safeThumbUrl = stream.thumbnail.includes('?') 
+                    ? `${stream.thumbnail}&t=${timeBucket}` 
+                    : `${stream.thumbnail}?t=${timeBucket}`;
+                
                 let tagsHtml = '';
                 if (stream.tags && stream.tags.length > 0) {
                     if (stream.tags.length === 1) {
@@ -945,15 +1228,19 @@
                     }
                 }
 
-                // Check if the card already exists on the screen
                 let card = grid.querySelector(`.stream-card[data-id="${stream.channel}"]`);
 
                 if (card) {
-                    // --- UPDATE EXISTING CARD IN-PLACE ---
                     card.className = `stream-card ${hoverClass}`;
                     
                     const img = card.querySelector('.thumbnail');
-                    if (img && !window.isInteracting) img.src = `${stream.thumbnail}${cacheBuster}`;
+                    if (img && !window.isInteracting) {
+                        // Check the hidden HTML tag. If the 5 minutes are up, update the image!
+                        if (img.dataset.bucket !== String(timeBucket)) {
+                            img.src = safeThumbUrl;
+                            img.dataset.bucket = timeBucket;
+                        }
+                    }
                     
                     const titleDiv = card.querySelector('.stream-title');
                     if (titleDiv && titleDiv.textContent !== stream.title) titleDiv.textContent = stream.title;
@@ -969,7 +1256,6 @@
                         `;
                     }
                     
-                    // Update the channel name area directly in case tags changed
                     const nameArea = card.querySelector('.channel-name-area');
                     if (nameArea) {
                         nameArea.innerHTML = `
@@ -979,8 +1265,10 @@
                         `;
                     }
 
-                    // Appending an existing element doesn't copy it, it just moves it to correct sort position
-                    grid.appendChild(card); 
+                    // --- NEW FIX: Only move the DOM node if it actually changed rank ---
+                    if (grid.children[index] !== card) {
+                        grid.insertBefore(card, grid.children[index]);
+                    }
 
                 } else {
                     // --- CREATE NEW CARD ---
@@ -991,10 +1279,11 @@
                     const streamUrl = stream.platform === 'kick' ? `https://kick.com/${stream.channel}` : `https://twitch.tv/${stream.channel}`;
                     card.onmouseup = () => { if (!window.isInteracting) window.open(streamUrl, '_blank'); };
 
+                    // EXPLICITLY Added data-bucket directly into the HTML so it starts tracking instantly!
                     card.innerHTML = `
                         <div class="drag-overlay">⠿ DRAG TO REORDER ⠿</div>
-                        <img class="thumbnail" src="${stream.thumbnail}${cacheBuster}" draggable="false" alt="thumb">
-                        <div class="card-info">
+                         <img class="thumbnail" data-bucket="${timeBucket}" src="${safeThumbUrl}" draggable="false" alt="thumb" onerror="this.src='https://placehold.co/640x360/1a1f29/a0a5b5?text=Offline'; this.onerror=null;">
+                         <div class="card-info">
                             <div class="stream-title">${stream.title}</div>
                             <div class="refresh-tag">${timeAgo}</div>
                             <div class="stream-meta">
@@ -1009,11 +1298,17 @@
                                 </div>
                             </div>
                         </div>`;
-                    grid.appendChild(card);
+                    
+                    // Insert at correct index position
+                    if (grid.children[index]) {
+                        grid.insertBefore(card, grid.children[index]);
+                    } else {
+                        grid.appendChild(card);
+                    }
                 }
             });
 
-            // 3. Remove streamers who went offline or no longer match the filter
+            // Remove offline streams securely
             Array.from(grid.querySelectorAll('.stream-card')).forEach(card => {
                 if (!currentChannels.has(card.dataset.id)) {
                     card.remove();
@@ -1022,24 +1317,41 @@
         }
 
         async function fetchStreams() {
-            // THE ULTIMATE KILL SWITCH
-            if (currentActiveTab !== 'streams') return;
+            // Bulletproof check: Only run the fetch if the Streams tab has the 'active' class
+            if (!document.getElementById('tab-streams').classList.contains('active')) return;
 
             try {
-                const response = await fetch(API_URL);
+                const response = await fetch(`${API_URL}?server=${currentServer}`);
                 const data = await response.json();
                 allStreams = data.streams;
                 countDisplay.textContent = data.count;
                 document.getElementById('api-status').textContent = data.status;
-                document.getElementById('last-sync').textContent = new Date().toLocaleTimeString();
                 
-                // Analytics Updaters
+                // Only update the "Last Sync" clock if we actually got live data
+                if (data.status !== "Initializing...") {
+                    document.getElementById('last-sync').textContent = new Date().toLocaleTimeString();
+                }
+                
                 const totalViewers = allStreams.reduce((sum, stream) => sum + stream.viewers, 0);
                 updateHoverMetrics(totalViewers, allStreams.length);
                 updateAdvancedMetrics();
 
                 if (!window.isInteracting) applySearch();
-            } catch (error) { console.error("Fetch error:", error); document.getElementById('api-status').textContent = "Offline"; }
+
+                // --- THE FIX: SMART POLLING ---
+                // If the backend is still booting up and scraping, don't wait 90 seconds.
+                // Check back every 3 seconds until the data arrives.
+                if (data.status === "Initializing...") {
+                    setTimeout(fetchStreams, 3000); 
+                }
+
+            } catch (error) { 
+                console.error("Fetch error:", error); 
+                document.getElementById('api-status').textContent = "Offline"; 
+                
+                // If the Python server is completely turned off, ping every 5 seconds until it wakes up
+                setTimeout(fetchStreams, 5000);
+            }
         }
 
         function filterPlatform(platform) { currentPlatform = platform; applySearch(); }
@@ -1059,18 +1371,14 @@
 
         searchBar.addEventListener('input', applySearch);
 
-        // --- INTERVAL SETUP ---
-        // 1. Clear ANY existing intervals in the browser's memory to kill ghosts
         if (window.streamInterval) {
             clearInterval(window.streamInterval);
         }
 
-        // 2. Initial load
         fetchStreams();
         
-        // 3. Set the strict, tab-aware interval
         window.streamInterval = setInterval(() => {
-            if (currentActiveTab === 'streams') {
+            if (document.getElementById('tab-streams').classList.contains('active')) {
                 fetchStreams();
             }
         }, 90000);

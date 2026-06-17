@@ -1,0 +1,97 @@
+{
+    "lspd": {
+        "label": "LSPD",
+        "color": "#0d7cf2",
+        "priority": 2
+    },
+    "new babylon": {
+        "label": "New Babylon",
+        "color": "#ff0000",
+        "priority": 1
+    },
+    "hydra": {
+        "label": "Hydra",
+        "color": "#225f0c",
+        "priority": 1
+    },
+    "strayz": {
+        "label": "Strayz",
+        "color": "#fb00ff",
+        "priority": 1
+    },
+    "bcso": {
+        "label": "BCSO",
+        "color": "#ffdd00",
+        "priority": 2
+    },
+    "san andreas medical group": {
+        "label": "Medical",
+        "color": "#ed5ad2",
+        "priority": 2
+    },
+    "habibis": {
+        "label": "Habibis",
+        "color": "#ff7300",
+        "priority": 1
+    },
+    "sasm": {
+        "label": "Marshal",
+        "color": "#d29614",
+        "priority": 2
+    },
+    "3pas": {
+        "label": "3Pas",
+        "color": "#eab457",
+        "priority": 1
+    },
+    "nopixel dev": {
+        "label": "Dev",
+        "color": "#ffffff",
+        "priority": 1
+    },
+    "kaneshiro": {
+        "label": "Kaneshiro",
+        "color": "#333333",
+        "priority": 1
+    },
+    "bbmc": {
+        "label": "BBMC",
+        "color": "#007bff",
+        "priority": 1
+    },
+    "esb": {
+        "label": "ESB",
+        "color": "#7d00d1",
+        "priority": 1
+    },
+    "pd": {
+        "label": "PD",
+        "color": "#001df5",
+        "priority": 2
+    },
+    "chang gang": {
+        "label": "CG",
+        "color": "#b37929",
+        "priority": 1
+    },
+    "odpd": {
+        "label": "ODPD",
+        "color": "#00ffee",
+        "priority": 2
+    },
+    "dullahans": {
+        "label": "dullahans",
+        "color": "#e87cfd",
+        "priority": 1
+    },
+    "besties": {
+        "label": "Besties",
+        "color": "#c34b18",
+        "priority": 1
+    },
+    "hounds mc": {
+        "label": "Hounds",
+        "color": "#00d176",
+        "priority": 1
+    }
+}
